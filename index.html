@@ -50,15 +50,15 @@
                     </button>
                     <div id="dash-submenu" class="pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="showView('dashboard-view', 'PLANT ENGINEERING DASHBOARD')" class="block py-1 text-xs text-slate-400 hover:text-white">Executive Dashboard</a>
-                        <a href="#" class="block py-1 text-xs text-slate-400 hover:text-white">KPI Engineering</a>
-                        <a href="#" class="block py-1 text-xs text-slate-400 hover:text-white">Equipment Health Index</a>
-                        <a href="#" class="block py-1 text-xs text-slate-400 hover:text-white">Top Problem</a>
-                        <a href="#" class="block py-1 text-xs text-slate-400 hover:text-white">Critical Unit</a>
-                        <a href="#" class="block py-1 text-xs text-slate-400 hover:text-white">Notification Center</a>
+                        <a href="#" onclick="showView('dashboard-view', 'KPI ENGINEERING')" class="block py-1 text-xs text-slate-400 hover:text-white">KPI Engineering</a>
+                        <a href="#" onclick="showView('dashboard-view', 'EQUIPMENT HEALTH INDEX')" class="block py-1 text-xs text-slate-400 hover:text-white">Equipment Health Index</a>
+                        <a href="#" onclick="showView('dashboard-view', 'TOP PROBLEM')" class="block py-1 text-xs text-slate-400 hover:text-white">Top Problem</a>
+                        <a href="#" onclick="showView('dashboard-view', 'CRITICAL UNIT')" class="block py-1 text-xs text-slate-400 hover:text-white">Critical Unit</a>
+                        <a href="#" onclick="showView('dashboard-view', 'NOTIFICATION CENTER')" class="block py-1 text-xs text-slate-400 hover:text-white">Notification Center</a>
                     </div>
                 </div>
 
-                <!-- PART BOOK, SM, & OMM -->
+                <!-- 2. PART BOOK, SM & OMM -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('partbook-submenu', 'partbook-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <!-- POPULASI UNIT -->
+                <!-- 3. POPULASI UNIT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('pop-submenu', 'pop-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <!-- CONDITION MONITORING -->
+                <!-- 4. CONDITION MONITORING -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('cm-submenu', 'cm-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <!-- 9. BACKLOG MANAGEMENT (INTEGRATED SYSTEM) -->
+                <!-- 5. BACKLOG MGMT (MODUL TERINTEGRASI) -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('backlog-submenu', 'backlog-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -146,7 +146,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN & SYSTEM -->
+                <!-- 6. ADMIN -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('admin-submenu', 'admin-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -191,7 +191,7 @@
                 </div>
             </header>
 
-            <!-- CONTAINER DENGAN SWITCHING VIEW -->
+            <!-- CONTAINER CONTAINER CONTENT -->
             <div class="flex-1 p-6">
                 
                 <!-- VIEW 1: DASHBOARD UTAMA (DEFAULT) -->
