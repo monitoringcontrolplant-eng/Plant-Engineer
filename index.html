@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Engineering System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-transition {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- SIDEBAR NAVIGATOR -->
+        <aside class="w-64 bg-slate-900 text-slate-100 flex flex-col sidebar-transition z-20 shadow-lg">
+            
+            <!-- Header Brand -->
+            <div class="h-16 flex items-center justify-between px-4 bg-slate-950 border-b border-slate-800">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-gears text-blue-500 text-xl"></i>
+                    <span class="font-bold text-lg tracking-wide text-white">PLANT ENG</span>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
+                
+                <!-- Populasi Unit -->
+                <a href="#populasi-unit" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group">
+                    <i class="fa-solid fa-truck-monster w-6 text-slate-400 group-hover:text-blue-400"></i>
+                    <span>Populasi Unit</span>
+                </a>
+
+                <!-- Condition Monitoring (Dropdown Menu) -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu()" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-chart-line w-6 text-slate-400 group-hover:text-blue-400"></i>
+                            <span>Condition Monitoring</span>
+                        </div>
+                        <i id="dropdown-arrow" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                    </button>
+
+                    <!-- Sub-menu Items -->
+                    <div id="condition-submenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#inova-index" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Inova Index</a>
+                        <a href="#vhms" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">VHMS</a>
+                        <a href="#pap" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PAP</a>
+                        <a href="#ppm" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PPM</a>
+                        <a href="#ppu" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PPU</a>
+                        <a href="#vita" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">VITA</a>
+                        <a href="#fogc" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">FOGC</a>
+                        <a href="#disc-clutch" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Monitoring Disc Clutch</a>
+                        <a href="#measurement-testing" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Measurement & Testing Adjusting</a>
+                        <a href="#komtrax" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">KOMTRAX</a>
+                    </div>
+                </div>
+
+            </nav>
+
+            <!-- User Info Footer -->
+            <div class="p-4 border-t border-slate-800 bg-slate-950 flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-sm">
+                    PE
+                </div>
+                <div class="flex-1 overflow-hidden">
+                    <p class="text-xs font-semibold text-white truncate">Plant Engineer</p>
+                    <p class="text-[10px] text-slate-400 truncate">Online</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Top App Bar -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <h1 class="text-lg font-bold text-gray-800">Plant Engineering Dashboard</h1>
+                <div class="text-xs text-gray-500">System Ready</div>
+            </header>
+
+            <!-- Workspace Body -->
+            <div class="p-6">
+                <div class="border-2 border-dashed border-gray-300 rounded-lg h-96 flex items-center justify-center text-gray-400">
+                    <p class="text-sm">Pilih menu di sidebar sebelah kiri untuk menampilkan modul data.</p>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Script Interaktif Sidebar -->
+    <script>
+        function toggleSubmenu() {
+            const submenu = document.getElementById('condition-submenu');
+            const arrow = document.getElementById('dropdown-arrow');
+            
+            submenu.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+    </script>
+</body>
+</html>
