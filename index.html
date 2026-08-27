@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Engineering System</title>
     <title>Plant Engineering Integrated System (PEIS)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        .sidebar-transition {
+            transition: all 0.3s ease-in-out;
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
@@ -21,13 +24,16 @@
 <body class="bg-gray-100 font-sans antialiased">
 
     <div class="flex h-screen overflow-hidden">
-        
+
         <!-- SIDEBAR NAVIGATOR -->
+        <aside class="w-64 bg-slate-900 text-slate-100 flex flex-col sidebar-transition z-20 shadow-lg">
         <aside class="w-72 bg-slate-900 text-slate-100 flex flex-col z-20 shadow-xl border-r border-slate-800">
-            
+
             <!-- Header Brand -->
             <div class="h-16 flex items-center justify-between px-4 bg-slate-950 border-b border-slate-800">
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="showView('dashboard-view', 'PLANT ENGINEERING DASHBOARD')">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-gears text-blue-500 text-xl"></i>
+                    <span class="font-bold text-lg tracking-wide text-white">PLANT ENG</span>
                     <i class="fa-solid fa-gears text-blue-500 text-2xl"></i>
                     <div>
                         <span class="font-bold text-base tracking-wide text-white block leading-tight">PEIS</span>
@@ -37,28 +43,42 @@
             </div>
 
             <!-- Navigation Menu -->
+            <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
-                
+
+                <!-- Part Book, SM, & OMM -->
                 <!-- 1. DASHBOARD -->
                 <div>
+                    <button type="button" onclick="toggleSubmenu('partbook-submenu', 'partbook-dropdown-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-book-open w-6 text-slate-400 group-hover:text-blue-400"></i>
+                            <span>Part Book, SM, & OMM</span>
                     <button type="button" onclick="toggleSubmenu('dash-submenu', 'dash-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
                             <i class="fa-solid fa-house w-5 text-blue-400"></i>
                             <span>DASHBOARD</span>
                         </div>
+                        <i id="partbook-dropdown-arrow" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                         <i id="dash-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="dash-submenu" class="pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="showView('dashboard-view', 'PLANT ENGINEERING DASHBOARD')" class="block py-1 text-xs text-slate-400 hover:text-white">Executive Dashboard</a>
-                        <a href="#" onclick="showView('dashboard-view', 'KPI ENGINEERING')" class="block py-1 text-xs text-slate-400 hover:text-white">KPI Engineering</a>
-                        <a href="#" onclick="showView('dashboard-view', 'EQUIPMENT HEALTH INDEX')" class="block py-1 text-xs text-slate-400 hover:text-white">Equipment Health Index</a>
-                        <a href="#" onclick="showView('dashboard-view', 'TOP PROBLEM')" class="block py-1 text-xs text-slate-400 hover:text-white">Top Problem</a>
-                        <a href="#" onclick="showView('dashboard-view', 'CRITICAL UNIT')" class="block py-1 text-xs text-slate-400 hover:text-white">Critical Unit</a>
-                        <a href="#" onclick="showView('dashboard-view', 'NOTIFICATION CENTER')" class="block py-1 text-xs text-slate-400 hover:text-white">Notification Center</a>
+                        <a href="#executive" class="block py-1 text-xs text-slate-400 hover:text-white">Executive Dashboard</a>
+                        <a href="#kpi" class="block py-1 text-xs text-slate-400 hover:text-white">KPI Engineering</a>
+                        <a href="#health-index" class="block py-1 text-xs text-slate-400 hover:text-white">Equipment Health Index</a>
+                        <a href="#top-problem" class="block py-1 text-xs text-slate-400 hover:text-white">Top Problem</a>
+                        <a href="#critical-unit" class="block py-1 text-xs text-slate-400 hover:text-white">Critical Unit</a>
+                        <a href="#notifications" class="block py-1 text-xs text-slate-400 hover:text-white">Notification Center</a>
                     </div>
                 </div>
 
-                <!-- 2. PART BOOK, SM & OMM -->
+                    <!-- Level 1 Sub-menu Items -->
+                    <div id="partbook-submenu" class="hidden pl-6 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        
+                        <!-- ENGINE -->
+                        <a href="#engine" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">ENGINE</a>
+                        
+                        <!-- A2B (Nested Menu) -->
+                <!-- PART BOOK, SM, & OMM -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('partbook-submenu', 'partbook-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -70,21 +90,37 @@
                     <div id="partbook-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#engine" class="block py-1 text-xs text-slate-400 hover:text-white">ENGINE</a>
                         <div>
+                            <button type="button" onclick="toggleSubmenu('a2b-submenu', 'a2b-arrow')" class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded focus:outline-none">
                             <button type="button" onclick="toggleSubmenu('a2b-submenu', 'a2b-arrow')" class="w-full flex items-center justify-between py-1 text-xs text-slate-400 hover:text-white">
                                 <span>A2B</span>
+                                <i id="a2b-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
                                 <i id="a2b-arrow" class="fa-solid fa-chevron-down text-[9px] text-slate-500"></i>
                             </button>
+                            <div id="a2b-submenu" class="hidden pl-4 py-1 space-y-1 border-l border-slate-800 ml-3 mt-1">
+                                <a href="#excavator" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Excavator</a>
+                                <a href="#bulldozer" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Bulldozer</a>
+                                <a href="#motor-grader" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Motor Grader</a>
                             <div id="a2b-submenu" class="hidden pl-3 py-1 space-y-1 border-l border-slate-800 ml-1">
                                 <a href="#excavator" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Excavator</a>
                                 <a href="#bulldozer" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Bulldozer</a>
                                 <a href="#motor-grader" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Motor Grader</a>
                             </div>
                         </div>
+
+                        <!-- WHEEL (Nested Menu) -->
                         <div>
+                            <button type="button" onclick="toggleSubmenu('wheel-submenu', 'wheel-arrow')" class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded focus:outline-none">
                             <button type="button" onclick="toggleSubmenu('wheel-submenu', 'wheel-arrow')" class="w-full flex items-center justify-between py-1 text-xs text-slate-400 hover:text-white">
                                 <span>WHEEL</span>
+                                <i id="wheel-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
                                 <i id="wheel-arrow" class="fa-solid fa-chevron-down text-[9px] text-slate-500"></i>
                             </button>
+                            <div id="wheel-submenu" class="hidden pl-4 py-1 space-y-1 border-l border-slate-800 ml-3 mt-1">
+                                <a href="#beiben" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Beiben</a>
+                                <a href="#dongfeng" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Dongfeng</a>
+                                <a href="#komatsu" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Komatsu</a>
+                                <a href="#xcmg" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">XCMG</a>
+                                <a href="#lgmg" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">LGMG</a>
                             <div id="wheel-submenu" class="hidden pl-3 py-1 space-y-1 border-l border-slate-800 ml-1">
                                 <a href="#beiben" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Beiben</a>
                                 <a href="#dongfeng" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Dongfeng</a>
@@ -97,7 +133,9 @@
                     </div>
                 </div>
 
-                <!-- 3. POPULASI UNIT -->
+                        <!-- SUPPORT -->
+                        <a href="#support" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">SUPPORT</a>
+                <!-- 2. POPULASI UNIT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('pop-submenu', 'pop-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -110,10 +148,18 @@
                         <a href="#overview-unit" class="block py-1 text-xs text-slate-400 hover:text-white">Overview Unit</a>
                         <a href="#unit-listing" class="block py-1 text-xs text-slate-400 hover:text-white">Unit Listing</a>
                         <a href="#unit-detail" class="block py-1 text-xs text-slate-400 hover:text-white">Unit Detail</a>
+                        <a href="#status-unit" class="block py-1 text-xs text-slate-400 hover:text-white">Status Unit</a>
+                        <a href="#population-model" class="block py-1 text-xs text-slate-400 hover:text-white">Population by Model</a>
+                        <a href="#unit-history" class="block py-1 text-xs text-slate-400 hover:text-white">Unit History</a>
                     </div>
                 </div>
 
-                <!-- 4. CONDITION MONITORING -->
+                <!-- Populasi Unit -->
+                <a href="#populasi-unit" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group">
+                    <i class="fa-solid fa-truck-monster w-6 text-slate-400 group-hover:text-blue-400"></i>
+                    <span>Populasi Unit</span>
+                </a>
+                <!-- 3. CONDITION MONITORING -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('cm-submenu', 'cm-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -127,26 +173,167 @@
                         <a href="#vhms" class="block py-1 text-xs text-slate-400 hover:text-white">VHMS</a>
                         <a href="#pap" class="block py-1 text-xs text-slate-400 hover:text-white">PAP</a>
                         <a href="#ppm" class="block py-1 text-xs text-slate-400 hover:text-white">PPM</a>
+                        <a href="#ppu" class="block py-1 text-xs text-slate-400 hover:text-white">PPU</a>
+                        <a href="#vita" class="block py-1 text-xs text-slate-400 hover:text-white">VITA</a>
+                        <a href="#fogc" class="block py-1 text-xs text-slate-400 hover:text-white">FOGC</a>
+                        <a href="#disc-clutch" class="block py-1 text-xs text-slate-400 hover:text-white">Disc Clutch</a>
+                        <a href="#mta" class="block py-1 text-xs text-slate-400 hover:text-white">Measurement & Testing</a>
+                        <a href="#komtrax" class="block py-1 text-xs text-slate-400 hover:text-white">KOMTRAX</a>
                     </div>
                 </div>
 
-                <!-- 5. BACKLOG MGMT (MODUL TERINTEGRASI) -->
+                <!-- Condition Monitoring -->
+                <!-- 4. FAILURE ANALYSIS -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('condition-submenu', 'dropdown-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-chart-line w-6 text-slate-400 group-hover:text-blue-400"></i>
+                            <span>Condition Monitoring</span>
+                    <button type="button" onclick="toggleSubmenu('fa-submenu', 'fa-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-magnifying-glass-chart w-5 text-slate-400"></i>
+                            <span>FAILURE ANALYSIS</span>
+                        </div>
+                        <i id="dropdown-arrow" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                        <i id="fa-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="fa-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#far-db" class="block py-1 text-xs text-slate-400 hover:text-white">FAR Database</a>
+                        <a href="#rca" class="block py-1 text-xs text-slate-400 hover:text-white">RCA</a>
+                        <a href="#fishbone" class="block py-1 text-xs text-slate-400 hover:text-white">Fishbone</a>
+                        <a href="#5why" class="block py-1 text-xs text-slate-400 hover:text-white">5 Why</a>
+                        <a href="#pica" class="block py-1 text-xs text-slate-400 hover:text-white">PICA</a>
+                        <a href="#lesson-learned" class="block py-1 text-xs text-slate-400 hover:text-white">Lesson Learned</a>
+                        <a href="#verification" class="block py-1 text-xs text-slate-400 hover:text-white">Verification</a>
+                    </div>
+                </div>
+
+                    <!-- Sub-menu Items -->
+                    <div id="condition-submenu" class="hidden pl-6 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#inova-index" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Inova Index</a>
+                        <a href="#vhms" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">VHMS</a>
+                        <a href="#pap" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PAP</a>
+                        <a href="#ppm" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PPM</a>
+                        <a href="#ppu" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PPU</a>
+                        <a href="#vita" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">VITA</a>
+                        <a href="#fogc" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">FOGC</a>
+                        <a href="#disc-clutch" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Monitoring Disc Clutch</a>
+                        <a href="#measurement-testing" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Measurement & Testing Adjusting</a>
+                        <a href="#komtrax" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">KOMTRAX</a>
+                <!-- 5. TREND ANALYSIS -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('ta-submenu', 'ta-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-chart-line-up w-5 text-slate-400"></i>
+                            <span>TREND ANALYSIS</span>
+                        </div>
+                        <i id="ta-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="ta-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#comp-trend" class="block py-1 text-xs text-slate-400 hover:text-white">Component Trend</a>
+                        <a href="#model-trend" class="block py-1 text-xs text-slate-400 hover:text-white">Model Trend</a>
+                        <a href="#repeat-failure" class="block py-1 text-xs text-slate-400 hover:text-white">Repeat Failure</a>
+                        <a href="#mtbf" class="block py-1 text-xs text-slate-400 hover:text-white">MTBF</a>
+                        <a href="#mttr" class="block py-1 text-xs text-slate-400 hover:text-white">MTTR</a>
+                        <a href="#reliability" class="block py-1 text-xs text-slate-400 hover:text-white">Reliability</a>
+                        <a href="#cost-analysis" class="block py-1 text-xs text-slate-400 hover:text-white">Cost Analysis</a>
+                    </div>
+                </div>
+
+                <!-- 6. LUBRICATION MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('lub-submenu', 'lub-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-oil-can w-5 text-slate-400"></i>
+                            <span>LUBRICATION MGMT</span>
+                        </div>
+                        <i id="lub-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="lub-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#oil-analysis" class="block py-1 text-xs text-slate-400 hover:text-white">Oil Analysis</a>
+                        <a href="#oil-consumption" class="block py-1 text-xs text-slate-400 hover:text-white">Oil Consumption</a>
+                        <a href="#oil-inventory" class="block py-1 text-xs text-slate-400 hover:text-white">Oil Inventory</a>
+                        <a href="#oil-sampling" class="block py-1 text-xs text-slate-400 hover:text-white">Oil Sampling</a>
+                        <a href="#oil-history" class="block py-1 text-xs text-slate-400 hover:text-white">Oil History</a>
+                    </div>
+                </div>
+
+                <!-- 7. MAINTENANCE MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('maint-submenu', 'maint-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-calendar-check w-5 text-slate-400"></i>
+                            <span>MAINTENANCE MGMT</span>
+                        </div>
+                        <i id="maint-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="maint-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#pm-schedule" class="block py-1 text-xs text-slate-400 hover:text-white">PM Schedule</a>
+                        <a href="#campaign-prog" class="block py-1 text-xs text-slate-400 hover:text-white">Campaign Program</a>
+                        <a href="#mid-life" class="block py-1 text-xs text-slate-400 hover:text-white">Mid Life Program</a>
+                        <a href="#lifetime-review" class="block py-1 text-xs text-slate-400 hover:text-white">Lifetime Review</a>
+                        <a href="#inspection" class="block py-1 text-xs text-slate-400 hover:text-white">Inspection</a>
+                        <a href="#follow-up" class="block py-1 text-xs text-slate-400 hover:text-white">Follow Up</a>
+                    </div>
+                </div>
+
+                <!-- 8. DOCUMENT CENTER -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('doc-submenu', 'doc-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-folder-open w-5 text-slate-400"></i>
+                            <span>DOCUMENT CENTER</span>
+                        </div>
+                        <i id="doc-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="doc-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#sop" class="block py-1 text-xs text-slate-400 hover:text-white">SOP</a>
+                        <a href="#wi" class="block py-1 text-xs text-slate-400 hover:text-white">WI</a>
+                        <a href="#service-letter" class="block py-1 text-xs text-slate-400 hover:text-white">Service Letter</a>
+                        <a href="#manual-book" class="block py-1 text-xs text-slate-400 hover:text-white">Manual Book</a>
+                        <a href="#training-mat" class="block py-1 text-xs text-slate-400 hover:text-white">Training Material</a>
+                        <a href="#eng-std" class="block py-1 text-xs text-slate-400 hover:text-white">Engineering Standard</a>
+                    </div>
+                </div>
+
+                <!-- 9. BACKLOG MANAGEMENT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('backlog-submenu', 'backlog-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
-                            <i class="fa-solid fa-clipboard-list w-5 text-blue-400"></i>
+                            <i class="fa-solid fa-clipboard-list w-5 text-slate-400"></i>
                             <span>BACKLOG MGMT</span>
                         </div>
                         <i id="backlog-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="backlog-submenu" class="pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="showView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-blue-300 font-medium hover:text-white">Open Backlog System</a>
-                        <a href="#" onclick="showView('backlog-view', 'BACKLOG - PROGRESS STATUS')" class="block py-1 text-xs text-slate-400 hover:text-white">Progress Status</a>
-                        <a href="#" onclick="showView('backlog-view', 'BACKLOG - COMPLETED HISTORY')" class="block py-1 text-xs text-slate-400 hover:text-white">Completed History</a>
+                    <div id="backlog-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#open-backlog" class="block py-1 text-xs text-slate-400 hover:text-white">Open Backlog</a>
+                        <a href="#backlog-progress" class="block py-1 text-xs text-slate-400 hover:text-white">Progress</a>
+                        <a href="#backlog-completed" class="block py-1 text-xs text-slate-400 hover:text-white">Completed</a>
+                        <a href="#backlog-approval" class="block py-1 text-xs text-slate-400 hover:text-white">Approval</a>
+                        <a href="#backlog-history" class="block py-1 text-xs text-slate-400 hover:text-white">History</a>
                     </div>
                 </div>
 
-                <!-- 6. ADMIN -->
+                <!-- 10. REPORTING -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('rep-submenu', 'rep-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-file-invoice w-5 text-slate-400"></i>
+                            <span>REPORTING</span>
+                        </div>
+                        <i id="rep-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="rep-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#daily-rep" class="block py-1 text-xs text-slate-400 hover:text-white">Daily</a>
+                        <a href="#weekly-rep" class="block py-1 text-xs text-slate-400 hover:text-white">Weekly</a>
+                        <a href="#monthly-rep" class="block py-1 text-xs text-slate-400 hover:text-white">Monthly</a>
+                        <a href="#quarterly-rep" class="block py-1 text-xs text-slate-400 hover:text-white">Quarterly</a>
+                        <a href="#yearly-rep" class="block py-1 text-xs text-slate-400 hover:text-white">Yearly</a>
+                        <a href="#export-rep" class="block py-1 text-xs text-slate-400 hover:text-white">Export PDF / Excel</a>
+                    </div>
+                </div>
+
+                <!-- 11. ADMIN -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('admin-submenu', 'admin-arrow')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-200 hover:bg-slate-800 transition-colors">
                         <div class="flex items-center space-x-2.5">
@@ -157,6 +344,9 @@
                     </button>
                     <div id="admin-submenu" class="hidden pl-7 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#user-mgmt" class="block py-1 text-xs text-slate-400 hover:text-white">User Management</a>
+                        <a href="#access-level" class="block py-1 text-xs text-slate-400 hover:text-white">Access Level</a>
+                        <a href="#master-data" class="block py-1 text-xs text-slate-400 hover:text-white">Master Data</a>
+                        <a href="#audit-log" class="block py-1 text-xs text-slate-400 hover:text-white">Audit Log</a>
                         <a href="#system-setting" class="block py-1 text-xs text-slate-400 hover:text-white">System Setting</a>
                     </div>
                 </div>
@@ -165,11 +355,13 @@
 
             <!-- User Info Footer -->
             <div class="p-4 border-t border-slate-800 bg-slate-950 flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-sm">
                 <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs shadow-md">
                     PE
                 </div>
                 <div class="flex-1 overflow-hidden">
                     <p class="text-xs font-semibold text-white truncate">Plant Engineer</p>
+                    <p class="text-[10px] text-slate-400 truncate">Online</p>
                     <p class="text-[10px] text-emerald-400 truncate flex items-center gap-1">
                         <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block"></span> Online
                     </p>
@@ -178,11 +370,15 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
         <main class="flex-1 flex flex-col overflow-y-auto bg-gray-50">
             <!-- Top App Bar -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+                <h1 class="text-lg font-bold text-gray-800">Plant Engineering Dashboard</h1>
+                <div class="text-xs text-gray-500">System Ready</div>
             <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-10 shadow-sm">
                 <div class="flex items-center space-x-3">
-                    <h1 id="page-title" class="text-lg font-bold text-slate-800 tracking-tight">PLANT ENGINEERING DASHBOARD</h1>
+                    <h1 class="text-lg font-bold text-slate-800">PLANT ENGINEERING DASHBOARD</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full border border-emerald-200">System Ready</span>
@@ -191,140 +387,232 @@
                 </div>
             </header>
 
-            <!-- CONTAINER CONTAINER CONTENT -->
-            <div class="flex-1 p-6">
+            <!-- Workspace Body -->
+            <div class="p-6">
+                <div class="border-2 border-dashed border-gray-300 rounded-lg h-96 flex items-center justify-center text-gray-400">
+                    <p class="text-sm">Pilih menu di sidebar sebelah kiri untuk menampilkan modul data.</p>
+            <div class="p-6 space-y-6">
                 
-                <!-- VIEW 1: DASHBOARD UTAMA (DEFAULT) -->
-                <div id="dashboard-view" class="space-y-6">
-                    
-                    <!-- STAT CARDS -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Population Unit</p>
-                                <h3 class="text-2xl font-black text-slate-800 mt-1">520 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
-                                <i class="fa-solid fa-truck-monster"></i>
-                            </div>
+                <!-- ROW 1: STAT CARDS (POPULASI UNIT) -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Population Unit</p>
+                            <h3 class="text-2xl font-black text-slate-800 mt-1">520 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
                         </div>
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-medium text-emerald-600 uppercase tracking-wider">🟢 Healthy</p>
-                                <h3 class="text-2xl font-black text-slate-800 mt-1">430 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
+                        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-truck-monster"></i>
                         </div>
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-medium text-amber-500 uppercase tracking-wider">🟡 Warning</p>
-                                <h3 class="text-2xl font-black text-slate-800 mt-1">68 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center text-xl">
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-emerald-600 uppercase tracking-wider">🟢 Healthy</p>
+                            <h3 class="text-2xl font-black text-slate-800 mt-1">430 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
                         </div>
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div class="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-amber-500 uppercase tracking-wider">🟡 Warning</p>
+                            <h3 class="text-2xl font-black text-slate-800 mt-1">68 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-rose-600 uppercase tracking-wider">🔴 Critical</p>
+                            <h3 class="text-2xl font-black text-slate-800 mt-1">22 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW 2: CONDITION MONITORING & TOP PROBLEM -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Condition Monitoring Card -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                            <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line text-blue-500"></i> Condition Monitoring Compliance
+                            </h2>
+                            <span class="text-xs text-slate-400">Realtime Compliance Rate</span>
+                        </div>
+                        <div class="space-y-3">
                             <div>
-                                <p class="text-xs font-medium text-rose-600 uppercase tracking-wider">🔴 Critical</p>
-                                <h3 class="text-2xl font-black text-slate-800 mt-1">22 <span class="text-xs font-normal text-slate-400">Unit</span></h3>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">PAP</span>
+                                    <span class="text-slate-900">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                    <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 95%"></div>
+                                </div>
                             </div>
-                            <div class="w-12 h-12 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
-                                <i class="fa-solid fa-circle-xmark"></i>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">PPM</span>
+                                    <span class="text-slate-900">91%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                    <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 91%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">FOGC</span>
+                                    <span class="text-slate-900">89%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 89%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">VHMS</span>
+                                    <span class="text-slate-900">82%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                    <div class="bg-amber-500 h-2.5 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">PPU</span>
+                                    <span class="text-slate-900">75%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2.5">
+                                    <div class="bg-amber-500 h-2.5 rounded-full" style="width: 75%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- CONDITION MONITORING & TOP PROBLEMS -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-                            <div class="flex justify-between items-center border-b pb-3 border-slate-100">
-                                <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-chart-line text-blue-500"></i> Condition Monitoring Compliance
-                                </h2>
-                                <span class="text-xs text-slate-400">Realtime Compliance Rate</span>
-                            </div>
-                            <div class="space-y-3">
-                                <div>
-                                    <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <span class="text-slate-700">PAP</span>
-                                        <span class="text-slate-900">95%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <span class="text-slate-700">PPM</span>
-                                        <span class="text-slate-900">91%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 91%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <span class="text-slate-700">FOGC</span>
-                                        <span class="text-slate-900">89%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="bg-blue-500 h-2.5 rounded-full" style="width: 89%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs font-semibold mb-1">
-                                        <span class="text-slate-700">VHMS</span>
-                                        <span class="text-slate-900">82%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2.5">
-                                        <div class="bg-amber-500 h-2.5 rounded-full" style="width: 82%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Top Problem System -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                            <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-rose-500"></i> Top System Problems
+                            </h2>
+                            <span class="text-xs text-slate-400">Current Active Issues</span>
                         </div>
-
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-                            <div class="flex justify-between items-center border-b pb-3 border-slate-100">
-                                <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-list-check text-rose-500"></i> Top System Problems
-                                </h2>
-                                <span class="text-xs text-slate-400">Current Active Issues</span>
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-6 h-6 rounded bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center">1</span>
+                                    <span class="text-xs font-semibold text-slate-700">Engine Cooling</span>
+                                </div>
+                                <span class="text-xs font-semibold px-2 py-0.5 bg-rose-50 text-rose-600 rounded">High Priority</span>
                             </div>
-                            <div class="space-y-2.5">
-                                <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                                    <div class="flex items-center space-x-3">
-                                        <span class="w-6 h-6 rounded bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center">1</span>
-                                        <span class="text-xs font-semibold text-slate-700">Engine Cooling</span>
-                                    </div>
-                                    <span class="text-xs font-semibold px-2 py-0.5 bg-rose-50 text-rose-600 rounded">High Priority</span>
+                            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-6 h-6 rounded bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center">2</span>
+                                    <span class="text-xs font-semibold text-slate-700">Hydraulic System</span>
                                 </div>
-                                <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                                    <div class="flex items-center space-x-3">
-                                        <span class="w-6 h-6 rounded bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center">2</span>
-                                        <span class="text-xs font-semibold text-slate-700">Hydraulic System</span>
-                                    </div>
-                                    <span class="text-xs font-semibold px-2 py-0.5 bg-rose-50 text-rose-600 rounded">High Priority</span>
+                                <span class="text-xs font-semibold px-2 py-0.5 bg-rose-50 text-rose-600 rounded">High Priority</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-6 h-6 rounded bg-amber-100 text-amber-700 font-bold text-xs flex items-center justify-center">3</span>
+                                    <span class="text-xs font-semibold text-slate-700">Final Drive</span>
                                 </div>
-                                <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
-                                    <div class="flex items-center space-x-3">
-                                        <span class="w-6 h-6 rounded bg-amber-100 text-amber-700 font-bold text-xs flex items-center justify-center">3</span>
-                                        <span class="text-xs font-semibold text-slate-700">Final Drive</span>
-                                    </div>
-                                    <span class="text-xs font-semibold px-2 py-0.5 bg-amber-50 text-amber-600 rounded">Medium Priority</span>
+                                <span class="text-xs font-semibold px-2 py-0.5 bg-amber-50 text-amber-600 rounded">Medium Priority</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-6 h-6 rounded bg-amber-100 text-amber-700 font-bold text-xs flex items-center justify-center">4</span>
+                                    <span class="text-xs font-semibold text-slate-700">Transmission</span>
                                 </div>
+                                <span class="text-xs font-semibold px-2 py-0.5 bg-amber-50 text-amber-600 rounded">Medium Priority</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-100">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-6 h-6 rounded bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">5</span>
+                                    <span class="text-xs font-semibold text-slate-700">Electrical System</span>
+                                </div>
+                                <span class="text-xs font-semibold px-2 py-0.5 bg-blue-50 text-blue-600 rounded">Low Priority</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT (IFRAME EMBED) -->
-                <div id="backlog-view" class="hidden h-full">
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden h-[calc(100vh-140px)]">
-                        <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
+                <!-- ROW 3: REPEAT FAILURE, RECENT FAR & PROGRAM -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Repeat Failure -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                            <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-rotate text-amber-500"></i> Repeat Failure
+                            </h2>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-2 rounded hover:bg-slate-50 text-xs">
+                                <span class="text-slate-600 font-medium">Engine</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">18 Case</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded hover:bg-slate-50 text-xs">
+                                <span class="text-slate-600 font-medium">Hydraulic</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">12 Case</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded hover:bg-slate-50 text-xs">
+                                <span class="text-slate-600 font-medium">Transmission</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">8 Case</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded hover:bg-slate-50 text-xs">
+                                <span class="text-slate-600 font-medium">Final Drive</span>
+                                <span class="font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">6 Case</span>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Recent FAR -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                            <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-file-circle-exclamation text-rose-500"></i> Recent FAR
+                            </h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 bg-rose-50 text-rose-700 font-semibold text-xs rounded-lg border border-rose-200">WT526</span>
+                            <span class="px-3 py-1.5 bg-amber-50 text-amber-700 font-semibold text-xs rounded-lg border border-amber-200">X9511</span>
+                            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200">DZ440</span>
+                            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200">HD785</span>
+                            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200">PC2000</span>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Program -->
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3 border-slate-100">
+                            <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-day text-emerald-500"></i> Upcoming Program
+                            </h2>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-600">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>PPM Schedule</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-600">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>PAP Sampling</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-600">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Mid Life Program</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-600">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>Lifetime Review</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -332,28 +620,16 @@
 
     </div>
 
-    <!-- Script Interaktif JS -->
+    <!-- Script Interaktif Reusable -->
     <script>
         function toggleSubmenu(menuId, arrowId) {
             const submenu = document.getElementById(menuId);
             const arrow = document.getElementById(arrowId);
-            
+
             if (submenu && arrow) {
                 submenu.classList.toggle('hidden');
                 arrow.classList.toggle('rotate-180');
             }
-        }
-
-        function showView(viewId, title) {
-            // Sembunyikan semua tampilan utama
-            document.getElementById('dashboard-view').classList.add('hidden');
-            document.getElementById('backlog-view').classList.add('hidden');
-            
-            // Tampilkan tampilan yang dipilih
-            document.getElementById(viewId).classList.remove('hidden');
-            
-            // Perbarui judul halaman di header
-            document.getElementById('page-title').innerText = title;
         }
     </script>
 </body>
