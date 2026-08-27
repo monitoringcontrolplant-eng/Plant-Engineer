@@ -32,6 +32,25 @@
             <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
                 
+                <!-- Part Book, SM, & OMM (Dropdown Menu Baru) -->
+                <div>
+                    <button type="button" onclick="togglePartBookSubmenu()" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-book-open w-6 text-slate-400 group-hover:text-blue-400"></i>
+                            <span>Part Book, SM, & OMM</span>
+                        </div>
+                        <i id="partbook-dropdown-arrow" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                    </button>
+
+                    <!-- Sub-menu Items -->
+                    <div id="partbook-submenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#engine" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">ENGINE</a>
+                        <a href="#a2b" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">A2B</a>
+                        <a href="#wheel" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">WHEEL</a>
+                        <a href="#support" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">SUPPORT</a>
+                    </div>
+                </div>
+
                 <!-- Populasi Unit -->
                 <a href="#populasi-unit" class="flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group">
                     <i class="fa-solid fa-truck-monster w-6 text-slate-400 group-hover:text-blue-400"></i>
@@ -97,6 +116,14 @@
 
     <!-- Script Interaktif Sidebar -->
     <script>
+        function togglePartBookSubmenu() {
+            const submenu = document.getElementById('partbook-submenu');
+            const arrow = document.getElementById('partbook-dropdown-arrow');
+            
+            submenu.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+
         function toggleSubmenu() {
             const submenu = document.getElementById('condition-submenu');
             const arrow = document.getElementById('dropdown-arrow');
