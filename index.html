@@ -32,9 +32,9 @@
             <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
                 
-                <!-- Part Book, SM, & OMM (Dropdown Menu Baru) -->
+                <!-- Part Book, SM, & OMM -->
                 <div>
-                    <button type="button" onclick="togglePartBookSubmenu()" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
+                    <button type="button" onclick="toggleSubmenu('partbook-submenu', 'partbook-dropdown-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
                         <div class="flex items-center">
                             <i class="fa-solid fa-book-open w-6 text-slate-400 group-hover:text-blue-400"></i>
                             <span>Part Book, SM, & OMM</span>
@@ -42,11 +42,41 @@
                         <i id="partbook-dropdown-arrow" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
 
-                    <!-- Sub-menu Items -->
-                    <div id="partbook-submenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                    <!-- Level 1 Sub-menu Items -->
+                    <div id="partbook-submenu" class="hidden pl-6 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        
+                        <!-- ENGINE -->
                         <a href="#engine" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">ENGINE</a>
-                        <a href="#a2b" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">A2B</a>
-                        <a href="#wheel" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">WHEEL</a>
+                        
+                        <!-- A2B (Nested Menu) -->
+                        <div>
+                            <button type="button" onclick="toggleSubmenu('a2b-submenu', 'a2b-arrow')" class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded focus:outline-none">
+                                <span>A2B</span>
+                                <i id="a2b-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                            </button>
+                            <div id="a2b-submenu" class="hidden pl-4 py-1 space-y-1 border-l border-slate-800 ml-3 mt-1">
+                                <a href="#excavator" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Excavator</a>
+                                <a href="#bulldozer" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Bulldozer</a>
+                                <a href="#motor-grader" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Motor Grader</a>
+                            </div>
+                        </div>
+
+                        <!-- WHEEL (Nested Menu) -->
+                        <div>
+                            <button type="button" onclick="toggleSubmenu('wheel-submenu', 'wheel-arrow')" class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded focus:outline-none">
+                                <span>WHEEL</span>
+                                <i id="wheel-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                            </button>
+                            <div id="wheel-submenu" class="hidden pl-4 py-1 space-y-1 border-l border-slate-800 ml-3 mt-1">
+                                <a href="#beiben" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Beiben</a>
+                                <a href="#dongfeng" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Dongfeng</a>
+                                <a href="#komatsu" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">Komatsu</a>
+                                <a href="#xcmg" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">XCMG</a>
+                                <a href="#lgmg" class="block px-3 py-1 text-[11px] font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/40 rounded">LGMG</a>
+                            </div>
+                        </div>
+
+                        <!-- SUPPORT -->
                         <a href="#support" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">SUPPORT</a>
                     </div>
                 </div>
@@ -57,9 +87,9 @@
                     <span>Populasi Unit</span>
                 </a>
 
-                <!-- Condition Monitoring (Dropdown Menu) -->
+                <!-- Condition Monitoring -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu()" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
+                    <button type="button" onclick="toggleSubmenu('condition-submenu', 'dropdown-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors group focus:outline-none">
                         <div class="flex items-center">
                             <i class="fa-solid fa-chart-line w-6 text-slate-400 group-hover:text-blue-400"></i>
                             <span>Condition Monitoring</span>
@@ -68,7 +98,7 @@
                     </button>
 
                     <!-- Sub-menu Items -->
-                    <div id="condition-submenu" class="hidden pl-8 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                    <div id="condition-submenu" class="hidden pl-6 pr-2 py-2 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#inova-index" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">Inova Index</a>
                         <a href="#vhms" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">VHMS</a>
                         <a href="#pap" class="block px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-slate-800/50 rounded">PAP</a>
@@ -114,22 +144,16 @@
 
     </div>
 
-    <!-- Script Interaktif Sidebar -->
+    <!-- Script Interaktif Reusable -->
     <script>
-        function togglePartBookSubmenu() {
-            const submenu = document.getElementById('partbook-submenu');
-            const arrow = document.getElementById('partbook-dropdown-arrow');
+        function toggleSubmenu(menuId, arrowId) {
+            const submenu = document.getElementById(menuId);
+            const arrow = document.getElementById(arrowId);
             
-            submenu.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        }
-
-        function toggleSubmenu() {
-            const submenu = document.getElementById('condition-submenu');
-            const arrow = document.getElementById('dropdown-arrow');
-            
-            submenu.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
+            if (submenu && arrow) {
+                submenu.classList.toggle('hidden');
+                arrow.classList.toggle('rotate-180');
+            }
         }
     </script>
 </body>
