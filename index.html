@@ -16,51 +16,54 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
-        /* Style Tambahan Glassmorphism */
+        /* Style Premium Glassmorphism Transparan */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        .glass-sidebar {
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .glass-sidebar {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glass-header {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glass-modal {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.90);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 font-sans antialiased text-slate-800 min-h-screen">
+<body class="bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 font-sans antialiased text-slate-800 min-h-screen">
+
+    <!-- OVERLAY LAYAR DENGAN ANIMASI HITAM TRANSPARAN KETIKA SIDEBAR TERBUKA -->
+    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/50 z-30 hidden transition-opacity duration-300"></div>
 
     <div class="flex h-screen overflow-hidden relative">
         
-        <!-- SIDEBAR NAVIGATOR (COLLAPSIBLE / AUTO-HIDE) -->
-        <aside id="main-sidebar" class="w-72 glass-sidebar text-slate-100 flex flex-col z-30 shadow-2xl transition-all duration-300 absolute md:relative h-full">
+        <!-- SIDEBAR NAVIGATOR (SLIDE OUT / OFF-CANVAS AUTO HIDE) -->
+        <aside id="main-sidebar" class="w-72 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
             
-            <!-- Header Brand & Collapse Button -->
+            <!-- Header Brand & Tombol Garis 3 Untuk Menutup Sidebar -->
             <div class="h-16 flex items-center justify-between px-4 border-b border-white/10">
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="showView('dashboard-view', 'PLANT ENGINEERING DASHBOARD')">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectMenu('dashboard-view', 'PLANT ENGINEERING DASHBOARD')">
                     <i class="fa-solid fa-gears text-cyan-400 text-2xl"></i>
-                    <div class="sidebar-text">
+                    <div>
                         <span class="font-bold text-base tracking-wide text-white block leading-tight">PEIS</span>
                         <span class="text-[10px] text-cyan-300/70 block tracking-wider">PLANT ENG SYSTEM</span>
                     </div>
                 </div>
-                <!-- Tombol Menyembunyikan Sidebar -->
-                <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors" title="Sembunyikan Menu">
+                <!-- Garis 3 / Toggle Button Dalam Sidebar (Memilih ini akan menyembunyikan sidebar) -->
+                <button onclick="closeSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Tutup Sidebar">
                     <i class="fa-solid fa-bars-staggered text-lg"></i>
                 </button>
             </div>
@@ -73,11 +76,11 @@
                     <button type="button" onclick="toggleSubmenu('dash-submenu', 'dash-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-house w-5 text-cyan-400"></i>
-                            <span class="sidebar-text">DASHBOARD</span>
+                            <span>DASHBOARD</span>
                         </div>
-                        <i id="dash-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform sidebar-text"></i>
+                        <i id="dash-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="dash-submenu" class="pl-8 py-1 space-y-1 bg-black/20 rounded-xl mt-1">
+                    <div id="dash-submenu" class="pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
                         <a href="#" onclick="selectMenu('dashboard-view', 'PLANT ENGINEERING DASHBOARD')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Executive Dashboard</a>
                         <a href="#" onclick="selectMenu('dashboard-view', 'KPI ENGINEERING')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">KPI Engineering</a>
                         <a href="#" onclick="selectMenu('dashboard-view', 'EQUIPMENT HEALTH INDEX')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Equipment Health Index</a>
@@ -92,21 +95,21 @@
                     <button type="button" onclick="toggleSubmenu('partbook-submenu', 'partbook-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-book-open w-5 text-slate-400"></i>
-                            <span class="sidebar-text">PART BOOK, SM & OMM</span>
+                            <span>PART BOOK, SM & OMM</span>
                         </div>
-                        <i id="partbook-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform sidebar-text"></i>
+                        <i id="partbook-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="partbook-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/20 rounded-xl mt-1">
-                        <a href="#engine" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">ENGINE</a>
+                    <div id="partbook-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#engine" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">ENGINE</a>
                         <div>
                             <button type="button" onclick="toggleSubmenu('a2b-submenu', 'a2b-arrow')" class="w-full flex items-center justify-between py-1 text-xs text-slate-300 hover:text-white">
                                 <span>A2B</span>
                                 <i id="a2b-arrow" class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
                             </button>
                             <div id="a2b-submenu" class="hidden pl-3 py-1 space-y-1 border-l border-white/10 ml-1">
-                                <a href="#excavator" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Excavator</a>
-                                <a href="#bulldozer" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Bulldozer</a>
-                                <a href="#motor-grader" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Motor Grader</a>
+                                <a href="#excavator" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Excavator</a>
+                                <a href="#bulldozer" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Bulldozer</a>
+                                <a href="#motor-grader" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Motor Grader</a>
                             </div>
                         </div>
                         <div>
@@ -115,14 +118,14 @@
                                 <i id="wheel-arrow" class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
                             </button>
                             <div id="wheel-submenu" class="hidden pl-3 py-1 space-y-1 border-l border-white/10 ml-1">
-                                <a href="#beiben" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Beiben</a>
-                                <a href="#dongfeng" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Dongfeng</a>
-                                <a href="#komatsu" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Komatsu</a>
-                                <a href="#xcmg" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">XCMG</a>
-                                <a href="#lgmg" onclick="closeSidebarOnMobile()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">LGMG</a>
+                                <a href="#beiben" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Beiben</a>
+                                <a href="#dongfeng" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Dongfeng</a>
+                                <a href="#komatsu" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Komatsu</a>
+                                <a href="#xcmg" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">XCMG</a>
+                                <a href="#lgmg" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">LGMG</a>
                             </div>
                         </div>
-                        <a href="#support" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">SUPPORT</a>
+                        <a href="#support" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">SUPPORT</a>
                     </div>
                 </div>
 
@@ -131,14 +134,14 @@
                     <button type="button" onclick="toggleSubmenu('pop-submenu', 'pop-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-truck-monster w-5 text-slate-400"></i>
-                            <span class="sidebar-text">POPULASI UNIT</span>
+                            <span>POPULASI UNIT</span>
                         </div>
-                        <i id="pop-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform sidebar-text"></i>
+                        <i id="pop-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="pop-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/20 rounded-xl mt-1">
-                        <a href="#overview-unit" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">Overview Unit</a>
-                        <a href="#unit-listing" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit Listing</a>
-                        <a href="#unit-detail" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit Detail</a>
+                    <div id="pop-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#overview-unit" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Overview Unit</a>
+                        <a href="#unit-listing" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit Listing</a>
+                        <a href="#unit-detail" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit Detail</a>
                     </div>
                 </div>
 
@@ -147,16 +150,16 @@
                     <button type="button" onclick="toggleSubmenu('cm-submenu', 'cm-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-chart-line w-5 text-slate-400"></i>
-                            <span class="sidebar-text">CONDITION MONITORING</span>
+                            <span>CONDITION MONITORING</span>
                         </div>
-                        <i id="cm-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform sidebar-text"></i>
+                        <i id="cm-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="cm-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/20 rounded-xl mt-1">
+                    <div id="cm-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
                         <a href="#health-score" onclick="selectMenu('dashboard-view', 'EQUIPMENT HEALTH SCORE')" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Health Score (0-100)</a>
-                        <a href="#inova-index" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">Inova Index</a>
-                        <a href="#vhms" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS</a>
-                        <a href="#pap" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP</a>
-                        <a href="#ppm" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM</a>
+                        <a href="#inova-index" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inova Index</a>
+                        <a href="#vhms" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS</a>
+                        <a href="#pap" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP</a>
+                        <a href="#ppm" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM</a>
                     </div>
                 </div>
 
@@ -165,11 +168,11 @@
                     <button type="button" onclick="toggleSubmenu('backlog-submenu', 'backlog-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-clipboard-list w-5 text-cyan-400"></i>
-                            <span class="sidebar-text">BACKLOG MGMT</span>
+                            <span>BACKLOG MGMT</span>
                         </div>
-                        <i id="backlog-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform sidebar-text"></i>
+                        <i id="backlog-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="backlog-submenu" class="pl-8 py-1 space-y-1 bg-black/20 rounded-xl mt-1">
+                    <div id="backlog-submenu" class="pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
                         <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-medium hover:text-white">Open Backlog System</a>
                         <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG - PROGRESS STATUS')" class="block py-1 text-xs text-slate-300 hover:text-white">Progress Status</a>
                         <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG - COMPLETED HISTORY')" class="block py-1 text-xs text-slate-300 hover:text-white">Completed History</a>
@@ -181,24 +184,24 @@
                     <button type="button" onclick="toggleSubmenu('admin-submenu', 'admin-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-user-gear w-5 text-slate-400"></i>
-                            <span class="sidebar-text">ADMIN</span>
+                            <span>ADMIN</span>
                         </div>
-                        <i id="admin-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform sidebar-text"></i>
+                        <i id="admin-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="admin-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/20 rounded-xl mt-1">
-                        <a href="#user-mgmt" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">User Management</a>
-                        <a href="#system-setting" onclick="closeSidebarOnMobile()" class="block py-1 text-xs text-slate-300 hover:text-white">System Setting</a>
+                    <div id="admin-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#user-mgmt" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">User Management</a>
+                        <a href="#system-setting" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">System Setting</a>
                     </div>
                 </div>
 
             </nav>
 
             <!-- User Info Footer -->
-            <div class="p-4 border-t border-white/10 bg-black/30 flex items-center space-x-3">
+            <div class="p-4 border-t border-white/10 bg-black/40 flex items-center space-x-3">
                 <div class="w-8 h-8 rounded-full bg-cyan-600/80 flex items-center justify-center font-bold text-white text-xs shadow-md border border-cyan-400/30">
                     PE
                 </div>
-                <div class="flex-1 overflow-hidden sidebar-text">
+                <div class="flex-1 overflow-hidden">
                     <p class="text-xs font-semibold text-white truncate">Plant Engineer</p>
                     <p class="text-[10px] text-emerald-400 truncate flex items-center gap-1">
                         <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-pulse"></span> Online
@@ -207,15 +210,15 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA WITH TRANSPARENT DESIGN -->
-        <main class="flex-1 flex flex-col overflow-y-auto relative">
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
             
-            <!-- Top Glass Header -->
-            <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-sm">
+            <!-- Header Atas Dengan Tombol Garis 3 (Hamburger Menu) -->
+            <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg">
                 <div class="flex items-center space-x-4">
-                    <!-- Toggle Sidebar Button (Jika Tersembunyi) -->
-                    <button onclick="toggleSidebar()" class="p-2 rounded-xl bg-white/40 hover:bg-white/60 text-slate-700 transition-colors shadow-sm" title="Toggle Navigation">
-                        <i class="fa-solid fa-bars"></i>
+                    <!-- Tombol Garis 3 Utama Untuk Membuka Navigation Menu -->
+                    <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10" title="Buka Menu Navigasi">
+                        <i class="fa-solid fa-bars text-lg"></i>
                     </button>
                     <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm">PLANT ENGINEERING DASHBOARD</h1>
                 </div>
@@ -225,7 +228,7 @@
                 </div>
             </header>
 
-            <!-- CONTAINER KONTEN DENGAN TEMA TRANSPARAN -->
+            <!-- CONTAINER CONTENT DENGAN TEMA TRANSPARAN -->
             <div class="flex-1 p-6">
                 
                 <!-- VIEW 1: DASHBOARD UTAMA -->
@@ -233,78 +236,78 @@
                     
                     <!-- EXECUTIVE KPI SUMMARY (GLASS CARDS) -->
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/30 text-slate-800">
-                            <p class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Avg MTBF</p>
-                            <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-medium text-slate-600">Jam</span></h3>
-                            <p class="text-[10px] text-emerald-700 font-bold mt-1"><i class="fa-solid fa-arrow-up"></i> +5.2% vs bln lalu</p>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
+                            <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-arrow-up"></i> +5.2% vs bln lalu</p>
                         </div>
-                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/30 text-slate-800">
-                            <p class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Avg MTTR</p>
-                            <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-medium text-slate-600">Jam</span></h3>
-                            <p class="text-[10px] text-emerald-700 font-bold mt-1"><i class="fa-solid fa-arrow-down"></i> -12% pemulihan</p>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTTR</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
+                            <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-arrow-down"></i> -12% pemulihan</p>
                         </div>
-                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/30 text-slate-800">
-                            <p class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Repeat Failure</p>
-                            <h3 class="text-2xl font-black text-rose-700 mt-1">2.8%</h3>
-                            <p class="text-[10px] text-rose-700 font-bold mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Target: &lt; 2.0%</p>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Repeat Failure</p>
+                            <h3 class="text-2xl font-black text-rose-800 mt-1">2.8%</h3>
+                            <p class="text-[10px] text-rose-800 font-bold mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Target: &lt; 2.0%</p>
                         </div>
-                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/30 text-slate-800">
-                            <p class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Biaya Maint.</p>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Biaya Maint.</p>
                             <h3 class="text-2xl font-black text-slate-900 mt-1">$124.5K</h3>
-                            <p class="text-[10px] text-emerald-700 font-bold mt-1"><i class="fa-solid fa-check"></i> 8% dibawah budget</p>
+                            <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-check"></i> 8% dibawah budget</p>
                         </div>
-                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/30 text-slate-800">
-                            <p class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Fleet Health</p>
-                            <h3 class="text-2xl font-black text-blue-800 mt-1">88 / 100</h3>
-                            <p class="text-[10px] text-slate-600 font-medium mt-1">Skor PAP, VHMS, PPM</p>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Fleet Health</p>
+                            <h3 class="text-2xl font-black text-blue-900 mt-1">88 / 100</h3>
+                            <p class="text-[10px] text-slate-700 font-semibold mt-1">Skor PAP, VHMS, PPM</p>
                         </div>
                     </div>
 
                     <!-- PREDICTIVE MAINTENANCE ALERTS -->
-                    <div class="glass-panel rounded-2xl p-5 shadow-xl border border-amber-300/40 bg-amber-500/10 backdrop-blur-md space-y-3">
+                    <div class="glass-panel rounded-2xl p-5 shadow-xl border border-amber-300/50 bg-amber-500/10 backdrop-blur-md space-y-3">
                         <div class="flex justify-between items-center">
-                            <h2 class="font-bold text-amber-100 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-bell text-amber-400 animate-bounce"></i> PREDICTIVE MAINTENANCE ALERTS (PERINGATAN DINI)
+                            <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-bell text-amber-600 animate-bounce"></i> PREDICTIVE MAINTENANCE ALERTS (PERINGATAN DINI)
                             </h2>
-                            <span class="text-[11px] bg-amber-400/30 text-amber-200 border border-amber-400/40 font-semibold px-3 py-1 rounded-full">3 Potensi Kegagalan Dideteksi</span>
+                            <span class="text-[11px] bg-amber-500/30 text-amber-900 border border-amber-500/40 font-bold px-3 py-1 rounded-full">3 Potensi Kegagalan Dideteksi</span>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <div class="glass-panel p-3.5 rounded-xl border border-white/30">
+                            <div class="glass-panel p-3.5 rounded-xl border border-white/40">
                                 <div class="flex justify-between items-center mb-1">
                                     <span class="text-xs font-bold text-slate-900">EX-2001 (Excavator)</span>
-                                    <span class="text-[10px] bg-rose-500/20 text-rose-800 border border-rose-500/30 font-bold px-2 py-0.5 rounded-full">Resiko Tinggi (89%)</span>
+                                    <span class="text-[10px] bg-rose-500/20 text-rose-900 border border-rose-500/40 font-bold px-2 py-0.5 rounded-full">Resiko Tinggi (89%)</span>
                                 </div>
-                                <p class="text-xs text-slate-800 leading-relaxed">Tren Fe di <b>PAP</b> naik + Temp <b>VHMS</b> tinggi. Potensi keausan Main Pump dalam 50 jam.</p>
+                                <p class="text-xs text-slate-800 leading-relaxed font-medium">Tren Fe di <b>PAP</b> naik + Temp <b>VHMS</b> tinggi. Potensi keausan Main Pump dalam 50 jam.</p>
                             </div>
-                            <div class="glass-panel p-3.5 rounded-xl border border-white/30">
+                            <div class="glass-panel p-3.5 rounded-xl border border-white/40">
                                 <div class="flex justify-between items-center mb-1">
                                     <span class="text-xs font-bold text-slate-900">DT-5042 (Dump Truck)</span>
-                                    <span class="text-[10px] bg-amber-500/20 text-amber-800 border border-amber-500/30 font-bold px-2 py-0.5 rounded-full">Resiko Sedang (65%)</span>
+                                    <span class="text-[10px] bg-amber-500/20 text-amber-900 border border-amber-500/40 font-bold px-2 py-0.5 rounded-full">Resiko Sedang (65%)</span>
                                 </div>
-                                <p class="text-xs text-slate-800 leading-relaxed">Tekanan oli drop berulang saat pengereman. Rekomendasi check brake accumulator valve.</p>
+                                <p class="text-xs text-slate-800 leading-relaxed font-medium">Tekanan oli drop berulang saat pengereman. Rekomendasi check brake accumulator valve.</p>
                             </div>
-                            <div class="glass-panel p-3.5 rounded-xl border border-white/30">
+                            <div class="glass-panel p-3.5 rounded-xl border border-white/40">
                                 <div class="flex justify-between items-center mb-1">
                                     <span class="text-xs font-bold text-slate-900">DZ-3012 (Bulldozer)</span>
-                                    <span class="text-[10px] bg-amber-500/20 text-amber-800 border border-amber-500/30 font-bold px-2 py-0.5 rounded-full">Resiko Sedang (58%)</span>
+                                    <span class="text-[10px] bg-amber-500/20 text-amber-900 border border-amber-500/40 font-bold px-2 py-0.5 rounded-full">Resiko Sedang (58%)</span>
                                 </div>
-                                <p class="text-xs text-slate-800 leading-relaxed">Deviasi PPM Blowby Engine melampaui batas. Rekomendasi jadwal Top Overhaul.</p>
+                                <p class="text-xs text-slate-800 leading-relaxed font-medium">Deviasi PPM Blowby Engine melampaui batas. Rekomendasi jadwal Top Overhaul.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- EQUIPMENT HEALTH SCORE TABLE -->
-                    <div class="glass-panel rounded-2xl shadow-xl p-5 border border-white/30 space-y-4">
+                    <div class="glass-panel rounded-2xl shadow-xl p-5 border border-white/40 space-y-4">
                         <div class="flex justify-between items-center">
                             <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
                                 <i class="fa-solid fa-heart-pulse text-rose-600"></i> Equipment Health Score Monitor (0 - 100)
                             </h2>
-                            <span class="text-xs text-slate-700 font-medium">Algoritma PAP (25%) + VHMS (25%) + PPM (25%) + Histori (25%)</span>
+                            <span class="text-xs text-slate-700 font-semibold">Algoritma PAP (25%) + VHMS (25%) + PPM (25%) + Histori (25%)</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
-                                    <tr class="bg-slate-900/10 text-slate-800 font-bold uppercase border-b border-white/20">
+                                    <tr class="bg-slate-900/10 text-slate-900 font-black uppercase border-b border-white/30">
                                         <th class="p-3">Unit Code</th>
                                         <th class="p-3">Model</th>
                                         <th class="p-3">PAP Score</th>
@@ -316,41 +319,41 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-white/20 font-medium">
-                                    <tr class="hover:bg-white/20 transition-colors">
+                                    <tr class="hover:bg-white/30 transition-colors">
                                         <td class="p-3 font-bold text-slate-900">EX-2001</td>
-                                        <td class="p-3 text-slate-700">Komatsu PC2000</td>
-                                        <td class="p-3 text-amber-800 font-bold">60 / 100</td>
-                                        <td class="p-3 text-rose-700 font-bold">45 / 100</td>
-                                        <td class="p-3 text-emerald-800 font-bold">90 / 100</td>
-                                        <td class="p-3 text-rose-700 font-bold">3x Unplanned DW</td>
+                                        <td class="p-3 text-slate-800">Komatsu PC2000</td>
+                                        <td class="p-3 text-amber-900 font-bold">60 / 100</td>
+                                        <td class="p-3 text-rose-800 font-bold">45 / 100</td>
+                                        <td class="p-3 text-emerald-900 font-bold">90 / 100</td>
+                                        <td class="p-3 text-rose-800 font-bold">3x Unplanned DW</td>
                                         <td class="p-3">
-                                            <span class="px-2.5 py-1 bg-rose-500/20 border border-rose-500/40 text-rose-900 font-black rounded-lg text-xs">48 / 100 (CRITICAL)</span>
+                                            <span class="px-2.5 py-1 bg-rose-500/20 border border-rose-500/40 text-rose-950 font-black rounded-lg text-xs">48 / 100 (CRITICAL)</span>
                                         </td>
-                                        <td class="p-3"><button onclick="openAIFloating('Diagnosa kritis unit EX-2001')" class="text-xs text-purple-800 hover:text-purple-950 font-bold flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Diagnosa</button></td>
+                                        <td class="p-3"><button onclick="openAIFloating('Diagnosa kritis unit EX-2001')" class="text-xs text-purple-900 hover:text-purple-950 font-bold flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Diagnosa</button></td>
                                     </tr>
-                                    <tr class="hover:bg-white/20 transition-colors">
+                                    <tr class="hover:bg-white/30 transition-colors">
                                         <td class="p-3 font-bold text-slate-900">DT-5042</td>
-                                        <td class="p-3 text-slate-700">Komatsu HD785</td>
-                                        <td class="p-3 text-emerald-800 font-bold">85 / 100</td>
-                                        <td class="p-3 text-amber-800 font-bold">70 / 100</td>
-                                        <td class="p-3 text-emerald-800 font-bold">88 / 100</td>
-                                        <td class="p-3 text-amber-800 font-bold">1x Unplanned DW</td>
+                                        <td class="p-3 text-slate-800">Komatsu HD785</td>
+                                        <td class="p-3 text-emerald-900 font-bold">85 / 100</td>
+                                        <td class="p-3 text-amber-900 font-bold">70 / 100</td>
+                                        <td class="p-3 text-emerald-900 font-bold">88 / 100</td>
+                                        <td class="p-3 text-amber-900 font-bold">1x Unplanned DW</td>
                                         <td class="p-3">
-                                            <span class="px-2.5 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-900 font-bold rounded-lg text-xs">73 / 100 (WARNING)</span>
+                                            <span class="px-2.5 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-950 font-bold rounded-lg text-xs">73 / 100 (WARNING)</span>
                                         </td>
-                                        <td class="p-3"><button onclick="openAIFloating('Rekomendasi preventif DT-5042')" class="text-xs text-purple-800 hover:text-purple-950 font-bold flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Diagnosa</button></td>
+                                        <td class="p-3"><button onclick="openAIFloating('Rekomendasi preventif DT-5042')" class="text-xs text-purple-900 hover:text-purple-950 font-bold flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Diagnosa</button></td>
                                     </tr>
-                                    <tr class="hover:bg-white/20 transition-colors">
+                                    <tr class="hover:bg-white/30 transition-colors">
                                         <td class="p-3 font-bold text-slate-900">DZ-3012</td>
-                                        <td class="p-3 text-slate-700">CAT D10T</td>
-                                        <td class="p-3 text-emerald-800 font-bold">95 / 100</td>
-                                        <td class="p-3 text-emerald-800 font-bold">92 / 100</td>
-                                        <td class="p-3 text-emerald-800 font-bold">98 / 100</td>
-                                        <td class="p-3 text-emerald-800 font-bold">0x Breakdown</td>
+                                        <td class="p-3 text-slate-800">CAT D10T</td>
+                                        <td class="p-3 text-emerald-900 font-bold">95 / 100</td>
+                                        <td class="p-3 text-emerald-900 font-bold">92 / 100</td>
+                                        <td class="p-3 text-emerald-900 font-bold">98 / 100</td>
+                                        <td class="p-3 text-emerald-900 font-bold">0x Breakdown</td>
                                         <td class="p-3">
-                                            <span class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-900 font-bold rounded-lg text-xs">96 / 100 (HEALTHY)</span>
+                                            <span class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-950 font-bold rounded-lg text-xs">96 / 100 (HEALTHY)</span>
                                         </td>
-                                        <td class="p-3"><span class="text-slate-600">Normal</span></td>
+                                        <td class="p-3"><span class="text-slate-700">Normal</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -361,7 +364,7 @@
 
                 <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT -->
                 <div id="backlog-view" class="hidden h-full">
-                    <div class="glass-panel rounded-2xl shadow-2xl border border-white/30 overflow-hidden h-[calc(100vh-140px)]">
+                    <div class="glass-panel rounded-2xl shadow-2xl border border-white/40 overflow-hidden h-[calc(100vh-140px)]">
                         <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                     </div>
                 </div>
@@ -433,24 +436,26 @@
 
     <!-- Script Interaktif JS -->
     <script>
-        // Toggle Menyembunyikan/Menampilkan Sidebar Navigator
-        function toggleSidebar() {
+        // Membuka Sidebar
+        function openSidebar() {
             const sidebar = document.getElementById('main-sidebar');
-            sidebar.classList.toggle('-translate-x-full');
-            sidebar.classList.toggle('md:translate-x-0');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
         }
 
-        // Otomatis menutup sidebar di layar HP/Tablet setelah memilih menu agar tidak menghalangi
+        // Menutup Sidebar (Auto Hide)
+        function closeSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+
+        // Otomatis memilih menu dan MENUTUP SIDEBAR secara otomatis
         function selectMenu(viewId, title) {
             showView(viewId, title);
-            closeSidebarOnMobile();
-        }
-
-        function closeSidebarOnMobile() {
-            if (window.innerWidth < 768) {
-                const sidebar = document.getElementById('main-sidebar');
-                sidebar.classList.add('-translate-x-full');
-            }
+            closeSidebar(); // Panggilan ini membuat menu auto-hide setelah diklik
         }
 
         function toggleSubmenu(menuId, arrowId) {
