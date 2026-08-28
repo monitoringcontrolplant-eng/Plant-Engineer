@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            height: 6px;
-            width: 6px;
+            width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
@@ -19,88 +18,140 @@
         }
         /* Style Premium Glassmorphism Transparan */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
         .glass-sidebar {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 0.88);
+            background: rgba(15, 23, 42, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glass-header {
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.65);
+            background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glass-modal {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 0.90);
+            background: rgba(15, 23, 42, 0.92);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-    </style>
+@@ -45,159 +45,332 @@
 </head>
 <body class="bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 font-sans antialiased text-slate-800 min-h-screen">
 
+    <!-- OVERLAY LAYAR DENGAN ANIMASI HITAM TRANSPARAN KETIKA SIDEBAR TERBUKA -->
+    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/50 z-30 hidden transition-opacity duration-300"></div>
     <!-- OVERLAY LAYAR SAAT SIDEBAR TERBUKA -->
     <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden transition-opacity duration-300"></div>
 
     <div class="flex h-screen overflow-hidden relative">
-        
-        <!-- SIDEBAR NAVIGATOR -->
+
+        <!-- SIDEBAR NAVIGATOR (SLIDE OUT / OFF-CANVAS AUTO HIDE) -->
+        <aside id="main-sidebar" class="w-72 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
+        <!-- SIDEBAR NAVIGATOR (SLIDE OUT / AUTO HIDE) -->
         <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
-            
-            <!-- Header Brand -->
+
+            <!-- Header Brand & Tombol Garis 3 Untuk Menutup Sidebar -->
+            <div class="h-16 flex items-center justify-between px-4 border-b border-white/10">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectMenu('dashboard-view', 'PLANT ENGINEERING DASHBOARD')">
             <div class="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="selectMenu('dashboard-view', 'EXECUTIVE DASHBOARD')">
                     <i class="fa-solid fa-gears text-cyan-400 text-2xl"></i>
                     <div>
                         <span class="font-bold text-base tracking-wide text-white block leading-tight">PEIS</span>
+                        <span class="text-[10px] text-cyan-300/70 block tracking-wider">PLANT ENG SYSTEM</span>
                         <span class="text-[10px] text-cyan-300/70 block tracking-wider">PLANT ENG INTEGRATED SYSTEM</span>
                     </div>
                 </div>
+                <!-- Garis 3 / Toggle Button Dalam Sidebar (Memilih ini akan menyembunyikan sidebar) -->
+                <!-- Garis 3 / Toggle Button Dalam Sidebar -->
                 <button onclick="closeSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Tutup Sidebar">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
                 </button>
             </div>
 
             <!-- Navigation Menu -->
+            <!-- Navigation Menu (13 Kategori Utama) -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
-                
+
                 <!-- 1. DASHBOARD -->
                 <div>
+                    <button type="button" onclick="toggleSubmenu('dash-submenu', 'dash-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                     <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-house w-5 text-cyan-400"></i>
                             <i class="fa-solid fa-gauge-high w-5 text-cyan-400"></i>
                             <span>DASHBOARD</span>
                         </div>
+                        <i id="dash-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         <i id="dash-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
+                    <div id="dash-submenu" class="pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectMenu('dashboard-view', 'PLANT ENGINEERING DASHBOARD')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Executive Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'KPI ENGINEERING')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">KPI Engineering</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'EQUIPMENT HEALTH INDEX')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Equipment Health Index</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'TOP PROBLEM')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Top Problem</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'CRITICAL UNIT')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Critical Unit</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'NOTIFICATION CENTER')" class="block py-1.5 text-xs text-slate-300 hover:text-cyan-300 transition-colors">Notification Center</a>
                     <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectMenu('dashboard-view', 'EXECUTIVE DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Executive Dashboard</a>
-                        <a href="#" onclick="selectMenu('dashboard-view', 'ENGINEERING DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Engineering Dashboard</a>
-                        <a href="#" onclick="selectMenu('dashboard-view', 'MAINTENANCE DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Maintenance Dashboard</a>
-                        <a href="#" onclick="selectMenu('dashboard-view', 'PLANNER DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Planner Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'Executive Dashboard')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Executive Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'Engineering Dashboard')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Engineering Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'Maintenance Dashboard')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Maintenance Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'Planner Dashboard')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Planner Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'Supervisor Dashboard')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Supervisor Dashboard</a>
+                        <a href="#" onclick="selectMenu('dashboard-view', 'Mechanic Dashboard')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Mechanic Dashboard</a>
                     </div>
                 </div>
 
+                <!-- 2. PART BOOK, SM & OMM -->
                 <!-- 2. MASTER DATA -->
                 <div>
+                    <button type="button" onclick="toggleSubmenu('partbook-submenu', 'partbook-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                     <button type="button" onclick="toggleSubmenu('master-sub', 'master-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book-open w-5 text-slate-400"></i>
+                            <span>PART BOOK, SM & OMM</span>
                             <i class="fa-solid fa-database w-5 text-amber-400"></i>
                             <span>MASTER DATA</span>
                         </div>
+                        <i id="partbook-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         <i id="master-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
+                    <div id="partbook-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#engine" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">ENGINE</a>
+                        <div>
+                            <button type="button" onclick="toggleSubmenu('a2b-submenu', 'a2b-arrow')" class="w-full flex items-center justify-between py-1 text-xs text-slate-300 hover:text-white">
+                                <span>A2B</span>
+                                <i id="a2b-arrow" class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                            </button>
+                            <div id="a2b-submenu" class="hidden pl-3 py-1 space-y-1 border-l border-white/10 ml-1">
+                                <a href="#excavator" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Excavator</a>
+                                <a href="#bulldozer" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Bulldozer</a>
+                                <a href="#motor-grader" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Motor Grader</a>
+                            </div>
                     <div id="master-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectMenu('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-amber-300 font-bold hover:text-white">Equipment</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Location</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Fleet</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Vendor</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Customer</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Failure Code</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Type</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Grease Type</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Coolant Type</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Part Number</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">User</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Role</a>
                     </div>
                 </div>
 
@@ -111,53 +162,319 @@
                             <i class="fa-solid fa-truck-monster w-5 text-emerald-400"></i>
                             <span>EQUIPMENT</span>
                         </div>
+                        <div>
+                            <button type="button" onclick="toggleSubmenu('wheel-submenu', 'wheel-arrow')" class="w-full flex items-center justify-between py-1 text-xs text-slate-300 hover:text-white">
+                                <span>WHEEL</span>
+                                <i id="wheel-arrow" class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                            </button>
+                            <div id="wheel-submenu" class="hidden pl-3 py-1 space-y-1 border-l border-white/10 ml-1">
+                                <a href="#beiben" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Beiben</a>
+                                <a href="#dongfeng" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Dongfeng</a>
+                                <a href="#komatsu" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">Komatsu</a>
+                                <a href="#xcmg" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">XCMG</a>
+                                <a href="#lgmg" onclick="closeSidebar()" class="block py-0.5 text-[11px] text-slate-400 hover:text-white">LGMG</a>
+                            </div>
                         <i id="eq-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="eq-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectMenu('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Population</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Detail</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Status</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Health</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Attachment</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">QR Code</a>
                     </div>
                 </div>
 
-                <!-- 5. MAINTENANCE -->
+                <!-- 4. CONDITION MONITORING -->
                 <div>
+                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-line w-5 text-purple-400"></i>
+                            <span>CONDITION MONITORING</span>
+                        </div>
+                        <a href="#support" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">SUPPORT</a>
+                        <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inova Index</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPU</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VITA</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">KOMTRAX</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">FOGC</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Disc Clutch</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Tire Monitoring</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Battery Monitoring</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Cooling System</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Engine Health</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Hydraulic Health</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Transmission Health</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Final Drive Health</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Trend Monitoring</a>
+                    </div>
+                </div>
+
+                <!-- 3. POPULASI UNIT -->
+                <!-- 5. MAINTENANCE (TERMASUK INTEGRASI BACKLOG) -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('pop-submenu', 'pop-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                     <button type="button" onclick="toggleSubmenu('maint-sub', 'maint-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-truck-monster w-5 text-slate-400"></i>
+                            <span>POPULASI UNIT</span>
                             <i class="fa-solid fa-wrench w-5 text-rose-400"></i>
                             <span>MAINTENANCE</span>
                         </div>
+                        <i id="pop-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         <i id="maint-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
+                    <div id="pop-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#overview-unit" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Overview Unit</a>
+                        <a href="#unit-listing" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit Listing</a>
+                        <a href="#unit-detail" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit Detail</a>
                     <div id="maint-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Work Order</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Preventive Maintenance</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Corrective Maintenance</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Breakdown</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inspection</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Campaign Program</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Mid Life</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lifetime Review</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Shutdown</a>
                         <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-bold hover:text-white">Backlog System</a>
+                    </div>
+                </div>
+
+                <!-- 4. CONDITION MONITORING & PREDICTIVE -->
+                <!-- 6. RELIABILITY -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('cm-submenu', 'cm-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-line w-5 text-slate-400"></i>
+                            <span>CONDITION MONITORING</span>
+                            <i class="fa-solid fa-shield-halved w-5 text-blue-400"></i>
+                            <span>RELIABILITY</span>
+                        </div>
+                        <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">FAR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">RCA</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Fishbone</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">5 Why</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PICA</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lesson Learned</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Verification</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Repeat Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Reliability Growth</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Risk Matrix</a>
+                    </div>
+                </div>
+
+                <!-- 7. COMPONENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('comp-sub', 'comp-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-microchip w-5 text-indigo-400"></i>
+                            <span>COMPONENT</span>
+                        </div>
+                        <i id="comp-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="comp-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Master</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Installation</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Removal</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lifetime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Rebuild History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Warranty</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Failure History</a>
+                    </div>
+                </div>
+
+                <!-- 8. LUBRICATION -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('lub-sub', 'lub-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-oil-can w-5 text-yellow-500"></i>
+                            <span>LUBRICATION</span>
+                        </div>
+                        <i id="lub-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="lub-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Sampling</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Inventory</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Consumption</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Trend</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Contamination</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Recommendation</a>
+                    </div>
+                </div>
+
+                <!-- 9. KPI -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('kpi-sub', 'kpi-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-pie w-5 text-teal-400"></i>
+                            <span>KPI</span>
+                        </div>
+                        <i id="kpi-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="kpi-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PA</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MA</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">UA</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Availability</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTBF</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTTR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTBS</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Cost/Hour</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Cost/Ton</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Breakdown Frequency</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Downtime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Reliability Index</a>
+                    </div>
+                </div>
+
+                <!-- 10. ANALYTICS -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('ana-sub', 'ana-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-column w-5 text-orange-400"></i>
+                            <span>ANALYTICS</span>
+                        </div>
+                        <i id="ana-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="ana-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Ranking</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Ranking</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Pareto Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Pareto Cost</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Pareto Downtime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Trend Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Heatmap</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Forecast</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Predictive Maintenance</a>
+                    </div>
+                </div>
+
+                <!-- 11. DOCUMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('doc-sub', 'doc-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-file-contract w-5 text-sky-400"></i>
+                            <span>DOCUMENT</span>
+                        </div>
+                        <i id="cm-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        <i id="doc-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="cm-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#health-score" onclick="selectMenu('dashboard-view', 'EQUIPMENT HEALTH SCORE')" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Health Score (0-100)</a>
+                        <a href="#inova-index" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inova Index</a>
+                        <a href="#vhms" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS</a>
+                        <a href="#pap" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP</a>
+                        <a href="#ppm" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM</a>
+                    <div id="doc-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">WI</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">SOP</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Manual</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Service Letter</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inspection Form</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM Form</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP Form</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Drawing</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Engineering Standard</a>
+                    </div>
+                </div>
+
+                <!-- 5. BACKLOG MGMT (INTEGRATED) -->
+                <!-- 12. REPORT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('backlog-submenu', 'backlog-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                    <button type="button" onclick="toggleSubmenu('rep-sub', 'rep-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-clipboard-list w-5 text-cyan-400"></i>
+                            <span>BACKLOG MGMT</span>
+                            <i class="fa-solid fa-file-invoice w-5 text-violet-400"></i>
+                            <span>REPORT</span>
+                        </div>
+                        <i id="backlog-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        <i id="rep-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="backlog-submenu" class="pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-medium hover:text-white">Open Backlog System</a>
+                        <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG - PROGRESS STATUS')" class="block py-1 text-xs text-slate-300 hover:text-white">Progress Status</a>
+                        <a href="#" onclick="selectMenu('backlog-view', 'BACKLOG - COMPLETED HISTORY')" class="block py-1 text-xs text-slate-300 hover:text-white">Completed History</a>
+                    <div id="rep-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Daily</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Weekly</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Monthly</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Quarterly</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Semester</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Annual</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PDF</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Excel</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PowerPoint</a>
+                    </div>
+                </div>
+
+                <!-- 6. ADMIN -->
+                <!-- 13. ADMIN -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('admin-submenu', 'admin-arrow')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                    <button type="button" onclick="toggleSubmenu('adm-sub', 'adm-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-user-gear w-5 text-slate-400"></i>
+                            <span>ADMIN</span>
+                        </div>
+                        <i id="admin-arrow" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        <i id="adm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="admin-submenu" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#user-mgmt" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">User Management</a>
+                        <a href="#system-setting" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">System Setting</a>
+                    <div id="adm-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">User</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Permission</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Role</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Audit Log</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Backup</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Restore</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Notification</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Email</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Setting</a>
                     </div>
                 </div>
 
             </nav>
 
             <!-- User Info Footer -->
+            <div class="p-4 border-t border-white/10 bg-black/40 flex items-center space-x-3">
             <div class="p-4 border-t border-white/10 bg-black/40 flex items-center space-x-3 shrink-0">
                 <div class="w-8 h-8 rounded-full bg-cyan-600/80 flex items-center justify-center font-bold text-white text-xs shadow-md border border-cyan-400/30">
                     PE
                 </div>
-                <div class="flex-1 overflow-hidden">
-                    <p class="text-xs font-semibold text-white truncate">Plant Engineer</p>
-                    <p class="text-[10px] text-emerald-400 truncate flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-pulse"></span> Online
-                    </p>
-                </div>
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT AREA -->
+@@ -214,49 +387,49 @@
         <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
-            
-            <!-- Header Atas -->
+
+            <!-- Header Atas Dengan Tombol Garis 3 (Hamburger Menu) -->
+            <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg">
             <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg shrink-0">
                 <div class="flex items-center space-x-4">
+                    <!-- Tombol Garis 3 Utama Untuk Membuka Navigation Menu -->
+                    <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10" title="Buka Menu Navigasi">
                     <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10 flex items-center justify-center" title="Buka Menu Navigasi">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
+                    <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm">PLANT ENGINEERING DASHBOARD</h1>
                     <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm uppercase">EXECUTIVE DASHBOARD</h1>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -166,202 +483,58 @@
                 </div>
             </header>
 
-            <!-- CONTAINER CONTENT -->
+            <!-- CONTAINER CONTENT DENGAN TEMA TRANSPARAN -->
+            <!-- CONTAINER CONTENT DENGAN TEMA GLASSMORPHISM -->
             <div class="flex-1 p-6">
-                
+
                 <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
-                    
-                    <!-- EXECUTIVE KPI SUMMARY -->
+
+                    <!-- EXECUTIVE KPI SUMMARY (GLASS CARDS) -->
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
                             <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
                             <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-arrow-up"></i> +5.2% vs bln lalu</p>
                         </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTTR</p>
                             <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
                             <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-arrow-down"></i> -12% pemulihan</p>
                         </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Repeat Failure</p>
                             <h3 class="text-2xl font-black text-rose-800 mt-1">2.8%</h3>
                             <p class="text-[10px] text-rose-800 font-bold mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Target: &lt; 2.0%</p>
                         </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Biaya Maint.</p>
                             <h3 class="text-2xl font-black text-slate-900 mt-1">$124.5K</h3>
                             <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-check"></i> 8% dibawah budget</p>
                         </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg border border-white/40 text-slate-900">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Fleet Health</p>
                             <h3 class="text-2xl font-black text-blue-900 mt-1">88 / 100</h3>
                             <p class="text-[10px] text-slate-700 font-semibold mt-1">Skor PAP, VHMS, PPM</p>
-                        </div>
-                    </div>
-
-                    <!-- PREDICTIVE MAINTENANCE ALERTS -->
-                    <div class="glass-panel rounded-2xl p-5 shadow-xl border border-amber-300/50 bg-amber-500/10 backdrop-blur-md space-y-3">
-                        <div class="flex justify-between items-center">
-                            <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-bell text-amber-600 animate-bounce"></i> PREDICTIVE MAINTENANCE ALERTS (PERINGATAN DINI)
-                            </h2>
-                            <span class="text-[11px] bg-amber-500/30 text-amber-900 border border-amber-500/40 font-bold px-3 py-1 rounded-full">3 Potensi Kegagalan Dideteksi</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <div class="glass-panel p-3.5 rounded-xl border border-white/40">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-xs font-bold text-slate-900">EX-2001 (Excavator)</span>
-                                    <span class="text-[10px] bg-rose-500/20 text-rose-900 border border-rose-500/40 font-bold px-2 py-0.5 rounded-full">Resiko Tinggi (89%)</span>
-                                </div>
-                                <p class="text-xs text-slate-800 leading-relaxed font-medium">Tren Fe di <b>PAP</b> naik + Temp <b>VHMS</b> tinggi. Potensi keausan Main Pump dalam 50 jam.</p>
-                            </div>
-                            <div class="glass-panel p-3.5 rounded-xl border border-white/40">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-xs font-bold text-slate-900">DT-5042 (Dump Truck)</span>
-                                    <span class="text-[10px] bg-amber-500/20 text-amber-900 border border-amber-500/40 font-bold px-2 py-0.5 rounded-full">Resiko Sedang (65%)</span>
-                                </div>
-                                <p class="text-xs text-slate-800 leading-relaxed font-medium">Tekanan oli drop berulang saat pengereman. Rekomendasi check brake accumulator valve.</p>
-                            </div>
-                            <div class="glass-panel p-3.5 rounded-xl border border-white/40">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-xs font-bold text-slate-900">DZ-3012 (Bulldozer)</span>
-                                    <span class="text-[10px] bg-amber-500/20 text-amber-900 border border-amber-500/40 font-bold px-2 py-0.5 rounded-full">Resiko Sedang (58%)</span>
-                                </div>
-                                <p class="text-xs text-slate-800 leading-relaxed font-medium">Deviasi PPM Blowby Engine melampaui batas. Rekomendasi jadwal Top Overhaul.</p>
-                            </div>
-                        </div>
+@@ -297,7 +470,7 @@
                     </div>
 
                     <!-- EQUIPMENT HEALTH SCORE TABLE -->
+                    <div class="glass-panel rounded-2xl shadow-xl p-5 border border-white/40 space-y-4">
                     <div class="glass-panel rounded-2xl shadow-xl p-5 space-y-4">
                         <div class="flex justify-between items-center">
                             <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
                                 <i class="fa-solid fa-heart-pulse text-rose-600"></i> Equipment Health Score Monitor (0 - 100)
-                            </h2>
-                            <span class="text-xs text-slate-700 font-semibold">Algoritma PAP (25%) + VHMS (25%) + PPM (25%) + Histori (25%)</span>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="bg-slate-900/10 text-slate-900 font-black uppercase border-b border-white/30">
-                                        <th class="p-3">Unit Code</th>
-                                        <th class="p-3">Model</th>
-                                        <th class="p-3">PAP Score</th>
-                                        <th class="p-3">VHMS Score</th>
-                                        <th class="p-3">PPM Score</th>
-                                        <th class="p-3">Histori Breakdown</th>
-                                        <th class="p-3">Total Health Score</th>
-                                        <th class="p-3">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-white/20 font-medium">
-                                    <tr class="hover:bg-white/30 transition-colors">
-                                        <td class="p-3 font-bold text-slate-900">EX-2001</td>
-                                        <td class="p-3 text-slate-800">Komatsu PC2000</td>
-                                        <td class="p-3 text-amber-900 font-bold">60 / 100</td>
-                                        <td class="p-3 text-rose-800 font-bold">45 / 100</td>
-                                        <td class="p-3 text-emerald-900 font-bold">90 / 100</td>
-                                        <td class="p-3 text-rose-800 font-bold">3x Unplanned DW</td>
-                                        <td class="p-3">
-                                            <span class="px-2.5 py-1 bg-rose-500/20 border border-rose-500/40 text-rose-950 font-black rounded-lg text-xs">48 / 100 (CRITICAL)</span>
-                                        </td>
-                                        <td class="p-3"><button onclick="openAIFloating('Diagnosa kritis unit EX-2001')" class="text-xs text-purple-900 hover:text-purple-950 font-bold flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Diagnosa</button></td>
-                                    </tr>
-                                    <tr class="hover:bg-white/30 transition-colors">
-                                        <td class="p-3 font-bold text-slate-900">DT-5042</td>
-                                        <td class="p-3 text-slate-800">Komatsu HD785</td>
-                                        <td class="p-3 text-emerald-900 font-bold">85 / 100</td>
-                                        <td class="p-3 text-amber-900 font-bold">70 / 100</td>
-                                        <td class="p-3 text-emerald-900 font-bold">88 / 100</td>
-                                        <td class="p-3 text-amber-900 font-bold">1x Unplanned DW</td>
-                                        <td class="p-3">
-                                            <span class="px-2.5 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-950 font-bold rounded-lg text-xs">73 / 100 (WARNING)</span>
-                                        </td>
-                                        <td class="p-3"><button onclick="openAIFloating('Rekomendasi preventif DT-5042')" class="text-xs text-purple-900 hover:text-purple-950 font-bold flex items-center gap-1"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Diagnosa</button></td>
-                                    </tr>
-                                    <tr class="hover:bg-white/30 transition-colors">
-                                        <td class="p-3 font-bold text-slate-900">DZ-3012</td>
-                                        <td class="p-3 text-slate-800">CAT D10T</td>
-                                        <td class="p-3 text-emerald-900 font-bold">95 / 100</td>
-                                        <td class="p-3 text-emerald-900 font-bold">92 / 100</td>
-                                        <td class="p-3 text-emerald-900 font-bold">98 / 100</td>
-                                        <td class="p-3 text-emerald-900 font-bold">0x Breakdown</td>
-                                        <td class="p-3">
-                                            <span class="px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-950 font-bold rounded-lg text-xs">96 / 100 (HEALTHY)</span>
-                                        </td>
-                                        <td class="p-3"><span class="text-slate-700">Normal</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+@@ -364,23 +537,22 @@
 
-                </div>
-
-                <!-- VIEW 2: POPULATION MANAGEMENT (25 KOLOM + AKSI TAMBAH/EDIT/HAPUS) -->
-                <div id="population-view" class="hidden space-y-4">
-                    <div class="glass-panel rounded-2xl shadow-xl p-5 space-y-4">
-                        <!-- Top Action Bar -->
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                            <div>
-                                <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-boxes-stacked text-emerald-600"></i> MASTER POPULATION EQUIPMENT
-                                </h2>
-                                <p class="text-[11px] text-slate-700 font-medium">Daftar registrasi populasi alat berat sesuai struktur Machpop Sheet (25 Kolom Data Integrasi)</p>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <input type="text" id="table-search" onkeyup="filterPopulationTable()" placeholder="Cari unit / model / SN..." class="px-3 py-1.5 bg-white/50 border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <button onclick="openModalTambahUnit()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5 transition-all">
-                                    <i class="fa-solid fa-plus"></i> Tambah Unit
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Data Table 25 Kolom + Column AKSI -->
-                        <div class="overflow-x-auto custom-scrollbar border border-white/30 rounded-xl max-h-[600px]">
-                            <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
-                                <thead class="sticky top-0 z-10">
-                                    <tr class="bg-slate-900 text-white font-bold uppercase tracking-wider">
-                                        <th class="p-2.5 border-r border-white/10 text-center">NO</th>
-                                        <th class="p-2.5 border-r border-white/10">SITE</th>
-                                        <th class="p-2.5 border-r border-white/10">EQUIPMENT</th>
-                                        <th class="p-2.5 border-r border-white/10">C/N</th>
-                                        <th class="p-2.5 border-r border-white/10">COST CENTER</th>
-                                        <th class="p-2.5 border-r border-white/10">MODEL</th>
-                                        <th class="p-2.5 border-r border-white/10">UNIT</th>
-                                        <th class="p-2.5 border-r border-white/10">CLUSTER</th>
-                                        <th class="p-2.5 border-r border-white/10">MACHINE S/N</th>
-                                        <th class="p-2.5 border-r border-white/10">ENGINE MODEL</th>
-                                        <th class="p-2.5 border-r border-white/10">ENGINE S/N</th>
-                                        <th class="p-2.5 border-r border-white/10">MFG. YEAR</th>
-                                        <th class="p-2.5 border-r border-white/10">DELIVERY DATE</th>
-                                        <th class="p-2.5 border-r border-white/10">REMARK</th>
-                                        <th class="p-2.5 border-r border-white/10">STATUS UNIT</th>
-                                        <th class="p-2.5 border-r border-white/10">SECTION</th>
-                                        <th class="p-2.5 border-r border-white/10">HM INITIAL SITE</th>
-                                        <th class="p-2.5 border-r border-white/10">FROM</th>
-                                        <th class="p-2.5 border-r border-white/10">STATUS COMMISSIONING</th>
-                                        <th class="p-2.5 border-r border-white/10">HM UPDATE</th>
-                                        <th class="p-2.5 border-r border-white/10">WARRANTY</th>
-                                        <th class="p-2.5 border-r border-white/10">STATUS</th>
-                                        <th class="p-2.5 border-r border-white/10">REMARKS</th>
-                                        <th class="p-2.5 border-r border-white/10">HM</th>
-                                        <th class="p-2.5 border-r border-white/10">LOKASI</th>
-                                        <th class="p-2.5 text-center sticky right-0 bg-slate-900 text-cyan-300">AKSI</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="population-tbody" class="divide-y divide-white/20 font-medium text-slate-900 bg-white/40">
-                                    <!-- Rendered dynamically by JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIEW 3: INTEGRATED BACKLOG MANAGEMENT -->
+                <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT -->
                 <div id="backlog-view" class="hidden h-full">
+                    <div class="glass-panel rounded-2xl shadow-2xl border border-white/40 overflow-hidden h-[calc(100vh-140px)]">
                     <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
                         <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                     </div>
@@ -370,6 +543,7 @@
             </div>
         </main>
 
+        <!-- FLOATING ACTION BUTTON (FAB) AI ASSISTANT (POJOK KANAN BAWAH) -->
         <!-- FLOATING ACTION BUTTON (FAB) AI ASSISTANT -->
         <div class="fixed bottom-6 right-6 z-50">
             <button onclick="toggleAIModal()" class="relative group flex items-center justify-center w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full shadow-2xl hover:scale-110 transition-all duration-300 focus:outline-none">
@@ -378,332 +552,100 @@
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-4 w-4 bg-purple-500"></span>
                 </span>
+                <!-- Tooltip Hover -->
                 <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl border border-white/10">
                     Tanya AI Assistant
                 </span>
-            </button>
-        </div>
-
-        <!-- AI ASSISTANT FLOATING MODAL WINDOW -->
-        <div id="ai-modal" class="hidden fixed bottom-24 right-6 w-96 md:w-[420px] h-[520px] glass-modal rounded-3xl shadow-2xl border border-white/20 z-50 flex flex-col overflow-hidden transition-all duration-300">
-            <div class="p-4 bg-gradient-to-r from-purple-900/90 to-indigo-900/90 text-white flex justify-between items-center border-b border-white/10">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-purple-600/30 rounded-xl border border-purple-400/30">
-                        <i class="fa-solid fa-wand-magic-sparkles text-purple-300"></i>
+@@ -398,7 +570,7 @@
                     </div>
                     <div>
                         <h2 class="font-bold text-xs tracking-wide">AI Assistant Engineering</h2>
+                        <p class="text-[10px] text-purple-200/80">Siap membantu trouble shooting & diagnosa</p>
                         <p class="text-[10px] text-purple-200/80">Trouble shooting & diagnosa otomatis</p>
                     </div>
                 </div>
                 <button onclick="toggleAIModal()" class="text-slate-300 hover:text-white p-1 rounded-lg">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
+@@ -408,7 +580,6 @@
+
+            <!-- Area Chat Scrollable -->
             <div id="chat-conversation" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar">
+                <!-- AI Welcome Message -->
                 <div class="flex items-start space-x-2.5">
                     <div class="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[10px] shadow-md shrink-0">AI</div>
                     <div class="bg-white/10 text-slate-100 p-3 rounded-2xl border border-white/10 max-w-[85%] space-y-2 backdrop-blur-md">
-                        <p>Halo Engineer! Silahkan tanyakan seputar analisa kerusakan, kode fault VHMS, atau rekomendasi perawatan populasi unit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="px-4 py-2 border-t border-white/5 flex gap-1.5 overflow-x-auto custom-scrollbar bg-black/20">
-                <button onclick="sendQuickPrompt('Diagnosa kritis unit EX-2001')" class="px-2.5 py-1 bg-purple-500/20 text-purple-200 border border-purple-500/30 rounded-full text-[10px] whitespace-nowrap hover:bg-purple-500/30">🔍 EX-2001</button>
-                <button onclick="sendQuickPrompt('Rekomendasi preventif DT-5042')" class="px-2.5 py-1 bg-purple-500/20 text-purple-200 border border-purple-500/30 rounded-full text-[10px] whitespace-nowrap hover:bg-purple-500/30">🛠️ DT-5042</button>
-            </div>
-            <div class="p-3 bg-black/40 border-t border-white/10 flex items-center gap-2">
-                <input id="ai-input-text" type="text" onkeypress="handleKeyPress(event)" placeholder="Ketik pertanyaan di sini..." class="flex-1 text-xs bg-white/10 text-white placeholder-slate-400 border border-white/10 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-400">
-                <button onclick="submitAIChat()" class="px-3 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl hover:opacity-90 text-xs font-semibold">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- MODAL FORM TAMBAH / EDIT UNIT (25 KOLOM MACHPOP) -->
-    <div id="unit-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
-        <div class="glass-modal w-full max-w-4xl max-h-[90vh] rounded-3xl p-6 text-white overflow-y-auto custom-scrollbar flex flex-col space-y-4">
-            <div class="flex justify-between items-center border-b border-white/10 pb-3">
-                <h3 id="modal-title" class="text-sm font-bold text-cyan-400 flex items-center gap-2">
-                    <i class="fa-solid fa-truck-monster"></i> REGISTRASI POPULASI UNIT MACHPOP (25 KOLOM)
-                </h3>
-                <button onclick="closeModalUnit()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <form id="unit-form" onsubmit="saveUnitData(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                <input type="hidden" id="edit-cn-index">
-                
-                <div><label class="block text-slate-300 mb-1">1. SITE</label><input id="inp-site" type="text" required class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">2. EQUIPMENT</label><input id="inp-equipment" type="text" required class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">3. C/N (Code Number)</label><input id="inp-cn" type="text" required class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">4. COST CENTER</label><input id="inp-cost-center" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">5. MODEL</label><input id="inp-model" type="text" required class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">6. UNIT TYPE</label><input id="inp-unit" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">7. CLUSTER</label><input id="inp-cluster" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">8. MACHINE S/N</label><input id="inp-machine-sn" type="text" required class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">9. ENGINE MODEL</label><input id="inp-engine-model" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">10. ENGINE S/N</label><input id="inp-engine-sn" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">11. MFG. YEAR</label><input id="inp-mfg-year" type="number" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">12. DELIVERY DATE</label><input id="inp-delivery-date" type="date" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">13. REMARK</label><input id="inp-remark" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">14. STATUS UNIT</label>
-                    <select id="inp-status-unit" class="w-full bg-slate-800 border border-white/20 rounded-lg p-2 text-white">
-                        <option value="RFU">RFU (Ready for Use)</option>
-                        <option value="BD">BD (Breakdown)</option>
-                        <option value="STBY">STBY (Standby)</option>
-                    </select>
-                </div>
-                <div><label class="block text-slate-300 mb-1">15. SECTION</label><input id="inp-section" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">16. HM INITIAL SITE</label><input id="inp-hm-initial" type="number" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">17. FROM</label><input id="inp-from" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">18. STATUS COMM.</label><input id="inp-status-comm" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">19. HM UPDATE</label><input id="inp-hm-update" type="number" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">20. WARRANTY</label><input id="inp-warranty" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">21. STATUS</label><input id="inp-status" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">22. REMARKS</label><input id="inp-remarks" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">23. HM CURRENT</label><input id="inp-hm" type="number" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-                <div><label class="block text-slate-300 mb-1">24. LOKASI</label><input id="inp-lokasi" type="text" class="w-full bg-white/10 border border-white/20 rounded-lg p-2 text-white"></div>
-
-                <div class="md:col-span-3 flex justify-end gap-2 pt-4 border-t border-white/10">
-                    <button type="button" onclick="closeModalUnit()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs font-bold">Batal</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-xs font-bold shadow-lg">Simpan Data</button>
-                </div>
-            </form>
-        </div>
-    </div>
+@@ -436,32 +607,24 @@
 
     <!-- Script Interaktif JS -->
     <script>
-        // Data Populasi In-Memory (Sesuai 25 Kolom Machpop)
-        let samplePopulationData = [
-            {
-                site: "Batu Hijau", equipment: "EXCAVATOR", cn: "EX-2001", costCenter: "CC-101", model: "PC2000-8",
-                unit: "EXCAVATOR", cluster: "PIT A", machineSn: "KMTPC1001", engineModel: "SAA12V140E", engineSn: "ENG-8821",
-                mfgYear: 2021, deliveryDate: "2021-03-15", remark: "Primary Digger", statusUnit: "RFU", section: "MINING",
-                hmInitial: 100, from: "SUPPLIER", statusComm: "COMMISSIONED", hmUpdate: 12450, warranty: "EXPIRED",
-                status: "ACTIVE", remarks: "Good Condition", hm: 12450, lokasi: "PIT SOUTH"
-            },
-            {
-                site: "Batu Hijau", equipment: "DUMP TRUCK", cn: "DT-5042", costCenter: "CC-102", model: "HD785-7",
-                unit: "HAUL TRUCK", cluster: "PIT A", machineSn: "KMTHD2005", engineModel: "SAA6D170E", engineSn: "ENG-9912",
-                mfgYear: 2022, deliveryDate: "2022-01-10", remark: "Hauler Unit", statusUnit: "RFU", section: "HAULING",
-                hmInitial: 50, from: "SUPPLIER", statusComm: "COMMISSIONED", hmUpdate: 8200, warranty: "VALID",
-                status: "ACTIVE", remarks: "Brake Valve Check Required", hm: 8200, lokasi: "HAUL ROAD 3"
-            }
-        ];
-
-        document.addEventListener("DOMContentLoaded", () => {
-            renderPopulationTable();
-        });
-
-        function renderPopulationTable() {
-            const tbody = document.getElementById('population-tbody');
-            tbody.innerHTML = '';
-
-            if (samplePopulationData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="26" class="p-4 text-center text-slate-400">Belum ada data unit. Klik tombol + Tambah Unit untuk menambahkan data baru.</td></tr>`;
-                return;
-            }
-
-            samplePopulationData.forEach((row, index) => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-white/50 transition-colors";
-                tr.innerHTML = `
-                    <td class="p-2.5 text-center font-bold text-slate-700 border-r border-slate-300/40">${index + 1}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.site || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40 font-bold">${row.equipment || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40 font-black text-indigo-900">${row.cn || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.costCenter || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40 font-semibold">${row.model || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.unit || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.cluster || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.machineSn || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.engineModel || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.engineSn || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.mfgYear || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.deliveryDate || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.remark || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40 font-bold ${row.statusUnit === 'RFU' ? 'text-emerald-700' : 'text-rose-700'}">${row.statusUnit || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.section || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.hmInitial || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.from || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.statusComm || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.hmUpdate || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.warranty || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.status || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.remarks || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40 font-bold">${row.hm || '-'}</td>
-                    <td class="p-2.5 border-r border-slate-300/40">${row.lokasi || '-'}</td>
-                    <td class="p-2.5 text-center sticky right-0 bg-slate-800/90 text-white flex items-center justify-center gap-1.5">
-                        <button onclick="editUnit(${index})" class="px-2 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded text-[10px] font-bold" title="Edit Unit"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteUnit(${index})" class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-[10px] font-bold" title="Hapus Unit"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function filterPopulationTable() {
-            const query = document.getElementById('table-search').value.toLowerCase();
-            const rows = document.querySelectorAll('#population-tbody tr');
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
-        }
-
-        function openModalTambahUnit() {
-            document.getElementById('edit-cn-index').value = "-1";
-            document.getElementById('unit-form').reset();
-            document.getElementById('modal-title').innerText = "REGISTRASI POPULASI UNIT MACHPOP (BARU)";
-            document.getElementById('unit-modal').classList.remove('hidden');
-        }
-
-        function editUnit(index) {
-            const data = samplePopulationData[index];
-            document.getElementById('edit-cn-index').value = index;
-            
-            document.getElementById('inp-site').value = data.site || '';
-            document.getElementById('inp-equipment').value = data.equipment || '';
-            document.getElementById('inp-cn').value = data.cn || '';
-            document.getElementById('inp-cost-center').value = data.costCenter || '';
-            document.getElementById('inp-model').value = data.model || '';
-            document.getElementById('inp-unit').value = data.unit || '';
-            document.getElementById('inp-cluster').value = data.cluster || '';
-            document.getElementById('inp-machine-sn').value = data.machineSn || '';
-            document.getElementById('inp-engine-model').value = data.engineModel || '';
-            document.getElementById('inp-engine-sn').value = data.engineSn || '';
-            document.getElementById('inp-mfg-year').value = data.mfgYear || '';
-            document.getElementById('inp-delivery-date').value = data.deliveryDate || '';
-            document.getElementById('inp-remark').value = data.remark || '';
-            document.getElementById('inp-status-unit').value = data.statusUnit || 'RFU';
-            document.getElementById('inp-section').value = data.section || '';
-            document.getElementById('inp-hm-initial').value = data.hmInitial || '';
-            document.getElementById('inp-from').value = data.from || '';
-            document.getElementById('inp-status-comm').value = data.statusComm || '';
-            document.getElementById('inp-hm-update').value = data.hmUpdate || '';
-            document.getElementById('inp-warranty').value = data.warranty || '';
-            document.getElementById('inp-status').value = data.status || '';
-            document.getElementById('inp-remarks').value = data.remarks || '';
-            document.getElementById('inp-hm').value = data.hm || '';
-            document.getElementById('inp-lokasi').value = data.lokasi || '';
-
-            document.getElementById('modal-title').innerText = `EDIT DATA UNIT (${data.cn})`;
-            document.getElementById('unit-modal').classList.remove('hidden');
-        }
-
-        function closeModalUnit() {
-            document.getElementById('unit-modal').classList.add('hidden');
-        }
-
-        function saveUnitData(e) {
-            e.preventDefault();
-            const index = parseInt(document.getElementById('edit-cn-index').value);
-
-            const formData = {
-                site: document.getElementById('inp-site').value,
-                equipment: document.getElementById('inp-equipment').value,
-                cn: document.getElementById('inp-cn').value,
-                costCenter: document.getElementById('inp-cost-center').value,
-                model: document.getElementById('inp-model').value,
-                unit: document.getElementById('inp-unit').value,
-                cluster: document.getElementById('inp-cluster').value,
-                machineSn: document.getElementById('inp-machine-sn').value,
-                engineModel: document.getElementById('inp-engine-model').value,
-                engineSn: document.getElementById('inp-engine-sn').value,
-                mfgYear: document.getElementById('inp-mfg-year').value,
-                deliveryDate: document.getElementById('inp-delivery-date').value,
-                remark: document.getElementById('inp-remark').value,
-                statusUnit: document.getElementById('inp-status-unit').value,
-                section: document.getElementById('inp-section').value,
-                hmInitial: document.getElementById('inp-hm-initial').value,
-                from: document.getElementById('inp-from').value,
-                statusComm: document.getElementById('inp-status-comm').value,
-                hmUpdate: document.getElementById('inp-hm-update').value,
-                warranty: document.getElementById('inp-warranty').value,
-                status: document.getElementById('inp-status').value,
-                remarks: document.getElementById('inp-remarks').value,
-                hm: document.getElementById('inp-hm').value,
-                lokasi: document.getElementById('inp-lokasi').value,
-            };
-
-            if (index >= 0) {
-                samplePopulationData[index] = formData;
-            } else {
-                samplePopulationData.push(formData);
-            }
-
-            renderPopulationTable();
-            closeModalUnit();
-        }
-
-        function deleteUnit(index) {
-            const unit = samplePopulationData[index];
-            if(confirm(`Apakah Anda yakin ingin menghapus unit ${unit.cn} dari populasi?`)) {
-                samplePopulationData.splice(index, 1);
-                renderPopulationTable();
-            }
-        }
-
+        // Membuka Sidebar
         function openSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.remove('hidden');
         }
 
+        // Menutup Sidebar (Auto Hide)
         function closeSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
             document.getElementById('main-sidebar').classList.add('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.add('hidden');
         }
 
+        // Otomatis memilih menu dan MENUTUP SIDEBAR secara otomatis
         function selectMenu(viewId, title) {
             showView(viewId, title);
-            closeSidebar();
+            closeSidebar(); // Panggilan ini membuat menu auto-hide setelah diklik
+            closeSidebar(); // Menutup sidebar otomatis saat menu dipilih
         }
 
         function toggleSubmenu(menuId, arrowId) {
             const submenu = document.getElementById(menuId);
             const arrow = document.getElementById(arrowId);
+            
             if (submenu && arrow) {
                 submenu.classList.toggle('hidden');
                 arrow.classList.toggle('rotate-180');
-            }
-        }
-
-        function showView(viewId, title) {
-            document.getElementById('dashboard-view').classList.add('hidden');
-            document.getElementById('population-view').classList.add('hidden');
-            document.getElementById('backlog-view').classList.add('hidden');
-            
-            document.getElementById(viewId).classList.remove('hidden');
+@@ -476,15 +639,12 @@
             document.getElementById('page-title').innerText = title;
         }
 
+        // Pop-up Floating AI Assistant Modal
         function toggleAIModal() {
+            const modal = document.getElementById('ai-modal');
+            modal.classList.toggle('hidden');
             document.getElementById('ai-modal').classList.toggle('hidden');
         }
 
         function openAIFloating(promptText) {
+            const modal = document.getElementById('ai-modal');
+            modal.classList.remove('hidden');
             document.getElementById('ai-modal').classList.remove('hidden');
             sendQuickPrompt(promptText);
         }
 
-        function sendQuickPrompt(promptText) {
-            document.getElementById('ai-input-text').value = promptText;
-            submitAIChat();
+@@ -494,9 +654,7 @@
         }
 
         function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                submitAIChat();
+            }
             if (e.key === 'Enter') submitAIChat();
         }
 
         function submitAIChat() {
-            const input = document.getElementById('ai-input-text');
-            const target = document.getElementById('chat-conversation');
+@@ -505,43 +663,32 @@
             if(!input.value.trim()) return;
 
             const userText = input.value;
+            
+            // Bubble chat user
             const userBubble = `
                 <div class="flex items-start space-x-2.5 justify-end">
                     <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-3 rounded-2xl shadow-md max-w-[85%]">
@@ -711,20 +653,23 @@
                     </div>
                 </div>
             `;
-
-            let responseMessage = `Permintaan "${userText}" sedang diproses oleh engine rekomendasi engineering.`;
-            if (userText.includes("EX-2001")) {
-                responseMessage = "<b>Analisa Kritis EX-2001:</b> VHMS mendeteksi lonjakan temperatur Hydraulic Pump. PAP menunjukkan peningkatan elemen Fe. Rekomendasi: Lakukan penggantian Main Pump Filter & Flushing sistem hidrolik dalam 24 jam.";
-            } else if (userText.includes("DT-5042")) {
-                responseMessage = "<b>Rekomendasi DT-5042:</b> Tekanan brake accumulator tidak stabil. Periksa pengereman retarding valve dan lakukan charge nitrogen accumulator.";
-            }
-
+            
+            // Jawaban simulasi AI
             const aiBubble = `
                 <div class="flex items-start space-x-2.5">
                     <div class="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[10px] shadow-md shrink-0">AI</div>
                     <div class="bg-white/10 text-slate-100 p-3 rounded-2xl border border-white/10 max-w-[85%] space-y-2 backdrop-blur-md">
+                        <p class="font-bold text-purple-300"><i class="fa-solid fa-microchip"></i> Diagnosa Engineering System:</p>
+                        <p class="text-slate-200">Berdasarkan kalkulasi terpadu, penurunan skor kesehatan unit dipicu oleh keausan partikel Fe pada tes PAP dan indikasi overheat VHMS.</p>
+                        <div class="bg-purple-900/40 p-2 rounded-xl border border-purple-500/30 text-purple-200">
+                            <b>Langkah Tindakan:</b>
+                            <ul class="list-disc pl-4 mt-1 space-y-0.5">
+                                <li>Inspeksi & cutting filter hidrolik.</li>
+                                <li>Order replacement kit ke Backlog System.</li>
+                            </ul>
+                        </div>
                         <p class="font-bold text-purple-300"><i class="fa-solid fa-microchip"></i> Respon AI Assistant:</p>
-                        <p class="text-slate-200">${responseMessage}</p>
+                        <p class="text-slate-200">Permintaan "${userText}" sedang diproses oleh engine rekomendasi engineering.</p>
                     </div>
                 </div>
             `;
@@ -736,7 +681,7 @@
             setTimeout(() => {
                 target.innerHTML += aiBubble;
                 target.scrollTop = target.scrollHeight;
-            }, 300);
+            }, 400);
         }
     </script>
 </body>
