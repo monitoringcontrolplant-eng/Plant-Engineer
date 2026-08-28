@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
+            height: 6px;
+            width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
@@ -50,10 +51,10 @@
 
     <div class="flex h-screen overflow-hidden relative">
         
-        <!-- SIDEBAR NAVIGATOR (SLIDE OUT / AUTO HIDE) -->
+        <!-- SIDEBAR NAVIGATOR -->
         <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
             
-            <!-- Header Brand & Tombol Garis 3 Untuk Menutup Sidebar -->
+            <!-- Header Brand -->
             <div class="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="selectMenu('dashboard-view', 'EXECUTIVE DASHBOARD')">
                     <i class="fa-solid fa-gears text-cyan-400 text-2xl"></i>
@@ -62,13 +63,12 @@
                         <span class="text-[10px] text-cyan-300/70 block tracking-wider">PLANT ENG INTEGRATED SYSTEM</span>
                     </div>
                 </div>
-                <!-- Garis 3 / Toggle Button Dalam Sidebar -->
                 <button onclick="closeSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Tutup Sidebar">
                     <i class="fa-solid fa-bars-staggered text-lg"></i>
                 </button>
             </div>
 
-            <!-- Navigation Menu (13 Kategori Utama) -->
+            <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
                 
                 <!-- 1. DASHBOARD -->
@@ -100,7 +100,7 @@
                         <i id="master-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="master-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment</a>
+                        <a href="#" onclick="selectMenu('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-amber-300 font-bold hover:text-white">Equipment</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Location</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Fleet</a>
@@ -126,7 +126,7 @@
                         <i id="eq-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="eq-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Population</a>
+                        <a href="#" onclick="selectMenu('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Detail</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment History</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Status</a>
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <!-- 5. MAINTENANCE (TERMASUK INTEGRASI BACKLOG) -->
+                <!-- 5. MAINTENANCE -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('maint-sub', 'maint-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
@@ -386,10 +386,9 @@
         <!-- MAIN CONTENT AREA -->
         <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
             
-            <!-- Header Atas Dengan Tombol Garis 3 (Hamburger Menu) -->
+            <!-- Header Atas -->
             <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg shrink-0">
                 <div class="flex items-center space-x-4">
-                    <!-- Tombol Garis 3 Utama Untuk Membuka Navigation Menu -->
                     <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10 flex items-center justify-center" title="Buka Menu Navigasi">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
@@ -401,13 +400,13 @@
                 </div>
             </header>
 
-            <!-- CONTAINER CONTENT DENGAN TEMA GLASSMORPHISM -->
+            <!-- CONTAINER CONTENT -->
             <div class="flex-1 p-6">
                 
                 <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
                     
-                    <!-- EXECUTIVE KPI SUMMARY (GLASS CARDS) -->
+                    <!-- EXECUTIVE KPI SUMMARY -->
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
@@ -535,7 +534,98 @@
 
                 </div>
 
-                <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT -->
+                <!-- VIEW 2: POPULATION MANAGEMENT (25 KOLOM + AKSI TAMBAH/EDIT/HAPUS) -->
+                <div id="population-view" class="hidden space-y-4">
+                    <div class="glass-panel rounded-2xl shadow-xl p-5 space-y-4">
+                        <!-- Top Action Bar -->
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-boxes-stacked text-emerald-600"></i> MASTER POPULATION EQUIPMENT
+                                </h2>
+                                <p class="text-[11px] text-slate-700 font-medium">Daftar registrasi populasi alat berat sesuai struktur Machpop Sheet</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openModalTambahUnit()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5 transition-all">
+                                    <i class="fa-solid fa-plus"></i> Tambah Unit
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Data Table 25 Kolom + Column AKSI -->
+                        <div class="overflow-x-auto custom-scrollbar border border-white/30 rounded-xl">
+                            <table class="w-full text-left border-collapse text-[11px] whitespace-nowrap">
+                                <thead>
+                                    <tr class="bg-slate-900/90 text-white font-bold uppercase tracking-wider">
+                                        <th class="p-2.5 border-r border-white/10 text-center">NO</th>
+                                        <th class="p-2.5 border-r border-white/10">SITE</th>
+                                        <th class="p-2.5 border-r border-white/10">EQUIPMENT</th>
+                                        <th class="p-2.5 border-r border-white/10">C/N</th>
+                                        <th class="p-2.5 border-r border-white/10">COST CENTER</th>
+                                        <th class="p-2.5 border-r border-white/10">MODEL</th>
+                                        <th class="p-2.5 border-r border-white/10">UNIT</th>
+                                        <th class="p-2.5 border-r border-white/10">CLUSTER</th>
+                                        <th class="p-2.5 border-r border-white/10">MACHINE S/N</th>
+                                        <th class="p-2.5 border-r border-white/10">ENGINE MODEL</th>
+                                        <th class="p-2.5 border-r border-white/10">ENGINE S/N</th>
+                                        <th class="p-2.5 border-r border-white/10">MFG. YEAR</th>
+                                        <th class="p-2.5 border-r border-white/10">DELIVERY DATE</th>
+                                        <th class="p-2.5 border-r border-white/10">REMARK</th>
+                                        <th class="p-2.5 border-r border-white/10">STATUS UNIT</th>
+                                        <th class="p-2.5 border-r border-white/10">SECTION</th>
+                                        <th class="p-2.5 border-r border-white/10">HM INITIAL SITE</th>
+                                        <th class="p-2.5 border-r border-white/10">FROM</th>
+                                        <th class="p-2.5 border-r border-white/10">STATUS COMMISSIONING</th>
+                                        <th class="p-2.5 border-r border-white/10">HM UPDATE</th>
+                                        <th class="p-2.5 border-r border-white/10">WARRANTY</th>
+                                        <th class="p-2.5 border-r border-white/10">STATUS</th>
+                                        <th class="p-2.5 border-r border-white/10">REMARKS</th>
+                                        <th class="p-2.5 border-r border-white/10">HM</th>
+                                        <th class="p-2.5 border-r border-white/10">LOKASI</th>
+                                        <th class="p-2.5 text-center sticky right-0 bg-slate-900 text-cyan-300">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="population-tbody" class="divide-y divide-white/20 font-medium text-slate-900 bg-white/40">
+                                    <!-- Baris Kosong Siap Diisi / Placeholder -->
+                                    <tr id="empty-row" class="hover:bg-white/50 transition-colors">
+                                        <td class="p-2.5 text-center font-bold text-slate-500 border-r border-slate-300/40">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 border-r border-slate-300/40 text-slate-400 font-italic">-</td>
+                                        <td class="p-2.5 text-center sticky right-0 bg-slate-800 text-white flex items-center justify-center gap-1.5">
+                                            <button onclick="openModalTambahUnit()" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[10px] font-bold">
+                                                <i class="fa-solid fa-plus"></i> Tambah Unit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: INTEGRATED BACKLOG MANAGEMENT -->
                 <div id="backlog-view" class="hidden h-full">
                     <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
                         <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
@@ -561,8 +651,6 @@
 
         <!-- AI ASSISTANT FLOATING MODAL WINDOW -->
         <div id="ai-modal" class="hidden fixed bottom-24 right-6 w-96 md:w-[420px] h-[520px] glass-modal rounded-3xl shadow-2xl border border-white/20 z-50 flex flex-col overflow-hidden transition-all duration-300">
-            
-            <!-- Header Floating Chat -->
             <div class="p-4 bg-gradient-to-r from-purple-900/90 to-indigo-900/90 text-white flex justify-between items-center border-b border-white/10">
                 <div class="flex items-center space-x-3">
                     <div class="p-2 bg-purple-600/30 rounded-xl border border-purple-400/30">
@@ -577,8 +665,6 @@
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-
-            <!-- Area Chat Scrollable -->
             <div id="chat-conversation" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar">
                 <div class="flex items-start space-x-2.5">
                     <div class="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[10px] shadow-md shrink-0">AI</div>
@@ -587,14 +673,10 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Quick Action Pills -->
             <div class="px-4 py-2 border-t border-white/5 flex gap-1.5 overflow-x-auto custom-scrollbar bg-black/20">
                 <button onclick="sendQuickPrompt('Diagnosa kritis unit EX-2001')" class="px-2.5 py-1 bg-purple-500/20 text-purple-200 border border-purple-500/30 rounded-full text-[10px] whitespace-nowrap hover:bg-purple-500/30">🔍 EX-2001</button>
                 <button onclick="sendQuickPrompt('Rekomendasi preventif DT-5042')" class="px-2.5 py-1 bg-purple-500/20 text-purple-200 border border-purple-500/30 rounded-full text-[10px] whitespace-nowrap hover:bg-purple-500/30">🛠️ DT-5042</button>
             </div>
-
-            <!-- Input Box -->
             <div class="p-3 bg-black/40 border-t border-white/10 flex items-center gap-2">
                 <input id="ai-input-text" type="text" onkeypress="handleKeyPress(event)" placeholder="Ketik pertanyaan di sini..." class="flex-1 text-xs bg-white/10 text-white placeholder-slate-400 border border-white/10 rounded-xl px-3 py-2 focus:outline-none focus:border-purple-400">
                 <button onclick="submitAIChat()" class="px-3 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl hover:opacity-90 text-xs font-semibold">
@@ -619,7 +701,7 @@
 
         function selectMenu(viewId, title) {
             showView(viewId, title);
-            closeSidebar(); // Menutup sidebar otomatis saat menu dipilih
+            closeSidebar();
         }
 
         function toggleSubmenu(menuId, arrowId) {
@@ -633,6 +715,7 @@
 
         function showView(viewId, title) {
             document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('population-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
             
             document.getElementById(viewId).classList.remove('hidden');
@@ -688,6 +771,21 @@
                 target.innerHTML += aiBubble;
                 target.scrollTop = target.scrollHeight;
             }, 400);
+        }
+
+        /* Handler Aksi Unit */
+        function openModalTambahUnit() {
+            alert('Form Modal Tambah Unit (25 Kolom) akan dipanggil.');
+        }
+
+        function editUnit(cn) {
+            alert('Edit data unit C/N: ' + cn);
+        }
+
+        function deleteUnit(cn) {
+            if(confirm('Apakah Anda yakin ingin menghapus unit ' + cn + ' dari populasi?')) {
+                alert('Unit ' + cn + ' berhasil dihapus.');
+            }
         }
     </script>
 </body>
