@@ -126,8 +126,7 @@
                         <i id="eq-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="eq-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <!-- PENTING: Menu Population memanggil file equipment.html ke Iframe -->
-                        <a href="#" onclick="selectExternalPage('equipment.html', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population</a>
+                        <a href="#" onclick="selectView('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Detail</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment History</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Status</a>
@@ -453,7 +452,59 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: EXTERNAL FRAME FOR PAGES LIKE POPULATION -->
+                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (DIRECT GOOGLE SHEETS SYNC) -->
+                <div id="population-view" class="hidden space-y-4">
+                    <div class="glass-panel rounded-2xl shadow-2xl p-5 overflow-x-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                                <i class="fa-solid fa-truck-monster text-emerald-600"></i> Live Equipment Population Data
+                            </h2>
+                            <button onclick="loadPopulationDataFromSheet()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-md">
+                                <i class="fa-solid fa-rotate"></i> Refresh Data
+                            </button>
+                        </div>
+                        <div class="max-h-[calc(100vh-220px)] overflow-y-auto custom-scrollbar">
+                            <table class="w-full text-left text-xs whitespace-nowrap text-slate-900">
+                                <thead class="sticky top-0 bg-slate-900 text-white border-b border-slate-700 uppercase tracking-wider text-[11px]">
+                                    <tr>
+                                        <th class="p-3">NO</th>
+                                        <th class="p-3">SITE</th>
+                                        <th class="p-3">EQUIPMENT</th>
+                                        <th class="p-3">C/N</th>
+                                        <th class="p-3">COST CENTER</th>
+                                        <th class="p-3">MODEL</th>
+                                        <th class="p-3">UNIT</th>
+                                        <th class="p-3">CLUSTER</th>
+                                        <th class="p-3">MACHINE S/N</th>
+                                        <th class="p-3">ENGINE MODEL</th>
+                                        <th class="p-3">ENGINE S/N</th>
+                                        <th class="p-3">MFG YEAR</th>
+                                        <th class="p-3">DELIVERY DATE</th>
+                                        <th class="p-3">REMARK</th>
+                                        <th class="p-3">STATUS UNIT</th>
+                                        <th class="p-3">SECTION</th>
+                                        <th class="p-3">HM INITIAL SITE</th>
+                                        <th class="p-3">FROM</th>
+                                        <th class="p-3">STATUS COMM</th>
+                                        <th class="p-3">HM UPDATE</th>
+                                        <th class="p-3">WARRANTY</th>
+                                        <th class="p-3">STATUS</th>
+                                        <th class="p-3">REMARKS</th>
+                                        <th class="p-3">HM</th>
+                                        <th class="p-3">LOKASI</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="population-tbody" class="divide-y divide-slate-300/40">
+                                    <tr>
+                                        <td colspan="25" class="p-6 text-center text-slate-600 italic">Memuat data dari Google Sheets...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 4: EXTERNAL FRAME FOR PAGES -->
                 <div id="external-page-view" class="hidden h-full">
                     <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
                         <iframe id="page-iframe" src="about:blank" class="w-full h-full border-0"></iframe>
@@ -518,8 +569,11 @@
 
     </div>
 
-    <!-- Script Interaktif JS -->
+    <!-- Script Interaktif JS & Integrasi Google Sheets -->
     <script>
+        // URL Google Sheets CSV
+        const SPREADSHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1gGcUNOZusmIA8ucpQDnax83SPA-F-s9525JeFABkuew/export?format=csv';
+
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.remove('hidden');
@@ -540,21 +594,27 @@
             }
         }
 
-        // Menampilkan tampilan bawaan internal (seperti Dashboard & Backlog)
+        // Menampilkan tampilan bawaan internal (Dashboard, Backlog, & Population)
         function selectView(viewId, title) {
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
+            document.getElementById('population-view').classList.add('hidden');
             document.getElementById('external-page-view').classList.add('hidden');
             
             document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
             closeSidebar();
+
+            if (viewId === 'population-view') {
+                loadPopulationDataFromSheet();
+            }
         }
 
-        // Menampilkan berkas HTML eksternal (seperti equipment.html)
+        // Menampilkan berkas HTML eksternal
         function selectExternalPage(url, title) {
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
+            document.getElementById('population-view').classList.add('hidden');
             
             const externalView = document.getElementById('external-page-view');
             const iframe = document.getElementById('page-iframe');
@@ -563,6 +623,68 @@
             externalView.classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
             closeSidebar();
+        }
+
+        // Fungsi Memuat Data Langsung dari Google Sheets
+        async function loadPopulationDataFromSheet() {
+            const tbody = document.getElementById('population-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = `<tr><td colspan="25" class="p-6 text-center text-slate-600 italic">Sedang mengambil data terbaru dari Google Sheets...</td></tr>`;
+
+            try {
+                const response = await fetch(SPREADSHEET_CSV_URL);
+                const csvText = await response.text();
+                
+                // Parse CSV sederana
+                const rows = csvText.split('\n').map(row => row.split(','));
+                tbody.innerHTML = '';
+
+                let dataCount = 0;
+                rows.slice(1).forEach((col, index) => {
+                    if (!col[0] || col[0].trim() === '') return;
+                    dataCount++;
+
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-white/40 transition-colors";
+                    
+                    tr.innerHTML = `
+                        <td class="p-3 font-bold">${dataCount}</td>
+                        <td class="p-3">${col[0] || '-'}</td>
+                        <td class="p-3 font-bold">${col[1] || '-'}</td>
+                        <td class="p-3 font-bold text-indigo-900">${col[2] || '-'}</td>
+                        <td class="p-3">${col[3] || '-'}</td>
+                        <td class="p-3">${col[4] || '-'}</td>
+                        <td class="p-3">${col[5] || '-'}</td>
+                        <td class="p-3">${col[6] || '-'}</td>
+                        <td class="p-3">${col[7] || '-'}</td>
+                        <td class="p-3">${col[8] || '-'}</td>
+                        <td class="p-3">${col[9] || '-'}</td>
+                        <td class="p-3">${col[10] || '-'}</td>
+                        <td class="p-3">${col[11] || '-'}</td>
+                        <td class="p-3">${col[12] || '-'}</td>
+                        <td class="p-3 font-bold">${col[13] || '-'}</td>
+                        <td class="p-3">${col[14] || '-'}</td>
+                        <td class="p-3">${col[15] || '-'}</td>
+                        <td class="p-3">${col[16] || '-'}</td>
+                        <td class="p-3">${col[17] || '-'}</td>
+                        <td class="p-3">${col[18] || '-'}</td>
+                        <td class="p-3">${col[19] || '-'}</td>
+                        <td class="p-3">${col[20] || '-'}</td>
+                        <td class="p-3">${col[21] || '-'}</td>
+                        <td class="p-3 font-bold">${col[22] || '-'}</td>
+                        <td class="p-3">${col[23] || '-'}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                if (dataCount === 0) {
+                    tbody.innerHTML = `<tr><td colspan="25" class="p-6 text-center text-slate-600 italic">Data kosong atau format spreadsheet tidak sesuai.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Gagal memuat data populasi:", error);
+                tbody.innerHTML = `<tr><td colspan="25" class="p-6 text-center text-rose-600 font-bold">Gagal memuat data dari Google Sheets. Pastikan akses Google Sheets diset ke "Anyone with the link".</td></tr>`;
+            }
         }
 
         function toggleAIModal() {
