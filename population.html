@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Populer Machine (BSS)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            margin: 20px;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        h2 {
+            color: #1a365d;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .form-group input, .form-group select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-add { background-color: #28a745; color: white; }
+        .btn-edit { background-color: #ffc107; color: black; }
+        .btn-delete { background-color: #dc3545; color: white; }
+        .btn-save { background-color: #007bff; color: white; }
+        .btn-cancel { background-color: #6c757d; color: white; }
+        
+        .table-responsive {
+            overflow-x: auto;
+            max-height: 500px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #1a365d;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .action-btns {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Sistem Update Populer Alat Berat (BSS)</h2>
+
+    <!-- Form Input / Edit Data -->
+    <div class="form-group" id="dataForm">
+        <input type="hidden" id="editIndex" value="-1">
+        <input type="text" id="equipment" placeholder="Equipment (cth: EX20009206)">
+        <input type="text" id="cn" placeholder="C/N (cth: X9206)">
+        <input type="text" id="cluster" placeholder="Cluster (cth: NING - LOADING OB)">
+        <input type="text" id="machineSn" placeholder="Machine S/N">
+        <input type="text" id="engineModel" placeholder="Engine Model">
+        <input type="text" id="engineSn" placeholder="Engine S/N">
+        <input type="text" id="mfgYear" placeholder="Mfg. Year">
+        <input type="text" id="deliveryDate" placeholder="Delivery Date">
+        <select id="remark">
+            <option value="EXISTING">EXISTING</option>
+            <option value="NEW">NEW</option>
+            <option value="REPLACEMENT">REPLACEMENT</option>
+        </select>
+        <div>
+            <button class="btn btn-add" id="btnSubmit" onclick="saveData()">Tambah Data</button>
+            <button class="btn btn-cancel" id="btnCancel" onclick="resetForm()" style="display:none;">Batal</button>
+        </div>
+    </div>
+
+    <!-- Tabel Data Populasi Unit -->
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>EQUIPMENT</th>
+                    <th>C/N</th>
+                    <th>CLUSTER</th>
+                    <th>MACHINE S/N</th>
+                    <th>ENGINE MODEL</th>
+                    <th>ENGINE S/N</th>
+                    <th>MFG. YEAR</th>
+                    <th>DELIVERY DATE</th>
+                    <th>REMARK</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Data akan dimuat secara dinamis via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Data Awal (Dikutip dari tangkapan layar)
+    let machineData = [
+        { equipment: "EX20009206", cn: "X9206", cluster: "NING - LOADING OB", machineSn: "20346", engineModel: "SAA12V140E-3", engineSn: "", mfgYear: "", deliveryDate: "", remark: "EXISTING" },
+        { equipment: "EX20009169", cn: "X169", cluster: "NING - LOADING OB", machineSn: "J10019", engineModel: "SAA12V140E-3", engineSn: "", mfgYear: "", deliveryDate: "", remark: "EXISTING" },
+        { equipment: "EX20009205", cn: "X9205", cluster: "NING - LOADING OB", machineSn: "20339", engineModel: "SAA12V140E-3", engineSn: "CC-510781", mfgYear: "2011", deliveryDate: "", remark: "EXISTING" },
+        { equipment: "EX20009253", cn: "X9253", cluster: "NING - LOADING OB", machineSn: "20343", engineModel: "SAA12V140E-3", engineSn: "", mfgYear: "2011", deliveryDate: "", remark: "EXISTING" },
+        { equipment: "EX20009492", cn: "X9492", cluster: "NING - LOADING OB", machineSn: "J20007", engineModel: "SAA12V140E-7", engineSn: "900149", mfgYear: "2024", deliveryDate: "16-Mar-24", remark: "EXISTING" },
+        { equipment: "EX20009493", cn: "X9493", cluster: "NING - LOADING OB", machineSn: "30135", engineModel: "SAA12V140E-7", engineSn: "900401", mfgYear: "", deliveryDate: "", remark: "EXISTING" }
+    ];
+
+    // Fungsi Render Tabel
+    function renderTable() {
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        machineData.forEach((item, index) => {
+            let row = `<tr>
+                <td>${index + 1}</td>
+                <td>${item.equipment}</td>
+                <td>${item.cn}</td>
+                <td>${item.cluster}</td>
+                <td>${item.machineSn}</td>
+                <td>${item.engineModel}</td>
+                <td>${item.engineSn}</td>
+                <td>${item.mfgYear}</td>
+                <td>${item.deliveryDate}</td>
+                <td>${item.remark}</td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn btn-edit" onclick="editData(${index})">Edit</button>
+                        <button class="btn btn-delete" onclick="deleteData(${index})">Hapus</button>
+                    </div>
+                </td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // Tambah & Update Data
+    function saveData() {
+        const index = document.getElementById("editIndex").value;
+        const newData = {
+            equipment: document.getElementById("equipment").value,
+            cn: document.getElementById("cn").value,
+            cluster: document.getElementById("cluster").value,
+            machineSn: document.getElementById("machineSn").value,
+            engineModel: document.getElementById("engineModel").value,
+            engineSn: document.getElementById("engineSn").value,
+            mfgYear: document.getElementById("mfgYear").value,
+            deliveryDate: document.getElementById("deliveryDate").value,
+            remark: document.getElementById("remark").value
+        };
+
+        if(!newData.equipment) {
+            alert("Kolom Equipment wajib diisi!");
+            return;
+        }
+
+        if (index === "-1") {
+            machineData.push(newData);
+        } else {
+            machineData[index] = newData;
+        }
+
+        resetForm();
+        renderTable();
+    }
+
+    // Edit Data
+    function editData(index) {
+        const item = machineData[index];
+        document.getElementById("editIndex").value = index;
+        document.getElementById("equipment").value = item.equipment;
+        document.getElementById("cn").value = item.cn;
+        document.getElementById("cluster").value = item.cluster;
+        document.getElementById("machineSn").value = item.machineSn;
+        document.getElementById("engineModel").value = item.engineModel;
+        document.getElementById("engineSn").value = item.engineSn;
+        document.getElementById("mfgYear").value = item.mfgYear;
+        document.getElementById("deliveryDate").value = item.deliveryDate;
+        document.getElementById("remark").value = item.remark;
+
+        document.getElementById("btnSubmit").innerText = "Update Data";
+        document.getElementById("btnSubmit").className = "btn btn-save";
+        document.getElementById("btnCancel").style.display = "inline-block";
+    }
+
+    // Hapus Data
+    function deleteData(index) {
+        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+            machineData.splice(index, 1);
+            renderTable();
+        }
+    }
+
+    // Reset Form Input
+    function resetForm() {
+        document.getElementById("editIndex").value = "-1";
+        document.getElementById("equipment").value = "";
+        document.getElementById("cn").value = "";
+        document.getElementById("cluster").value = "";
+        document.getElementById("machineSn").value = "";
+        document.getElementById("engineModel").value = "";
+        document.getElementById("engineSn").value = "";
+        document.getElementById("mfgYear").value = "";
+        document.getElementById("deliveryDate").value = "";
+        document.getElementById("remark").value = "EXISTING";
+
+        document.getElementById("btnSubmit").innerText = "Tambah Data";
+        document.getElementById("btnSubmit").className = "btn btn-add";
+        document.getElementById("btnCancel").style.display = "none";
+    }
+
+    // Muat data awal saat sistem dibuka
+    window.onload = renderTable;
+</script>
+
+</body>
+</html>
