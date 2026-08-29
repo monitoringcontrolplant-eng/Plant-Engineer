@@ -17,7 +17,6 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
-        /* Style Premium Glassmorphism Transparan */
         .glass-panel {
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(16px);
@@ -51,7 +50,7 @@
 
     <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR NAVIGATOR (SLIDE OUT / AUTO HIDE) -->
+        <!-- SIDEBAR NAVIGATOR -->
         <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
             <!-- Header Brand & Tombol Close Sidebar -->
@@ -68,7 +67,7 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu Lengkap -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -118,7 +117,7 @@
                         <i id="eq-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="eq-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectView('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population</a>
+                        <a href="#" onclick="selectView('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population (MACHPOP)</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Detail</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment History</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Status</a>
@@ -189,13 +188,11 @@
                 </div>
             </header>
 
-            <!-- CONTAINER CONTENT DENGAN TEMA GLASSMORPHISM -->
+            <!-- CONTAINER CONTENT -->
             <div class="flex-1 p-6">
 
                 <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
-
-                    <!-- EXECUTIVE KPI SUMMARY -->
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
@@ -224,7 +221,6 @@
                         </div>
                     </div>
 
-                    <!-- EQUIPMENT HEALTH SCORE TABLE -->
                     <div class="glass-panel rounded-2xl shadow-xl p-5 space-y-4">
                         <div class="flex justify-between items-center">
                             <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
@@ -232,7 +228,6 @@
                             </h2>
                         </div>
                     </div>
-
                 </div>
 
                 <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT -->
@@ -354,7 +349,7 @@
 
     </div>
 
-    <!-- Script Interaktif JS & Integrasi Google Sheets -->
+    <!-- Script Interaktif JS -->
     <script>
         // URL Google Sheets Khusus Sheet MACHPOP Kolom B sampai Z
         const SPREADSHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1gGcUNOZusmIA8ucpQDnax83SPA-F-s9525JeFABkuew/gviz/tq?tqx=out:csv&sheet=MACHPOP&range=B:Z';
@@ -394,7 +389,7 @@
             }
         }
 
-        // CSV Parser yang aman terhadap nilai berkoma di dalam kutip
+        // CSV Parser yang presisi memisahkan tanda petik/koma
         function parseCSVRow(text) {
             const result = [];
             let cell = '';
@@ -436,13 +431,11 @@
 
                 let dataCount = 0;
 
-                // Loop mulai dari baris data kedua (mengabaikan header spreadsheet)
                 for (let i = 1; i < rawRows.length; i++) {
                     if (!rawRows[i].trim()) continue;
                     
                     const col = parseCSVRow(rawRows[i]);
                     
-                    // Lewati baris jika C/N kosong
                     if (!col[0] || col[0] === '""') continue;
                     
                     dataCount++;
