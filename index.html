@@ -11,6 +11,7 @@
     <style>
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
+            height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
@@ -53,7 +54,7 @@
         <!-- SIDEBAR NAVIGATOR (SLIDE OUT / AUTO HIDE) -->
         <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
-            <!-- Header Brand & Tombol Garis 3 Untuk Menutup Sidebar -->
+            <!-- Header Brand & Tombol Close Sidebar -->
             <div class="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'EXECUTIVE DASHBOARD')">
                     <i class="fa-solid fa-gears text-cyan-400 text-2xl"></i>
@@ -62,13 +63,12 @@
                         <span class="text-[10px] text-cyan-300/70 block tracking-wider">PLANT ENG INTEGRATED SYSTEM</span>
                     </div>
                 </div>
-                <!-- Garis 3 / Toggle Button Dalam Sidebar -->
                 <button onclick="closeSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Tutup Sidebar">
                     <i class="fa-solid fa-bars-staggered text-lg"></i>
                 </button>
             </div>
 
-            <!-- Navigation Menu (13 Kategori Utama) -->
+            <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -105,14 +105,6 @@
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Location</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Fleet</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Vendor</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Customer</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Failure Code</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Type</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Grease Type</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Coolant Type</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Part Number</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">User</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Role</a>
                     </div>
                 </div>
 
@@ -130,9 +122,6 @@
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Detail</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment History</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Status</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Health</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Attachment</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">QR Code</a>
                     </div>
                 </div>
 
@@ -150,19 +139,6 @@
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPU</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VITA</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">KOMTRAX</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">FOGC</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Disc Clutch</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Tire Monitoring</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Battery Monitoring</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Cooling System</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Engine Health</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Hydraulic Health</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Transmission Health</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Final Drive Health</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Trend Monitoring</a>
                     </div>
                 </div>
 
@@ -178,192 +154,7 @@
                     <div id="maint-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Work Order</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Preventive Maintenance</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Corrective Maintenance</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Breakdown</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inspection</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Campaign Program</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Mid Life</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lifetime Review</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Shutdown</a>
                         <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-bold hover:text-white">Backlog System</a>
-                    </div>
-                </div>
-
-                <!-- 6. RELIABILITY -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-shield-halved w-5 text-blue-400"></i>
-                            <span>RELIABILITY</span>
-                        </div>
-                        <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">FAR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">RCA</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Fishbone</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">5 Why</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PICA</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lesson Learned</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Verification</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Repeat Failure</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Reliability Growth</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Risk Matrix</a>
-                    </div>
-                </div>
-
-                <!-- 7. COMPONENT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('comp-sub', 'comp-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-microchip w-5 text-indigo-400"></i>
-                            <span>COMPONENT</span>
-                        </div>
-                        <i id="comp-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="comp-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Master</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Installation</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Removal</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lifetime</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Rebuild History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Warranty</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Failure History</a>
-                    </div>
-                </div>
-
-                <!-- 8. LUBRICATION -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('lub-sub', 'lub-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-oil-can w-5 text-yellow-500"></i>
-                            <span>LUBRICATION</span>
-                        </div>
-                        <i id="lub-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="lub-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Sampling</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Inventory</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Consumption</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Trend</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Contamination</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Recommendation</a>
-                    </div>
-                </div>
-
-                <!-- 9. KPI -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('kpi-sub', 'kpi-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-pie w-5 text-teal-400"></i>
-                            <span>KPI</span>
-                        </div>
-                        <i id="kpi-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="kpi-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PA</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MA</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">UA</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Availability</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTBF</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTTR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTBS</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Cost/Hour</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Cost/Ton</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Breakdown Frequency</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Downtime</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Reliability Index</a>
-                    </div>
-                </div>
-
-                <!-- 10. ANALYTICS -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('ana-sub', 'ana-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-column w-5 text-orange-400"></i>
-                            <span>ANALYTICS</span>
-                        </div>
-                        <i id="ana-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="ana-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Ranking</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Ranking</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Pareto Failure</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Pareto Cost</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Pareto Downtime</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Trend Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Heatmap</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Forecast</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Predictive Maintenance</a>
-                    </div>
-                </div>
-
-                <!-- 11. DOCUMENT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('doc-sub', 'doc-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-file-contract w-5 text-sky-400"></i>
-                            <span>DOCUMENT</span>
-                        </div>
-                        <i id="doc-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="doc-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">WI</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">SOP</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Manual</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Service Letter</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inspection Form</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM Form</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP Form</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Drawing</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Engineering Standard</a>
-                    </div>
-                </div>
-
-                <!-- 12. REPORT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('rep-sub', 'rep-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-file-invoice w-5 text-violet-400"></i>
-                            <span>REPORT</span>
-                        </div>
-                        <i id="rep-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="rep-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Daily</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Weekly</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Monthly</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Quarterly</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Semester</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Annual</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PDF</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Excel</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PowerPoint</a>
-                    </div>
-                </div>
-
-                <!-- 13. ADMIN -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('adm-sub', 'adm-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-user-gear w-5 text-slate-400"></i>
-                            <span>ADMIN</span>
-                        </div>
-                        <i id="adm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="adm-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">User</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Permission</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Role</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Audit Log</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Backup</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Restore</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Notification</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Email</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Setting</a>
                     </div>
                 </div>
 
@@ -384,10 +175,9 @@
         <!-- MAIN CONTENT AREA -->
         <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
 
-            <!-- Header Atas Dengan Tombol Garis 3 (Hamburger Menu) -->
+            <!-- Header Atas -->
             <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg shrink-0">
                 <div class="flex items-center space-x-4">
-                    <!-- Tombol Garis 3 Utama Untuk Membuka Navigation Menu -->
                     <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10 flex items-center justify-center" title="Buka Menu Navigasi">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
@@ -405,7 +195,7 @@
                 <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
 
-                    <!-- EXECUTIVE KPI SUMMARY (GLASS CARDS) -->
+                    <!-- EXECUTIVE KPI SUMMARY -->
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
                             <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
@@ -452,12 +242,12 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (DIRECT GOOGLE SHEETS SYNC) -->
+                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (SPECIAL SHEET: MACHPOP RANGE B:Z) -->
                 <div id="population-view" class="hidden space-y-4">
                     <div class="glass-panel rounded-2xl shadow-2xl p-5 overflow-x-auto">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                                <i class="fa-solid fa-truck-monster text-emerald-600"></i> Live Equipment Population Data
+                                <i class="fa-solid fa-truck-monster text-emerald-600"></i> Live Equipment Population Data (MACHPOP)
                             </h2>
                             <button onclick="loadPopulationDataFromSheet()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-md">
                                 <i class="fa-solid fa-rotate"></i> Refresh Data
@@ -468,35 +258,36 @@
                                 <thead class="sticky top-0 bg-slate-900 text-white border-b border-slate-700 uppercase tracking-wider text-[11px]">
                                     <tr>
                                         <th class="p-3">NO</th>
-                                        <th class="p-3">SITE</th>
-                                        <th class="p-3">EQUIPMENT</th>
-                                        <th class="p-3">C/N</th>
-                                        <th class="p-3">COST CENTER</th>
+                                        <th class="p-3">CN</th>
                                         <th class="p-3">MODEL</th>
-                                        <th class="p-3">UNIT</th>
-                                        <th class="p-3">CLUSTER</th>
-                                        <th class="p-3">MACHINE S/N</th>
-                                        <th class="p-3">ENGINE MODEL</th>
-                                        <th class="p-3">ENGINE S/N</th>
-                                        <th class="p-3">MFG YEAR</th>
-                                        <th class="p-3">DELIVERY DATE</th>
-                                        <th class="p-3">REMARK</th>
-                                        <th class="p-3">STATUS UNIT</th>
-                                        <th class="p-3">SECTION</th>
-                                        <th class="p-3">HM INITIAL SITE</th>
-                                        <th class="p-3">FROM</th>
-                                        <th class="p-3">STATUS COMM</th>
-                                        <th class="p-3">HM UPDATE</th>
-                                        <th class="p-3">WARRANTY</th>
-                                        <th class="p-3">STATUS</th>
-                                        <th class="p-3">REMARKS</th>
                                         <th class="p-3">HM</th>
-                                        <th class="p-3">LOKASI</th>
+                                        <th class="p-3">HM LAST SERVICE</th>
+                                        <th class="p-3">TGL LAST SERVICE</th>
+                                        <th class="p-3">DOWNTIME STATUS</th>
+                                        <th class="p-3">SITUATION</th>
+                                        <th class="p-3">PLAN COMPONENT REPLACEMENT</th>
+                                        <th class="p-3">CRITICAL COMPONENT</th>
+                                        <th class="p-3">PAP BAD TREND</th>
+                                        <th class="p-3">REMARK PAP</th>
+                                        <th class="p-3">CRITICAL BACKLOG</th>
+                                        <th class="p-3">REMARK BACKLOG</th>
+                                        <th class="p-3">STATUS APAR</th>
+                                        <th class="p-3">STATUS ANSUL</th>
+                                        <th class="p-3">EXP APAR / ANSUL</th>
+                                        <th class="p-3">LAST COMMISSIONING</th>
+                                        <th class="p-3">DUE COMMISSIONING</th>
+                                        <th class="p-3">EXP STNK</th>
+                                        <th class="p-3">STATUS FABRICATION</th>
+                                        <th class="p-3">SCHEDULE MAINTENANCE</th>
+                                        <th class="p-3">REMARK SCHEDULE</th>
+                                        <th class="p-3">LOCATION</th>
+                                        <th class="p-3">POPULATION STATUS</th>
+                                        <th class="p-3">UPDATE DATE</th>
                                     </tr>
                                 </thead>
                                 <tbody id="population-tbody" class="divide-y divide-slate-300/40">
                                     <tr>
-                                        <td colspan="25" class="p-6 text-center text-slate-600 italic">Memuat data dari Google Sheets...</td>
+                                        <td colspan="26" class="p-6 text-center text-slate-600 italic">Memuat data dari Google Sheets MACHPOP (B:Z)...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -504,7 +295,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: EXTERNAL FRAME FOR PAGES -->
+                <!-- VIEW 4: EXTERNAL PAGE FRAME -->
                 <div id="external-page-view" class="hidden h-full">
                     <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
                         <iframe id="page-iframe" src="about:blank" class="w-full h-full border-0"></iframe>
@@ -521,9 +312,6 @@
                 <span class="absolute -top-1 -right-1 flex h-4 w-4">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-4 w-4 bg-purple-500"></span>
-                </span>
-                <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl border border-white/10">
-                    Tanya AI Assistant
                 </span>
             </button>
         </div>
@@ -545,9 +333,7 @@
                 </button>
             </div>
 
-            <!-- Area Chat Scrollable -->
             <div id="chat-conversation" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar">
-                <!-- AI Welcome Message -->
                 <div class="flex items-start space-x-2.5">
                     <div class="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[10px] shadow-md shrink-0">AI</div>
                     <div class="bg-white/10 text-slate-100 p-3 rounded-2xl border border-white/10 max-w-[85%] space-y-2 backdrop-blur-md">
@@ -556,7 +342,6 @@
                 </div>
             </div>
 
-            <!-- Area Input Chat -->
             <div class="p-3 border-t border-white/10 bg-black/40">
                 <div class="flex items-center space-x-2">
                     <input id="ai-input" type="text" onkeypress="handleKeyPress(event)" placeholder="Ketik pertanyaan atau masalah..." class="flex-1 bg-white/10 border border-white/10 text-white placeholder-slate-400 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-purple-500 transition-colors">
@@ -571,8 +356,8 @@
 
     <!-- Script Interaktif JS & Integrasi Google Sheets -->
     <script>
-        // URL Google Sheets CSV
-        const SPREADSHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1gGcUNOZusmIA8ucpQDnax83SPA-F-s9525JeFABkuew/export?format=csv';
+        // URL Google Sheets Khusus Sheet MACHPOP Kolom B sampai Z
+        const SPREADSHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1gGcUNOZusmIA8ucpQDnax83SPA-F-s9525JeFABkuew/gviz/tq?tqx=out:csv&sheet=MACHPOP&range=B:Z';
 
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -594,7 +379,6 @@
             }
         }
 
-        // Menampilkan tampilan bawaan internal (Dashboard, Backlog, & Population)
         function selectView(viewId, title) {
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
@@ -610,39 +394,57 @@
             }
         }
 
-        // Menampilkan berkas HTML eksternal
-        function selectExternalPage(url, title) {
-            document.getElementById('dashboard-view').classList.add('hidden');
-            document.getElementById('backlog-view').classList.add('hidden');
-            document.getElementById('population-view').classList.add('hidden');
+        // CSV Parser yang aman terhadap nilai berkoma di dalam kutip
+        function parseCSVRow(text) {
+            const result = [];
+            let cell = '';
+            let inQuotes = false;
             
-            const externalView = document.getElementById('external-page-view');
-            const iframe = document.getElementById('page-iframe');
-            
-            iframe.src = url;
-            externalView.classList.remove('hidden');
-            document.getElementById('page-title').innerText = title;
-            closeSidebar();
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                if (char === '"') {
+                    if (inQuotes && text[i + 1] === '"') {
+                        cell += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(cell.trim());
+                    cell = '';
+                } else {
+                    cell += char;
+                }
+            }
+            result.push(cell.trim());
+            return result;
         }
 
-        // Fungsi Memuat Data Langsung dari Google Sheets
+        // Memuat Data dari Google Sheets MACHPOP (B:Z)
         async function loadPopulationDataFromSheet() {
             const tbody = document.getElementById('population-tbody');
             if (!tbody) return;
 
-            tbody.innerHTML = `<tr><td colspan="25" class="p-6 text-center text-slate-600 italic">Sedang mengambil data terbaru dari Google Sheets...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-slate-600 italic">Sedang mengambil data dari sheet MACHPOP (Kolom B:Z)...</td></tr>`;
 
             try {
                 const response = await fetch(SPREADSHEET_CSV_URL);
                 const csvText = await response.text();
                 
-                // Parse CSV sederana
-                const rows = csvText.split('\n').map(row => row.split(','));
+                const rawRows = csvText.split(/\r?\n/);
                 tbody.innerHTML = '';
 
                 let dataCount = 0;
-                rows.slice(1).forEach((col, index) => {
-                    if (!col[0] || col[0].trim() === '') return;
+
+                // Loop mulai dari baris data kedua (mengabaikan header spreadsheet)
+                for (let i = 1; i < rawRows.length; i++) {
+                    if (!rawRows[i].trim()) continue;
+                    
+                    const col = parseCSVRow(rawRows[i]);
+                    
+                    // Lewati baris jika C/N kosong
+                    if (!col[0] || col[0] === '""') continue;
+                    
                     dataCount++;
 
                     const tr = document.createElement('tr');
@@ -650,9 +452,9 @@
                     
                     tr.innerHTML = `
                         <td class="p-3 font-bold">${dataCount}</td>
-                        <td class="p-3">${col[0] || '-'}</td>
+                        <td class="p-3 font-bold text-indigo-900">${col[0] || '-'}</td>
                         <td class="p-3 font-bold">${col[1] || '-'}</td>
-                        <td class="p-3 font-bold text-indigo-900">${col[2] || '-'}</td>
+                        <td class="p-3 font-bold text-emerald-800">${col[2] || '-'}</td>
                         <td class="p-3">${col[3] || '-'}</td>
                         <td class="p-3">${col[4] || '-'}</td>
                         <td class="p-3">${col[5] || '-'}</td>
@@ -663,7 +465,7 @@
                         <td class="p-3">${col[10] || '-'}</td>
                         <td class="p-3">${col[11] || '-'}</td>
                         <td class="p-3">${col[12] || '-'}</td>
-                        <td class="p-3 font-bold">${col[13] || '-'}</td>
+                        <td class="p-3">${col[13] || '-'}</td>
                         <td class="p-3">${col[14] || '-'}</td>
                         <td class="p-3">${col[15] || '-'}</td>
                         <td class="p-3">${col[16] || '-'}</td>
@@ -674,16 +476,17 @@
                         <td class="p-3">${col[21] || '-'}</td>
                         <td class="p-3 font-bold">${col[22] || '-'}</td>
                         <td class="p-3">${col[23] || '-'}</td>
+                        <td class="p-3">${col[24] || '-'}</td>
                     `;
                     tbody.appendChild(tr);
-                });
+                }
 
                 if (dataCount === 0) {
-                    tbody.innerHTML = `<tr><td colspan="25" class="p-6 text-center text-slate-600 italic">Data kosong atau format spreadsheet tidak sesuai.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-slate-600 italic">Data kosong pada sheet MACHPOP.</td></tr>`;
                 }
             } catch (error) {
                 console.error("Gagal memuat data populasi:", error);
-                tbody.innerHTML = `<tr><td colspan="25" class="p-6 text-center text-rose-600 font-bold">Gagal memuat data dari Google Sheets. Pastikan akses Google Sheets diset ke "Anyone with the link".</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-rose-600 font-bold">Gagal memuat data dari Google Sheets. Pastikan akses Google Sheets diset ke "Anyone with the link".</td></tr>`;
             }
         }
 
@@ -715,7 +518,7 @@
                     <div class="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[10px] shadow-md shrink-0">AI</div>
                     <div class="bg-white/10 text-slate-100 p-3 rounded-2xl border border-white/10 max-w-[85%] space-y-2 backdrop-blur-md">
                         <p class="font-bold text-purple-300"><i class="fa-solid fa-microchip"></i> Respon AI Assistant:</p>
-                        <p class="text-slate-200">Permintaan "${userText}" sedang diproses oleh engine rekomendasi engineering.</p>
+                        <p class="text-slate-200">Permintaan "${userText}" sedang diproses.</p>
                     </div>
                 </div>
             `;
