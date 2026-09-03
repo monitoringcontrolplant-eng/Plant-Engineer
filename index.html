@@ -55,7 +55,7 @@
 
             <!-- Header Brand & Tombol Close Sidebar -->
             <div class="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'EXECUTIVE DASHBOARD')">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
                     <i class="fa-solid fa-gears text-cyan-400 text-2xl"></i>
                     <div>
                         <span class="font-bold text-base tracking-wide text-white block leading-tight">PEIS</span>
@@ -67,64 +67,46 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu Lengkap -->
+            <!-- Navigation Menu Lengkap Sesuai Struktur Hierarki -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-gauge-high w-5 text-cyan-400"></i>
+                            <i class="fa-solid fa-house w-5 text-cyan-400"></i>
                             <span>DASHBOARD</span>
                         </div>
                         <i id="dash-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectView('dashboard-view', 'EXECUTIVE DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Executive Dashboard</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ENGINEERING DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Engineering Dashboard</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'MAINTENANCE DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Maintenance Dashboard</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'PLANNER DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Planner Dashboard</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'SUPERVISOR DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Supervisor Dashboard</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'MECHANIC DASHBOARD')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Mechanic Dashboard</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Plant Performance Overview</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Fleet Availability</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Breakdown Trend</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Top Failure Component</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Cost Impact</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Action Monitoring</a>
                     </div>
                 </div>
 
-                <!-- 2. MASTER DATA -->
+                <!-- 2. POPULATION UNIT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('master-sub', 'master-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-database w-5 text-amber-400"></i>
-                            <span>MASTER DATA</span>
+                            <i class="fa-solid fa-tractor w-5 text-emerald-400"></i>
+                            <span>POPULATION UNIT</span>
                         </div>
-                        <i id="master-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="master-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Location</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Fleet</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Vendor</a>
+                    <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1 text-xs text-slate-300 hover:text-emerald-300">Unit Database</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Lifetime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Policy</a>
                     </div>
                 </div>
 
-                <!-- 3. EQUIPMENT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('eq-sub', 'eq-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-truck-monster w-5 text-emerald-400"></i>
-                            <span>EQUIPMENT</span>
-                        </div>
-                        <i id="eq-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="eq-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectView('population-view', 'EQUIPMENT POPULATION')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Population (MACHPOP)</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Detail</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Equipment Status</a>
-                    </div>
-                </div>
-
-                <!-- 4. CONDITION MONITORING -->
+                <!-- 3. CONDITION MONITORING -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
@@ -135,25 +117,109 @@
                     </button>
                     <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inova Index</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PAP</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PPM</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS Monitoring</a>
                     </div>
                 </div>
 
-                <!-- 5. MAINTENANCE -->
+                <!-- 4. FAILURE ANALYSIS (FAR) -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('maint-sub', 'maint-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-wrench w-5 text-rose-400"></i>
-                            <span>MAINTENANCE</span>
+                            <span>FAILURE ANALYSIS (FAR)</span>
                         </div>
-                        <i id="maint-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="maint-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Work Order</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Preventive Maintenance</a>
-                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-bold hover:text-white">Backlog System</a>
+                    <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Create FAR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">RCA Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PICA</a>
+                    </div>
+                </div>
+
+                <!-- 5. BACKLOG MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-clipboard-list w-5 text-amber-400"></i>
+                            <span>BACKLOG MANAGEMENT</span>
+                        </div>
+                        <i id="backlog-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-bold hover:text-white">Finding List / Backlog System</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Priority & Risk</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Planning & Execution</a>
+                    </div>
+                </div>
+
+                <!-- 6. RELIABILITY DASHBOARD -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-pie w-5 text-blue-400"></i>
+                            <span>RELIABILITY DASHBOARD</span>
+                        </div>
+                        <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTBF & MTTR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Repeat Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Bad Actor Component</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Reliability Ranking</a>
+                    </div>
+                </div>
+
+                <!-- 7. KNOWLEDGE MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book w-5 text-yellow-400"></i>
+                            <span>KNOWLEDGE MANAGEMENT</span>
+                        </div>
+                        <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lesson Learned</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Troubleshooting Guide</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Standard Repair (WI / SOP)</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Failure Library</a>
+                    </div>
+                </div>
+
+                <!-- 8. ENGINEERING TOOLS -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-screwdriver-wrench w-5 text-teal-400"></i>
+                            <span>ENGINEERING TOOLS</span>
+                        </div>
+                        <i id="tools-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Torque Calculator</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Bearing Life Calculator</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Shaft Stress Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Life Calculator</a>
+                    </div>
+                </div>
+
+                <!-- 9. USER MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-users w-5 text-indigo-400"></i>
+                            <span>USER MANAGEMENT</span>
+                        </div>
+                        <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Admin</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Plant Engineer</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Supervisor</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Mechanic</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Viewer</a>
                     </div>
                 </div>
 
@@ -180,7 +246,7 @@
                     <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10 flex items-center justify-center" title="Buka Menu Navigasi">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
-                    <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm uppercase">EXECUTIVE DASHBOARD</h1>
+                    <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm uppercase">PLANT PERFORMANCE OVERVIEW</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="px-3 py-1 bg-emerald-500/20 text-emerald-200 border border-emerald-500/30 text-xs font-medium rounded-full backdrop-blur-md">System Ready</span>
@@ -237,12 +303,12 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (SPECIAL SHEET: MACHPOP RANGE B:Z) -->
+                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (MACHPOP RANGE B:Z) -->
                 <div id="population-view" class="hidden space-y-4">
                     <div class="glass-panel rounded-2xl shadow-2xl p-5 overflow-x-auto">
                         <div class="flex justify-between items-center mb-4">
                             <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                                <i class="fa-solid fa-truck-monster text-emerald-600"></i> Live Equipment Population Data (MACHPOP)
+                                <i class="fa-solid fa-tractor text-emerald-600"></i> Live Equipment Population Data (MACHPOP)
                             </h2>
                             <button onclick="loadPopulationDataFromSheet()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-md">
                                 <i class="fa-solid fa-rotate"></i> Refresh Data
@@ -290,13 +356,6 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: EXTERNAL PAGE FRAME -->
-                <div id="external-page-view" class="hidden h-full">
-                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
-                        <iframe id="page-iframe" src="about:blank" class="w-full h-full border-0"></iframe>
-                    </div>
-                </div>
-
             </div>
         </main>
 
@@ -332,7 +391,7 @@
                 <div class="flex items-start space-x-2.5">
                     <div class="w-7 h-7 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[10px] shadow-md shrink-0">AI</div>
                     <div class="bg-white/10 text-slate-100 p-3 rounded-2xl border border-white/10 max-w-[85%] space-y-2 backdrop-blur-md">
-                        <p>Halo! Saya AI Assistant PEIS. Ada yang bisa saya bantu terkait trouble shooting unit atau status backlog?</p>
+                        <p>Halo! Saya AI Assistant PEIS. Ada yang bisa saya bantu terkait troubleshooting unit atau status backlog?</p>
                     </div>
                 </div>
             </div>
@@ -351,7 +410,6 @@
 
     <!-- Script Interaktif JS -->
     <script>
-        // URL Google Sheets Khusus Sheet MACHPOP Kolom B sampai Z
         const SPREADSHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1gGcUNOZusmIA8ucpQDnax83SPA-F-s9525JeFABkuew/gviz/tq?tqx=out:csv&sheet=MACHPOP&range=B:Z';
 
         function openSidebar() {
@@ -378,7 +436,6 @@
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
             document.getElementById('population-view').classList.add('hidden');
-            document.getElementById('external-page-view').classList.add('hidden');
             
             document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
@@ -389,7 +446,6 @@
             }
         }
 
-        // CSV Parser yang presisi memisahkan tanda petik/koma
         function parseCSVRow(text) {
             const result = [];
             let cell = '';
@@ -415,7 +471,6 @@
             return result;
         }
 
-        // Memuat Data dari Google Sheets MACHPOP (B:Z)
         async function loadPopulationDataFromSheet() {
             const tbody = document.getElementById('population-tbody');
             if (!tbody) return;
@@ -435,11 +490,9 @@
                     if (!rawRows[i].trim()) continue;
                     
                     const col = parseCSVRow(rawRows[i]);
-                    
                     if (!col[0] || col[0] === '""') continue;
                     
                     dataCount++;
-
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-white/40 transition-colors";
                     
