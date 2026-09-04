@@ -3,145 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Engineering Integrated System (PEIS) - ANTAM</title>
+    <title>PEIS Portal - Plant Engineering Integrated System</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
             height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(100, 116, 139, 0.3);
             border-radius: 4px;
         }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .glass-sidebar {
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .glass-header {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .glass-modal {
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.5);
         }
     </style>
 </head>
-<body class="bg-slate-900 font-sans antialiased text-slate-800 min-h-screen">
+<body class="bg-slate-100 font-sans antialiased text-slate-800 min-h-screen">
 
-    <!-- ================= HALAMAN LOGIN (TEMA ANTAM SPLIT-SCREEN) ================= -->
-    <div id="login-view" class="fixed inset-0 z-50 flex flex-col lg:flex-row bg-slate-950">
+    <!-- ================= HALAMAN LOGIN (TEMA CERAH & INTERAKTIF PLANT ENGINEERING) ================= -->
+    <div id="login-view" class="fixed inset-0 z-50 flex flex-col lg:flex-row bg-gradient-to-br from-blue-50 via-slate-50 to-emerald-50">
         
-        <!-- Sisi Kiri: Banner / Visual Korporat ala ANTAM -->
-        <div class="lg:w-7/12 relative flex flex-col justify-between p-8 lg:p-16 overflow-hidden bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 text-white">
-            <!-- Background Overlay Pattern / Aksen Tambang -->
-            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
-            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Sisi Kiri: Banner Visual Plant & Industri Cerah -->
+        <div class="lg:w-7/12 relative flex flex-col justify-between p-8 lg:p-16 overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-700 to-emerald-600 text-white shadow-2xl">
+            <!-- Background Pola Teknik -->
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
 
             <!-- Header Brand -->
             <div class="relative z-10 flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center font-bold text-white shadow-lg">
-                    <i class="fa-solid fa-mountain text-lg"></i>
+                <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center font-bold text-white shadow-inner border border-white/30">
+                    <i class="fa-solid fa-industry text-xl"></i>
                 </div>
                 <div>
-                    <span class="font-black text-lg tracking-wider block leading-tight">MIND ID / ANTAM</span>
-                    <span class="text-[10px] text-emerald-400 tracking-widest uppercase">Mining Industry Indonesia</span>
+                    <span class="font-black text-lg tracking-wider block leading-tight">PEIS SYSTEM</span>
+                    <span class="text-[11px] text-blue-200 tracking-widest uppercase font-semibold">Plant Engineering Integrated</span>
                 </div>
             </div>
 
-            <!-- Konten Tengah Banner -->
+            <!-- Konten Tengah -->
             <div class="relative z-10 my-auto py-12 space-y-6 max-w-xl">
-                <span class="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-semibold rounded-full uppercase tracking-wider">
-                    Plant Engineering Division
+                <span class="inline-flex items-center px-3.5 py-1.5 bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">
+                    <i class="fa-solid fa-bolt mr-2 text-amber-300"></i> Smart Industrial Maintenance
                 </span>
-                <h1 class="text-3xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-                    Membangun Masa Depan Berkelanjutan dari Kekayaan Bumi Nusantara
+                <h1 class="text-3xl lg:text-5xl font-black tracking-tight text-white leading-tight drop-shadow-sm">
+                    Optimalisasi Perawatan & Manajemen Aset Pabrik Terpadu
                 </h1>
-                <p class="text-sm text-slate-300 leading-relaxed">
-                    Sistem Integrasi Perawatan, Manajemen Backlog, dan Pemantauan Performa Alat Berat Berbasis Teknologi Terpadu di Seluruh Wilayah Operasi.
+                <p class="text-sm lg:text-base text-blue-100 leading-relaxed font-medium">
+                    Platform cerdas pemantauan performa alat berat, manajemen backlog, dan keandalan mesin pabrik secara *real-time* untuk efisiensi operasional maksimal.
                 </p>
-                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
-                    <div>
-                        <p class="text-lg font-bold text-emerald-400">1968</p>
-                        <p class="text-[10px] text-slate-400 uppercase">Pioner Pertambangan</p>
+                <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20">
+                    <div class="bg-white/10 backdrop-blur-sm p-3.5 rounded-2xl border border-white/15">
+                        <p class="text-xl font-black text-amber-300">99.8%</p>
+                        <p class="text-[11px] text-blue-100 uppercase font-medium mt-0.5">System Uptime</p>
                     </div>
-                    <div>
-                        <p class="text-lg font-bold text-emerald-400">Zero</p>
-                        <p class="text-[10px] text-slate-400 uppercase">Fatalities Goal</p>
+                    <div class="bg-white/10 backdrop-blur-sm p-3.5 rounded-2xl border border-white/15">
+                        <p class="text-xl font-black text-emerald-300">Live</p>
+                        <p class="text-[11px] text-blue-100 uppercase font-medium mt-0.5">Backlog Tracker</p>
                     </div>
-                    <div>
-                        <p class="text-lg font-bold text-emerald-400">Integrated</p>
-                        <p class="text-[10px] text-slate-400 uppercase">Hulu ke Hilir</p>
+                    <div class="bg-white/10 backdrop-blur-sm p-3.5 rounded-2xl border border-white/15">
+                        <p class="text-xl font-black text-cyan-300">Auto</p>
+                        <p class="text-[11px] text-blue-100 uppercase font-medium mt-0.5">Machine Health</p>
                     </div>
                 </div>
             </div>
 
             <!-- Footer Banner -->
-            <div class="relative z-10 text-xs text-slate-400">
-                &copy; 2026 PT ANTAM Tbk. All Rights Reserved.
+            <div class="relative z-10 text-xs text-blue-200 font-medium">
+                &copy; 2026 Plant Engineering Division. All Rights Reserved.
             </div>
         </div>
 
-        <!-- Sisi Kanan: Form Login -->
-        <div class="lg:w-5/12 flex items-center justify-center p-8 bg-slate-900 border-l border-white/10 relative">
+        <!-- Sisi Kanan: Form Login Tema Cerah & Interaktif -->
+        <div class="lg:w-5/12 flex items-center justify-center p-8 bg-white shadow-2xl relative">
             <div class="w-full max-w-md space-y-6">
                 <div>
-                    <h2 class="text-2xl font-black text-white tracking-wide">Portal Login PEIS</h2>
-                    <p class="text-xs text-slate-400 mt-1">Silakan masukkan akun Plant Engineer Anda untuk melanjutkan.</p>
+                    <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Autentikasi Pengguna</span>
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-1">Masuk ke PEIS Portal</h2>
+                    <p class="text-xs text-slate-500 mt-1">Silakan masukkan kredensial akun Plant Engineer Anda.</p>
                 </div>
 
                 <form onsubmit="handleLogin(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Username</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Username</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                                 <i class="fa-solid fa-user text-xs"></i>
                             </span>
                             <input type="text" id="login-username" required placeholder="Masukkan username (cth: admin)" 
-                                class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors">
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Password</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Password</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                                 <i class="fa-solid fa-lock text-xs"></i>
                             </span>
                             <input type="password" id="login-password" required placeholder="Masukkan password (cth: engineer123)" 
-                                class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors">
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all">
                         </div>
                     </div>
 
-                    <div id="login-error" class="hidden p-3 bg-rose-500/20 border border-rose-500/40 rounded-xl text-rose-300 text-xs text-center font-medium">
+                    <div id="login-error" class="hidden p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-600 text-xs text-center font-semibold">
                         Username atau Password salah!
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg transition-all duration-300 transform active:scale-95">
-                        Masuk ke Sistem
+                    <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-blue-500/25 transition-all duration-300 transform active:scale-95">
+                        <i class="fa-solid fa-right-to-bracket mr-2"></i> Login ke Sistem
                     </button>
                 </form>
 
-                <div class="pt-4 border-t border-slate-800 text-center">
-                    <p class="text-[11px] text-slate-400">Demo Akses Cepat:</p>
-                    <button onclick="autoFillLogin()" class="mt-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-[10px] font-semibold transition-colors border border-slate-700">
-                        <i class="fa-solid fa-bolt mr-1"></i> Auto-Fill (admin / engineer123)
+                <div class="pt-4 border-t border-slate-200 text-center">
+                    <p class="text-[11px] text-slate-500 font-medium">Demo Akses Cepat:</p>
+                    <button onclick="autoFillLogin()" class="mt-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-blue-700 rounded-xl text-[11px] font-bold transition-all border border-slate-200 shadow-sm">
+                        <i class="fa-solid fa-bolt mr-1 text-amber-500"></i> Auto-Fill (admin / engineer123)
                     </button>
                 </div>
             </div>
@@ -152,23 +132,25 @@
     <!-- ================= APLIKASI UTAMA (SETELAH LOGIN) ================= -->
     <div id="app-main-container" class="hidden">
         <!-- OVERLAY LAYAR SAAT SIDEBAR TERBUKA -->
-        <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden transition-opacity duration-300"></div>
+        <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden transition-opacity duration-300"></div>
 
-        <div class="flex h-screen overflow-hidden relative bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-slate-800">
+        <div class="flex h-screen overflow-hidden relative bg-slate-100 text-slate-800">
 
-            <!-- SIDEBAR NAVIGATOR -->
-            <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
+            <!-- SIDEBAR NAVIGATOR (TEMA CERAH) -->
+            <aside id="main-sidebar" class="w-80 bg-white border-r border-slate-200 text-slate-800 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
                 <!-- Header Brand & Tombol Close Sidebar -->
-                <div class="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
+                <div class="h-16 flex items-center justify-between px-4 border-b border-slate-200 shrink-0 bg-white">
                     <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
-                        <i class="fa-solid fa-mountain text-emerald-400 text-2xl"></i>
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md">
+                            <i class="fa-solid fa-industry text-sm"></i>
+                        </div>
                         <div>
-                            <span class="font-bold text-base tracking-wide text-white block leading-tight">PEIS ANTAM</span>
-                            <span class="text-[10px] text-emerald-300/70 block tracking-wider">PLANT ENG INTEGRATED SYSTEM</span>
+                            <span class="font-black text-sm tracking-wide text-slate-900 block leading-tight">PEIS PORTAL</span>
+                            <span class="text-[10px] text-slate-500 block tracking-wider font-semibold">PLANT ENGINEERING</span>
                         </div>
                     </div>
-                    <button onclick="closeSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Tutup Sidebar">
+                    <button onclick="closeSidebar()" class="text-slate-500 hover:text-slate-900 p-2 rounded-xl hover:bg-slate-100 transition-colors" title="Tutup Sidebar">
                         <i class="fa-solid fa-bars-staggered text-lg"></i>
                     </button>
                 </div>
@@ -177,78 +159,80 @@
                 <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
                     <!-- 1. DASHBOARD -->
                     <div>
-                        <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
                             <div class="flex items-center space-x-3">
-                                <i class="fa-solid fa-house w-5 text-cyan-400"></i>
+                                <i class="fa-solid fa-house w-5 text-blue-600"></i>
                                 <span>DASHBOARD</span>
                             </div>
                             <i id="dash-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
-                        <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                            <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Plant Performance Overview</a>
-                            <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Fleet Availability</a>
-                            <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Breakdown Trend</a>
+                        <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-blue-600">Plant Performance Overview</a>
+                            <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-blue-600">Fleet Availability</a>
+                            <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-blue-600">Breakdown Trend</a>
                         </div>
                     </div>
 
                     <!-- 2. POPULATION UNIT -->
                     <div>
-                        <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
                             <div class="flex items-center space-x-3">
-                                <i class="fa-solid fa-tractor w-5 text-emerald-400"></i>
+                                <i class="fa-solid fa-tractor w-5 text-emerald-600"></i>
                                 <span>POPULATION UNIT</span>
                             </div>
                             <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
-                        <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                            <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1 text-xs text-slate-300 hover:text-emerald-300">Unit Database</a>
+                        <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-emerald-600">Unit Database</a>
                         </div>
                     </div>
 
                     <!-- 3. BACKLOG MANAGEMENT -->
                     <div>
-                        <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
+                        <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">
                             <div class="flex items-center space-x-3">
-                                <i class="fa-solid fa-clipboard-list w-5 text-amber-400"></i>
+                                <i class="fa-solid fa-clipboard-list w-5 text-amber-600"></i>
                                 <span>BACKLOG MANAGEMENT</span>
                             </div>
                             <i id="backlog-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
-                        <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                            <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-bold hover:text-white">Finding List / Backlog System</a>
+                        <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs font-bold text-amber-600 hover:text-amber-700">Finding List / Backlog System</a>
                         </div>
                     </div>
                 </nav>
 
                 <!-- User Info Footer dengan Tombol Logout -->
-                <div class="p-4 border-t border-white/10 bg-black/40 flex items-center justify-between shrink-0">
+                <div class="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
                     <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-xs shadow-md">
+                        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white text-xs shadow-md">
                             PE
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-white">Plant Engineer</p>
-                            <p class="text-[10px] text-slate-400">ANTAM UBP</p>
+                            <p class="text-xs font-bold text-slate-900">Plant Engineer</p>
+                            <p class="text-[10px] text-slate-500 font-semibold">Active Session</p>
                         </div>
                     </div>
-                    <button onclick="handleLogout()" class="p-2 text-slate-400 hover:text-rose-400 rounded-xl hover:bg-white/5 transition-colors" title="Keluar Sistem">
+                    <button onclick="handleLogout()" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-rose-50 transition-colors" title="Keluar Sistem">
                         <i class="fa-solid fa-right-from-bracket text-sm"></i>
                     </button>
                 </div>
             </aside>
 
             <!-- MAIN CONTENT AREA -->
-            <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
+            <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-slate-100">
                 <!-- Header Atas -->
-                <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg shrink-0">
+                <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-20 shadow-xs shrink-0">
                     <div class="flex items-center space-x-4">
-                        <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10 flex items-center justify-center" title="Buka Menu Navigasi">
+                        <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all shadow-xs border border-slate-200 flex items-center justify-center" title="Buka Menu Navigasi">
                             <i class="fa-solid fa-bars text-lg"></i>
                         </button>
-                        <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm uppercase">PLANT PERFORMANCE OVERVIEW</h1>
+                        <h1 id="page-title" class="text-sm lg:text-base font-black text-slate-900 tracking-tight uppercase">PLANT PERFORMANCE OVERVIEW</h1>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-200 border border-emerald-500/30 text-xs font-medium rounded-full backdrop-blur-md">ANTAM Connected</span>
+                    <div class="flex items-center space-x-3">
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-full shadow-xs flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Connected
+                        </span>
                     </div>
                 </header>
 
@@ -257,41 +241,54 @@
                     <!-- VIEW 1: DASHBOARD -->
                     <div id="dashboard-view" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                            <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
-                                <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
-                                <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
+                                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Avg MTBF</p>
+                                <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
+                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-up mr-1"></i> +4.2% bln ini</span>
                             </div>
-                            <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
-                                <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTTR</p>
-                                <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
+                                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Avg MTTR</p>
+                                <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
+                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-down mr-1"></i> -0.5 jam</span>
                             </div>
-                            <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
-                                <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Repeat Failure</p>
-                                <h3 class="text-2xl font-black text-rose-800 mt-1">2.8%</h3>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
+                                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Repeat Failure</p>
+                                <h3 class="text-2xl font-black text-rose-600 mt-1">2.8%</h3>
+                                <span class="inline-block mt-2 text-[10px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Perlu Atensi</span>
                             </div>
-                            <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
-                                <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Biaya Maint.</p>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
+                                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Biaya Maint.</p>
                                 <h3 class="text-2xl font-black text-slate-900 mt-1">$124.5K</h3>
+                                <span class="inline-block mt-2 text-[10px] text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-check mr-1"></i> Sesuai Budget</span>
                             </div>
-                            <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
-                                <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Fleet Health</p>
-                                <h3 class="text-2xl font-black text-blue-900 mt-1">88 / 100</h3>
+                            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
+                                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Fleet Health</p>
+                                <h3 class="text-2xl font-black text-blue-600 mt-1">88 / 100</h3>
+                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-shield-halved mr-1"></i> Optimal</span>
                             </div>
+                        </div>
+
+                        <!-- Panel Tambahan Interaktif -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
+                            <h3 class="font-bold text-slate-900 text-sm mb-2">Selamat Datang di Portal PEIS</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Gunakan menu di sidebar sebelah kiri untuk menavigasi ke data populasi unit mesin, pemantauan status alat berat secara langsung, serta manajemen backlog pemeliharaan pabrik.
+                            </p>
                         </div>
                     </div>
 
                     <!-- VIEW 2: BACKLOG -->
                     <div id="backlog-view" class="hidden h-full">
-                        <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden h-[calc(100vh-140px)]">
                             <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                         </div>
                     </div>
 
                     <!-- VIEW 3: POPULATION -->
                     <div id="population-view" class="hidden space-y-4">
-                        <div class="glass-panel rounded-2xl shadow-2xl p-5 overflow-x-auto">
-                            <h2 class="font-bold text-slate-900 text-base mb-4">Live Equipment Population Data (MACHPOP)</h2>
-                            <div id="population-tbody" class="text-xs text-slate-700">Memuat data...</div>
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                            <h2 class="font-bold text-slate-900 text-sm mb-4">Live Equipment Population Data (MACHPOP)</h2>
+                            <div id="population-tbody" class="text-xs text-slate-600">Memuat data Google Sheets...</div>
                         </div>
                     </div>
                 </div>
@@ -313,6 +310,7 @@
                 errorDiv.classList.add('hidden');
                 document.getElementById('login-view').classList.add('hidden');
                 document.getElementById('app-main-container').classList.remove('hidden');
+                loadPopulationData();
             } else {
                 errorDiv.classList.remove('hidden');
             }
@@ -358,6 +356,44 @@
             document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
             closeSidebar();
+        }
+
+        async function loadPopulationData() {
+            const container = document.getElementById('population-tbody');
+            try {
+                const response = await fetch(SPREADSHEET_CSV_URL);
+                const data = await response.text();
+                const rows = data.split('\n').map(row => row.split(','));
+                
+                if (rows.length > 0) {
+                    let html = '<div class="overflow-x-auto"><table class="w-full text-left border-collapse"><thead class="bg-slate-100 text-slate-700 text-[11px] uppercase tracking-wider"><tr>';
+                    
+                    // Header table
+                    const headers = rows[0];
+                    headers.forEach(h => {
+                        html += `<th class="p-3 border-b border-slate-200 font-bold">${h.replace(/"/g, '')}</th>`;
+                    });
+                    html += '</tr></thead><tbody class="divide-y divide-slate-200 text-xs text-slate-700">';
+
+                    // Rows data (maksimal 50 baris pertama)
+                    for (let i = 1; i < Math.min(rows.length, 50); i++) {
+                        const cols = rows[i];
+                        if (cols.length > 1 && cols[0].trim() !== '') {
+                            html += '<tr class="hover:bg-slate-50 transition-colors">';
+                            cols.forEach(c => {
+                                html += `<td class="p-3 border-b border-slate-100">${c.replace(/"/g, '')}</td>`;
+                            });
+                            html += '</tr>';
+                        }
+                    }
+                    html += '</tbody></table></div>';
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p class="text-slate-500">Tidak ada data ditemukan.</p>';
+                }
+            } catch (err) {
+                container.innerHTML = '<p class="text-rose-500">Gagal memuat data dari Spreadsheet. Pastikan koneksi internet aktif.</p>';
+            }
         }
     </script>
 </body>
