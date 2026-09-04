@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PEIS Portal (Odoo Style)</title>
+    <title>Plant Engineering Integrated System (PEIS - Odoo Style)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
             height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -27,27 +27,27 @@
     <!-- ================= HALAMAN LOGIN (GAYA TEMA ODOO) ================= -->
     <div id="login-view" class="fixed inset-0 z-50 flex flex-col justify-between bg-slate-50 overflow-y-auto">
         
-        <!-- Header / Logo Odoo Style (Pojok Kiri Atas) -->
+        <!-- Header Login Minimalis -->
         <div class="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
             <div class="flex items-center space-x-2">
                 <div class="w-8 h-8 rounded-lg bg-purple-900 flex items-center justify-center text-white font-black text-sm shadow-sm">
-                    <i class="fa-solid fa-industry"></i>
+                    <i class="fa-solid fa-gears"></i>
                 </div>
-                <span class="font-bold text-lg text-slate-900 tracking-tight">PEIS <span class="text-purple-700 font-normal">Enterprise</span></span>
+                <span class="font-bold text-lg text-slate-900 tracking-tight">PEIS <span class="text-purple-700 font-normal">Odoo Portal</span></span>
             </div>
             <div>
-                <span class="text-xs text-slate-500 font-medium hidden sm:inline">Butuh bantuan sistem?</span>
-                <a href="#" onclick="autoFillLogin()" class="ml-2 text-xs font-bold text-purple-700 hover:underline">Demo Akses Cepat</a>
+                <span class="text-xs text-slate-500 font-medium hidden sm:inline">Akses Cepat Database?</span>
+                <button onclick="autoFillLogin()" class="ml-2 text-xs font-bold text-purple-700 hover:underline">Demo Auto-Fill</button>
             </div>
         </div>
 
-        <!-- Konten Tengah: Card Login Ala Odoo -->
+        <!-- Card Form Login Tengah -->
         <div class="w-full max-w-md mx-auto px-6 my-auto py-8">
-            <div class="bg-white border border-slate-200/80 rounded-2xl shadow-xl shadow-slate-200/50 p-8 space-y-6">
+            <div class="bg-white border border-slate-200/90 rounded-2xl shadow-xl shadow-slate-200/50 p-8 space-y-6">
                 
                 <div class="text-center space-y-1">
-                    <h1 class="text-xl font-bold text-slate-900 tracking-tight">Masuk ke Database Pabrik</h1>
-                    <p class="text-xs text-slate-500">Plant Engineering Integrated System</p>
+                    <h1 class="text-xl font-bold text-slate-900 tracking-tight">Masuk ke Sistem</h1>
+                    <p class="text-xs text-slate-500">Plant Engineering Integrated System (PEIS)</p>
                 </div>
 
                 <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -64,7 +64,7 @@
                     </div>
 
                     <div id="login-error" class="hidden p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-600 text-xs text-center font-semibold">
-                        Username atau Password salah!
+                        Username atau Password salah! (Gunakan: admin / engineer123)
                     </div>
 
                     <button type="submit" class="w-full py-3 bg-purple-900 hover:bg-purple-800 text-white rounded-lg text-xs font-bold uppercase tracking-wider shadow-md shadow-purple-900/20 transition-all">
@@ -73,40 +73,39 @@
                 </form>
 
                 <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                    <span>Powered by Plant Division</span>
-                    <button onclick="autoFillLogin()" class="text-purple-700 font-semibold hover:underline">Auto-Fill Demo</button>
+                    <span>Plant Site: Batu Hijau</span>
+                    <button onclick="autoFillLogin()" class="text-purple-700 font-semibold hover:underline">Isi Otomatis</button>
                 </div>
             </div>
         </div>
 
-        <!-- Footer Odoo Style -->
+        <!-- Footer -->
         <div class="w-full py-6 text-center text-xs text-slate-400">
-            <span class="hover:underline cursor-pointer">Privacy Policy</span> &bull; 
-            <span class="hover:underline cursor-pointer">Terms of Service</span> &bull; 
-            <span>&copy; 2026 PEIS Systems</span>
+            <span>Privacy Policy</span> &bull; <span>Terms of Service</span> &bull; <span>&copy; 2026 PEIS Systems</span>
         </div>
     </div>
 
 
     <!-- ================= APLIKASI UTAMA (SETELAH LOGIN) ================= -->
     <div id="app-main-container" class="hidden">
+
         <!-- OVERLAY LAYAR SAAT SIDEBAR TERBUKA -->
         <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden transition-opacity duration-300"></div>
 
         <div class="flex h-screen overflow-hidden relative bg-slate-100 text-slate-800">
 
-            <!-- SIDEBAR NAVIGATOR -->
+            <!-- SIDEBAR NAVIGATOR (Gaya Bersih Odoo dengan Menu Lengkap Anda) -->
             <aside id="main-sidebar" class="w-80 bg-white border-r border-slate-200 text-slate-800 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
                 <!-- Header Brand & Tombol Close Sidebar -->
                 <div class="h-16 flex items-center justify-between px-4 border-b border-slate-200 shrink-0 bg-white">
                     <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
                         <div class="w-9 h-9 rounded-xl bg-purple-900 flex items-center justify-center text-white shadow-md">
-                            <i class="fa-solid fa-industry text-sm"></i>
+                            <i class="fa-solid fa-gears text-sm"></i>
                         </div>
                         <div>
                             <span class="font-black text-sm tracking-wide text-slate-900 block leading-tight">PEIS PORTAL</span>
-                            <span class="text-[10px] text-slate-500 block tracking-wider font-semibold">PLANT ENGINEERING</span>
+                            <span class="text-[10px] text-slate-500 block tracking-wider font-semibold">PLANT ENG INTEGRATED SYSTEM</span>
                         </div>
                     </div>
                     <button onclick="closeSidebar()" class="text-slate-500 hover:text-slate-900 p-2 rounded-xl hover:bg-slate-100 transition-colors" title="Tutup Sidebar">
@@ -114,8 +113,9 @@
                     </button>
                 </div>
 
-                <!-- Navigation Menu Lengkap -->
+                <!-- Navigation Menu Lengkap Sesuai Struktur Hierarki Asli -->
                 <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
+
                     <!-- 1. DASHBOARD -->
                     <div>
                         <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-purple-50 hover:text-purple-700 transition-colors">
@@ -129,6 +129,9 @@
                             <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-purple-700">Plant Performance Overview</a>
                             <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-purple-700">Fleet Availability</a>
                             <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-purple-700">Breakdown Trend</a>
+                            <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-purple-700">Top Failure Component</a>
+                            <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-purple-700">Cost Impact</a>
+                            <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-purple-700">Action Monitoring</a>
                         </div>
                     </div>
 
@@ -142,12 +145,46 @@
                             <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                         </button>
                         <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
-                            <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-emerald-600">Unit Database</a>
-                            <a href="#" onclick="selectView('add-unit-view', 'TAMBAH UNIT & EQUIPMENT BARU')" class="block py-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700"><i class="fa-solid fa-plus-circle mr-1"></i> Add Unit & Equipment</a>
+                            <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700">Unit Database</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Unit History</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Component Lifetime</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Component Policy</a>
                         </div>
                     </div>
 
-                    <!-- 3. BACKLOG MANAGEMENT -->
+                    <!-- 3. CONDITION MONITORING -->
+                    <div>
+                        <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-chart-line w-5 text-blue-600"></i>
+                                <span>CONDITION MONITORING</span>
+                            </div>
+                            <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Inova Index</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Oil Analysis</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">VHMS Monitoring</a>
+                        </div>
+                    </div>
+
+                    <!-- 4. FAILURE ANALYSIS (FAR) -->
+                    <div>
+                        <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-rose-50 hover:text-rose-600 transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-wrench w-5 text-rose-600"></i>
+                                <span>FAILURE ANALYSIS (FAR)</span>
+                            </div>
+                            <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Create FAR</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">RCA Analysis</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">PICA</a>
+                        </div>
+                    </div>
+
+                    <!-- 5. BACKLOG MANAGEMENT -->
                     <div>
                         <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-colors">
                             <div class="flex items-center space-x-3">
@@ -158,8 +195,80 @@
                         </button>
                         <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
                             <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs font-bold text-amber-600 hover:text-amber-700">Finding List / Backlog System</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Priority & Risk</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Planning & Execution</a>
                         </div>
                     </div>
+
+                    <!-- 6. RELIABILITY DASHBOARD -->
+                    <div>
+                        <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-chart-pie w-5 text-indigo-600"></i>
+                                <span>RELIABILITY DASHBOARD</span>
+                            </div>
+                            <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">MTBF & MTTR</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Repeat Failure</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Bad Actor Component</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Reliability Ranking</a>
+                        </div>
+                    </div>
+
+                    <!-- 7. KNOWLEDGE MANAGEMENT -->
+                    <div>
+                        <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-book w-5 text-yellow-600"></i>
+                                <span>KNOWLEDGE MANAGEMENT</span>
+                            </div>
+                            <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Lesson Learned</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Troubleshooting Guide</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Standard Repair (WI / SOP)</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Failure Library</a>
+                        </div>
+                    </div>
+
+                    <!-- 8. ENGINEERING TOOLS -->
+                    <div>
+                        <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-screwdriver-wrench w-5 text-teal-600"></i>
+                                <span>ENGINEERING TOOLS</span>
+                            </div>
+                            <i id="tools-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Torque Calculator</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Bearing Life Calculator</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Shaft Stress Analysis</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Component Life Calculator</a>
+                        </div>
+                    </div>
+
+                    <!-- 9. USER MANAGEMENT -->
+                    <div>
+                        <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl text-slate-700 hover:bg-purple-50 hover:text-purple-700 transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-users w-5 text-purple-700"></i>
+                                <span>USER MANAGEMENT</span>
+                            </div>
+                            <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-50 rounded-xl mt-1 border border-slate-200/60">
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Admin</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Plant Engineer</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Supervisor</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Mechanic</a>
+                            <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900">Viewer</a>
+                        </div>
+                    </div>
+
                 </nav>
 
                 <!-- User Info Footer dengan Tombol Logout -->
@@ -170,7 +279,7 @@
                         </div>
                         <div>
                             <p class="text-xs font-bold text-slate-900">Plant Engineer</p>
-                            <p class="text-[10px] text-slate-500 font-semibold">Active Session</p>
+                            <p class="text-[10px] text-slate-500">Administrator</p>
                         </div>
                     </div>
                     <button onclick="handleLogout()" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-rose-50 transition-colors" title="Keluar Sistem">
@@ -181,7 +290,8 @@
 
             <!-- MAIN CONTENT AREA -->
             <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-slate-100">
-                <!-- Header Atas -->
+
+                <!-- Header Atas (Odoo Light Theme Style) -->
                 <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-20 shadow-xs shrink-0">
                     <div class="flex items-center space-x-4">
                         <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all shadow-xs border border-slate-200 flex items-center justify-center" title="Buka Menu Navigasi">
@@ -193,135 +303,161 @@
                         <span class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold rounded-full shadow-xs flex items-center">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Connected
                         </span>
+                        <span class="text-xs font-bold text-slate-600 hidden sm:inline">Site: Batu Hijau</span>
                     </div>
                 </header>
 
                 <!-- CONTAINER CONTENT -->
                 <div class="flex-1 p-6">
-                    <!-- VIEW 1: DASHBOARD -->
+
+                    <!-- VIEW 1: DASHBOARD UTAMA -->
                     <div id="dashboard-view" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
                                 <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Avg MTBF</p>
                                 <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
-                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-up mr-1"></i> +4.2% bln ini</span>
+                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-up mr-1"></i> +5.2% vs bln lalu</span>
                             </div>
                             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
                                 <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Avg MTTR</p>
                                 <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
-                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-down mr-1"></i> -0.5 jam</span>
+                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-down mr-1"></i> -12% pemulihan</span>
                             </div>
                             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
                                 <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Repeat Failure</p>
                                 <h3 class="text-2xl font-black text-rose-600 mt-1">2.8%</h3>
-                                <span class="inline-block mt-2 text-[10px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Perlu Atensi</span>
+                                <span class="inline-block mt-2 text-[10px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Target: &lt; 2.0%</span>
                             </div>
                             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
                                 <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Biaya Maint.</p>
                                 <h3 class="text-2xl font-black text-slate-900 mt-1">$124.5K</h3>
-                                <span class="inline-block mt-2 text-[10px] text-purple-700 font-bold bg-purple-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-check mr-1"></i> Sesuai Budget</span>
+                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-check mr-1"></i> 8% dibawah budget</span>
                             </div>
                             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 hover:shadow-md transition-shadow">
                                 <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Fleet Health</p>
                                 <h3 class="text-2xl font-black text-purple-700 mt-1">88 / 100</h3>
-                                <span class="inline-block mt-2 text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-shield-halved mr-1"></i> Optimal</span>
+                                <span class="inline-block mt-2 text-[10px] text-slate-600 font-semibold bg-slate-100 px-2 py-0.5 rounded-md">Skor PAP, VHMS, PPM</span>
                             </div>
                         </div>
 
-                        <!-- Panel Tambahan Interaktif -->
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                            <h3 class="font-bold text-slate-900 text-sm mb-2">Selamat Datang di Portal PEIS</h3>
-                            <p class="text-xs text-slate-600 leading-relaxed">
-                                Gunakan menu di sidebar sebelah kiri untuk menavigasi ke data populasi unit mesin, pemantauan status alat berat secara langsung, serta manajemen backlog pemeliharaan pabrik.
-                            </p>
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+                            <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-heart-pulse text-rose-600"></i> Equipment Health Score Monitor (0 - 100)
+                            </h2>
+                            <p class="text-xs text-slate-600">Gunakan menu di sidebar untuk memantau data populasi unit mesin atau membuka sistem backlog.</p>
                         </div>
                     </div>
 
-                    <!-- VIEW 2: BACKLOG -->
+                    <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT -->
                     <div id="backlog-view" class="hidden h-full">
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden h-[calc(100vh-140px)]">
                             <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                         </div>
                     </div>
 
-                    <!-- VIEW 3: POPULATION -->
+                    <!-- VIEW 3: EQUIPMENT POPULATION VIEW (MACHPOP RANGE B:Z) -->
                     <div id="population-view" class="hidden space-y-4">
-                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                            <h2 class="font-bold text-slate-900 text-sm mb-4">Live Equipment Population Data (MACHPOP)</h2>
-                            <div id="population-tbody" class="text-xs text-slate-600">Memuat data Google Sheets...</div>
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-tractor text-emerald-600"></i> Live Equipment Population Data (MACHPOP)
+                                </h2>
+                                <button onclick="loadPopulationDataFromSheet()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-xs">
+                                    <i class="fa-solid fa-rotate"></i> Refresh Data
+                                </button>
+                            </div>
+                            <div class="max-h-[calc(100vh-220px)] overflow-y-auto custom-scrollbar">
+                                <table class="w-full text-left text-xs whitespace-nowrap text-slate-800">
+                                    <thead class="sticky top-0 bg-slate-100 text-slate-700 border-b border-slate-200 uppercase tracking-wider text-[11px]">
+                                        <tr>
+                                            <th class="p-3">NO</th>
+                                            <th class="p-3">CN</th>
+                                            <th class="p-3">MODEL</th>
+                                            <th class="p-3">HM</th>
+                                            <th class="p-3">HM LAST SERVICE</th>
+                                            <th class="p-3">TGL LAST SERVICE</th>
+                                            <th class="p-3">DOWNTIME STATUS</th>
+                                            <th class="p-3">SITUATION</th>
+                                            <th class="p-3">PLAN COMPONENT REPLACEMENT</th>
+                                            <th class="p-3">CRITICAL COMPONENT</th>
+                                            <th class="p-3">PAP BAD TREND</th>
+                                            <th class="p-3">REMARK PAP</th>
+                                            <th class="p-3">CRITICAL BACKLOG</th>
+                                            <th class="p-3">REMARK BACKLOG</th>
+                                            <th class="p-3">STATUS APAR</th>
+                                            <th class="p-3">STATUS ANSUL</th>
+                                            <th class="p-3">EXP APAR / ANSUL</th>
+                                            <th class="p-3">LAST COMMISSIONING</th>
+                                            <th class="p-3">DUE COMMISSIONING</th>
+                                            <th class="p-3">EXP STNK</th>
+                                            <th class="p-3">STATUS FABRICATION</th>
+                                            <th class="p-3">SCHEDULE MAINTENANCE</th>
+                                            <th class="p-3">REMARK SCHEDULE</th>
+                                            <th class="p-3">LOCATION</th>
+                                            <th class="p-3">POPULATION STATUS</th>
+                                            <th class="p-3">UPDATE DATE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="population-tbody" class="divide-y divide-slate-100">
+                                        <tr>
+                                            <td colspan="26" class="p-6 text-center text-slate-500 italic">Memuat data dari Google Sheets MACHPOP (B:Z)...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- VIEW 4: ADD UNIT & EQUIPMENT -->
-                    <div id="add-unit-view" class="hidden space-y-6 max-w-3xl mx-auto">
-                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-                            <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-200">
-                                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                                    <i class="fa-solid fa-plus text-sm"></i>
-                                </div>
-                                <div>
-                                    <h2 class="font-black text-slate-900 text-base">Registrasi Unit & Equipment Baru</h2>
-                                    <p class="text-xs text-slate-500">Formulir penambahan data aset dan alat berat baru ke dalam sistem MACHPOP.</p>
-                                </div>
-                            </div>
+                </div>
+            </main>
 
-                            <form onsubmit="handleSaveUnit(event)" class="space-y-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nomor Unit / Tag Number</label>
-                                        <input type="text" id="unit-code" required placeholder="Cth: EX-092" 
-                                            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white transition-all">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Nama / Tipe Mesin</label>
-                                        <input type="text" id="unit-name" required placeholder="Cth: Excavator CAT 320D" 
-                                            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white transition-all">
-                                    </div>
-                                </div>
+            <!-- FLOATING ACTION BUTTON (FAB) AI ASSISTANT -->
+            <div class="fixed bottom-6 right-6 z-50">
+                <button onclick="toggleAIModal()" class="relative group flex items-center justify-center w-14 h-14 bg-purple-900 text-white rounded-full shadow-2xl hover:scale-110 transition-all duration-300 focus:outline-none">
+                    <i class="fa-solid fa-robot text-2xl"></i>
+                    <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-4 w-4 bg-purple-600"></span>
+                    </span>
+                </button>
+            </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Departemen / Area</label>
-                                        <select id="unit-dept" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white transition-all">
-                                            <option value="Production">Production Plant</option>
-                                            <option value="Mining">Mining & Heavy Duty</option>
-                                            <option value="Utility">Utility & Power Plant</option>
-                                            <option value="Workshop">Workshop & Maintenance</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Status Awal Unit</label>
-                                        <select id="unit-status" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white transition-all">
-                                            <option value="Operational">Operational (Ready)</option>
-                                            <option value="Standby">Standby</option>
-                                            <option value="Under Maintenance">Under Maintenance</option>
-                                        </select>
-                                    </div>
-                                </div>
+            <!-- MODAL AI ASSISTANT -->
+            <div id="ai-modal" class="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col hidden border border-slate-200 overflow-hidden text-slate-800">
+                <div class="p-4 bg-purple-900 text-white border-b border-purple-800 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-purple-800 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-xs tracking-wide">AI Assistant Engineering</h2>
+                            <p class="text-[10px] text-purple-200">Troubleshooting & diagnosa otomatis</p>
+                        </div>
+                    </div>
+                    <button onclick="toggleAIModal()" class="text-slate-300 hover:text-white p-1 rounded-lg">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
 
-                                <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Keterangan / Catatan Spesifikasi</label>
-                                    <textarea id="unit-desc" rows="3" placeholder="Masukkan spesifikasi tambahan atau catatan kondisi awal..." 
-                                        class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white transition-all"></textarea>
-                                </div>
-
-                                <div id="form-alert" class="hidden p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-700 text-xs font-semibold text-center">
-                                    Unit baru berhasil disimpan ke dalam sistem!
-                                </div>
-
-                                <div class="pt-4 flex items-center justify-end space-x-3">
-                                    <button type="reset" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all">
-                                        Reset Form
-                                    </button>
-                                    <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition-all">
-                                        <i class="fa-solid fa-save mr-2"></i> Simpan Unit Baru
-                                    </button>
-                                </div>
-                            </form>
+                <div id="chat-conversation" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs custom-scrollbar bg-slate-50">
+                    <div class="flex items-start space-x-2.5">
+                        <div class="w-7 h-7 rounded-full bg-purple-900 text-white flex items-center justify-center font-bold text-[10px] shadow-xs shrink-0">AI</div>
+                        <div class="bg-white text-slate-800 p-3 rounded-2xl border border-slate-200 max-w-[85%] space-y-2 shadow-xs">
+                            <p>Halo! Saya AI Assistant PEIS. Ada yang bisa saya bantu terkait troubleshooting unit atau status backlog?</p>
                         </div>
                     </div>
                 </div>
-            </main>
+
+                <div class="p-3 border-t border-slate-200 bg-white">
+                    <div class="flex items-center space-x-2">
+                        <input id="ai-input" type="text" onkeypress="handleKeyPress(event)" placeholder="Ketik pertanyaan atau masalah..." class="flex-1 bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-purple-700 transition-colors">
+                        <button onclick="submitAIChat()" class="p-2 bg-purple-900 hover:bg-purple-800 text-white rounded-xl transition-colors shadow-xs">
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -339,7 +475,6 @@
                 errorDiv.classList.add('hidden');
                 document.getElementById('login-view').classList.add('hidden');
                 document.getElementById('app-main-container').classList.remove('hidden');
-                loadPopulationData();
             } else {
                 errorDiv.classList.remove('hidden');
             }
@@ -371,6 +506,7 @@
         function toggleSubmenu(menuId, arrowId) {
             const submenu = document.getElementById(menuId);
             const arrow = document.getElementById(arrowId);
+            
             if (submenu && arrow) {
                 submenu.classList.toggle('hidden');
                 arrow.classList.toggle('rotate-180');
@@ -381,60 +517,147 @@
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
             document.getElementById('population-view').classList.add('hidden');
-            document.getElementById('add-unit-view').classList.add('hidden');
             
             document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
             closeSidebar();
+
+            if (viewId === 'population-view') {
+                loadPopulationDataFromSheet();
+            }
         }
 
-        function handleSaveUnit(e) {
-            e.preventDefault();
-            const alertBox = document.getElementById('form-alert');
-            alertBox.classList.remove('hidden');
+        function parseCSVRow(text) {
+            const result = [];
+            let cell = '';
+            let inQuotes = false;
             
-            setTimeout(() => {
-                alertBox.classList.add('hidden');
-                e.target.reset();
-            }, 3000);
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                if (char === '"') {
+                    if (inQuotes && text[i + 1] === '"') {
+                        cell += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(cell.trim());
+                    cell = '';
+                } else {
+                    cell += char;
+                }
+            }
+            result.push(cell.trim());
+            return result;
         }
 
-        async function loadPopulationData() {
-            const container = document.getElementById('population-tbody');
+        async function loadPopulationDataFromSheet() {
+            const tbody = document.getElementById('population-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-slate-500 italic">Sedang mengambil data dari sheet MACHPOP (Kolom B:Z)...</td></tr>`;
+
             try {
                 const response = await fetch(SPREADSHEET_CSV_URL);
-                const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(','));
+                const csvText = await response.text();
                 
-                if (rows.length > 0) {
-                    let html = '<div class="overflow-x-auto"><table class="w-full text-left border-collapse"><thead class="bg-slate-100 text-slate-700 text-[11px] uppercase tracking-wider"><tr>';
-                    
-                    // Header table
-                    const headers = rows[0];
-                    headers.forEach(h => {
-                        html += `<th class="p-3 border-b border-slate-200 font-bold">${h.replace(/"/g, '')}</th>`;
-                    });
-                    html += '</tr></thead><tbody class="divide-y divide-slate-200 text-xs text-slate-700">';
+                const rawRows = csvText.split(/\r?\n/);
+                tbody.innerHTML = '';
 
-                    // Rows data (maksimal 50 baris pertama)
-                    for (let i = 1; i < Math.min(rows.length, 50); i++) {
-                        const cols = rows[i];
-                        if (cols.length > 1 && cols[0].trim() !== '') {
-                            html += '<tr class="hover:bg-slate-50 transition-colors">';
-                            cols.forEach(c => {
-                                html += `<td class="p-3 border-b border-slate-100">${c.replace(/"/g, '')}</td>`;
-                            });
-                            html += '</tr>';
-                        }
-                    }
-                    html += '</tbody></table></div>';
-                    container.innerHTML = html;
-                } else {
-                    container.innerHTML = '<p class="text-slate-500">Tidak ada data ditemukan.</p>';
+                let dataCount = 0;
+
+                for (let i = 1; i < rawRows.length; i++) {
+                    if (!rawRows[i].trim()) continue;
+                    
+                    const col = parseCSVRow(rawRows[i]);
+                    if (!col[0] || col[0] === '""') continue;
+                    
+                    dataCount++;
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50 transition-colors";
+                    
+                    tr.innerHTML = `
+                        <td class="p-3 font-bold">${dataCount}</td>
+                        <td class="p-3 font-bold text-purple-900">${col[0] || '-'}</td>
+                        <td class="p-3 font-bold">${col[1] || '-'}</td>
+                        <td class="p-3 font-bold text-emerald-700">${col[2] || '-'}</td>
+                        <td class="p-3">${col[3] || '-'}</td>
+                        <td class="p-3">${col[4] || '-'}</td>
+                        <td class="p-3">${col[5] || '-'}</td>
+                        <td class="p-3">${col[6] || '-'}</td>
+                        <td class="p-3">${col[7] || '-'}</td>
+                        <td class="p-3">${col[8] || '-'}</td>
+                        <td class="p-3">${col[9] || '-'}</td>
+                        <td class="p-3">${col[10] || '-'}</td>
+                        <td class="p-3">${col[11] || '-'}</td>
+                        <td class="p-3">${col[12] || '-'}</td>
+                        <td class="p-3">${col[13] || '-'}</td>
+                        <td class="p-3">${col[14] || '-'}</td>
+                        <td class="p-3">${col[15] || '-'}</td>
+                        <td class="p-3">${col[16] || '-'}</td>
+                        <td class="p-3">${col[17] || '-'}</td>
+                        <td class="p-3">${col[18] || '-'}</td>
+                        <td class="p-3">${col[19] || '-'}</td>
+                        <td class="p-3">${col[20] || '-'}</td>
+                        <td class="p-3">${col[21] || '-'}</td>
+                        <td class="p-3 font-bold">${col[22] || '-'}</td>
+                        <td class="p-3">${col[23] || '-'}</td>
+                        <td class="p-3">${col[24] || '-'}</td>
+                    `;
+                    tbody.appendChild(tr);
                 }
-            } catch (err) {
-                container.innerHTML = '<p class="text-rose-500">Gagal memuat data dari Spreadsheet. Pastikan koneksi internet aktif.</p>';
+
+                if (dataCount === 0) {
+                    tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-slate-500 italic">Data kosong pada sheet MACHPOP.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Gagal memuat data populasi:", error);
+                tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-rose-600 font-bold">Gagal memuat data dari Google Sheets. Pastikan akses Google Sheets diset ke "Anyone with the link".</td></tr>`;
             }
+        }
+
+        function toggleAIModal() {
+            document.getElementById('ai-modal').classList.toggle('hidden');
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') submitAIChat();
+        }
+
+        function submitAIChat() {
+            const input = document.getElementById('ai-input');
+            const target = document.getElementById('chat-conversation');
+            if(!input.value.trim()) return;
+
+            const userText = input.value;
+            
+            const userBubble = `
+                <div class="flex items-start space-x-2.5 justify-end">
+                    <div class="bg-purple-900 text-white p-3 rounded-2xl shadow-xs max-w-[85%]">
+                        <p>${userText}</p>
+                    </div>
+                </div>
+            `;
+            
+            const aiBubble = `
+                <div class="flex items-start space-x-2.5">
+                    <div class="w-7 h-7 rounded-full bg-purple-900 text-white flex items-center justify-center font-bold text-[10px] shadow-xs shrink-0">AI</div>
+                    <div class="bg-white text-slate-800 p-3 rounded-2xl border border-slate-200 max-w-[85%] space-y-2 shadow-xs">
+                        <p class="font-bold text-purple-700"><i class="fa-solid fa-microchip"></i> Respon AI Assistant:</p>
+                        <p class="text-slate-700">Permintaan "${userText}" sedang diproses.</p>
+                    </div>
+                </div>
+            `;
+
+            target.innerHTML += userBubble;
+            input.value = '';
+            target.scrollTop = target.scrollHeight;
+
+            setTimeout(() => {
+                target.innerHTML += aiBubble;
+                target.scrollTop = target.scrollHeight;
+            }, 400);
         }
     </script>
 </body>
