@@ -33,7 +33,7 @@
 
     <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR NAVIGATOR -->
+        <!-- SIDEBAR NAVIGATOR (LENGKAP A - Z) -->
         <aside id="main-sidebar" class="w-72 bg-slate-900 text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
             <!-- Header Brand -->
@@ -52,7 +52,7 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu Lengkap 1-10 -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -68,6 +68,9 @@
                         <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Plant Performance Overview</a>
                         <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Fleet Availability</a>
                         <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Breakdown Trend</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Top Failure Component</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Cost Impact</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Action Monitoring</a>
                     </div>
                 </div>
 
@@ -82,6 +85,9 @@
                     </button>
                     <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('population-view', 'UNIT DATABASE (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-emerald-400 font-bold hover:text-emerald-300">Unit Database</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Unit History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Lifetime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Policy</a>
                     </div>
                 </div>
 
@@ -97,6 +103,7 @@
                     <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Inova Index</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Oil Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">VHMS Monitoring</a>
                     </div>
                 </div>
 
@@ -115,7 +122,23 @@
                     </div>
                 </div>
 
-                <!-- 5. BACKLOG MANAGEMENT -->
+                <!-- 5. FAILURE ANALYSIS (FAR) -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-wrench w-5 text-rose-400"></i>
+                            <span>FAILURE ANALYSIS (FAR)</span>
+                        </div>
+                        <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Create FAR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">RCA Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">PICA</a>
+                    </div>
+                </div>
+
+                <!-- 6. BACKLOG MANAGEMENT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -126,6 +149,77 @@
                     </button>
                     <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs text-amber-300 font-bold hover:text-white">Finding List / Backlog System</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Priority & Risk</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Planning & Execution</a>
+                    </div>
+                </div>
+
+                <!-- 7. RELIABILITY DASHBOARD -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-pie w-5 text-blue-400"></i>
+                            <span>RELIABILITY DASHBOARD</span>
+                        </div>
+                        <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">MTBF & MTTR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Repeat Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bad Actor Component</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Reliability Ranking</a>
+                    </div>
+                </div>
+
+                <!-- 8. KNOWLEDGE MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book w-5 text-yellow-400"></i>
+                            <span>KNOWLEDGE MANAGEMENT</span>
+                        </div>
+                        <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Lesson Learned</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Troubleshooting Guide</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Standard Repair (WI / SOP)</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Failure Library</a>
+                    </div>
+                </div>
+
+                <!-- 9. ENGINEERING TOOLS -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-screwdriver-wrench w-5 text-teal-400"></i>
+                            <span>ENGINEERING TOOLS</span>
+                        </div>
+                        <i id="tools-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Torque Calculator</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bearing Life Calculator</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Shaft Stress Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Life Calculator</a>
+                    </div>
+                </div>
+
+                <!-- 10. USER MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-users w-5 text-indigo-400"></i>
+                            <span>USER MANAGEMENT</span>
+                        </div>
+                        <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Admin</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Plant Engineer</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Supervisor</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Mechanic</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Viewer</a>
                     </div>
                 </div>
 
@@ -278,11 +372,15 @@
 
         function selectView(viewId, title) {
             ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+                const el = document.getElementById(id);
+                if(el) el.classList.add('hidden');
             });
             
-            document.getElementById(viewId).classList.remove('hidden');
-            document.getElementById('page-title').innerText = title;
+            const targetView = document.getElementById(viewId);
+            if(targetView) targetView.classList.remove('hidden');
+            
+            const pageTitle = document.getElementById('page-title');
+            if(pageTitle) pageTitle.innerText = title;
             closeSidebar();
 
             if (viewId === 'population-view') loadDatabase('population');
@@ -290,15 +388,14 @@
             if (viewId === 'pareto-dashboard-view') calculateParetoStats();
         }
 
-        // Fungsi Universal Ambil Data Sheet (Population & Pareto)
         async function loadDatabase(type) {
-            // gid=0 untuk Population, gid=782860436 untuk Pareto
             const gid = type === 'pareto' ? '782860436' : '0';
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=${gid}`;
             
             const tableHead = document.getElementById(type === 'pareto' ? 'paretoTableHead' : 'populationTableHead');
             const tableBody = document.getElementById(type === 'pareto' ? 'paretoTableBody' : 'populationTableBody');
             
+            if(!tableBody) return;
             tableBody.innerHTML = `<tr><td class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-blue-600"></i> Memuat data dari Google Sheets...</td></tr>`;
 
             try {
@@ -323,7 +420,7 @@
                 let bodyHtml = '';
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
-                    if (!cols[0]) continue; // Lewati baris kosong
+                    if (!cols[0]) continue;
 
                     bodyHtml += `<tr class="hover:bg-blue-50/60 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
@@ -341,7 +438,6 @@
             }
         }
 
-        // Fungsi Kalkulasi Otomatis Ringkasan Dashboard Pareto
         async function loadParetoRawData() {
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
@@ -355,21 +451,24 @@
 
         async function calculateParetoStats() {
             const data = await loadParetoRawData();
-            document.getElementById('stat-total-records').innerText = `${data.length} Data`;
+            const recEl = document.getElementById('stat-total-records');
+            const durEl = document.getElementById('stat-total-duration');
+            const topEl = document.getElementById('stat-top-component');
+
+            if(recEl) recEl.innerText = `${data.length} Data`;
             
-            // Kolom DURATION diasumsikan indeks ke-10 (K) atau kita hitung baris valid
             let totalDurasi = 0;
             let compCounts = {};
 
             data.forEach(row => {
-                const duration = parseFloat(row[10]) || 0; // Kolom DURATION
+                const duration = parseFloat(row[10]) || 0; 
                 totalDurasi += duration;
 
-                const majorComp = row[12] || 'Unknown'; // Kolom MAJOR COMPONENT
+                const majorComp = row[12] || 'Unknown'; 
                 compCounts[majorComp] = (compCounts[majorComp] || 0) + 1;
             });
 
-            document.getElementById('stat-total-duration').innerText = `${totalDurasi.toFixed(1)} Jam`;
+            if(durEl) durEl.innerText = `${totalDurasi.toFixed(1)} Jam`;
 
             let topComp = '-';
             let maxCount = 0;
@@ -379,7 +478,7 @@
                     topComp = comp;
                 }
             }
-            document.getElementById('stat-top-component').innerText = topComp;
+            if(topEl) topEl.innerText = topComp;
         }
     </script>
 </body>
