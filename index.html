@@ -342,61 +342,76 @@
                     </div>
                 </div>
 
-                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN FILTER MENYAMPING & CHART) -->
+                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN FILTER MENYAMPING & CHART LENGKAP) -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
-                    <!-- Panel Filter Menyamping -->
+                    <!-- Panel Filter Menyamping (8 Kolom Sesuai Indeks Google Sheets Anda) -->
                     <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 space-y-4">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-slate-900 font-mono tracking-wide uppercase">FILTER DASHBOARD PARETO</h2>
-                                <p class="text-xs text-slate-500">Filter data secara real-time untuk analisis komponen & durasi.</p>
+                                <p class="text-xs text-slate-500">Filter data berdasarkan Unit, Tahun (Col V), Bulan (Col W), Major (Col M), Sub (Col O), & Cluster (Col T).</p>
                             </div>
                             <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5">
                                 <i class="fa-solid fa-rotate-left"></i> Reset Filter
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                        <!-- Barisan Filter Lengkap -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+                            <!-- 1. Unit -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tahun</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Unit</label>
+                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                    <option value="">Semua Unit</option>
+                                </select>
+                            </div>
+                            <!-- 2. Tahun (Kolom V / Index 21) -->
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tahun (Col V)</label>
                                 <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Tahun</option>
                                 </select>
                             </div>
+                            <!-- 3. Bulan (Kolom W / Index 22) -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Bulan</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Bulan (Col W)</label>
                                 <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Bulan</option>
-                                    <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
-                                    <option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option>
-                                    <option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option>
-                                    <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+                                    <option value="Jan">Jan</option><option value="Feb">Feb</option><option value="Mar">Mar</option>
+                                    <option value="Apr">Apr</option><option value="May">May</option><option value="Jun">Jun</option>
+                                    <option value="Jul">Jul</option><option value="Aug">Aug</option><option value="Sep">Sep</option>
+                                    <option value="Oct">Oct</option><option value="Nov">Nov</option><option value="Dec">Dec</option>
                                 </select>
                             </div>
+                            <!-- 4. Tanggal Awal -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tanggal Awal</label>
                                 <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                             </div>
+                            <!-- 5. Tanggal Finish -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tanggal Finish</label>
                                 <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                             </div>
+                            <!-- 6. Cluster (Kolom T / Index 19) -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Cluster</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Cluster (Col T)</label>
                                 <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Cluster</option>
                                 </select>
                             </div>
+                            <!-- 7. Major Component (Kolom M / Index 12) -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Major Component</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Major (Col M)</label>
                                 <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Major</option>
                                 </select>
                             </div>
+                            <!-- 8. Sub Component (Kolom O / Index 14) -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Sub Component</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Sub Comp (Col O)</label>
                                 <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
-                                    <option value="">Semua Sub Component</option>
+                                    <option value="">Semua Sub</option>
                                 </select>
                             </div>
                         </div>
@@ -465,7 +480,7 @@
 
     </div>
 
-    <!-- Script JavaScript Terintegrasi -->
+    <!-- Script JavaScript Terintegrasi & Sinkronisasi Indeks Google Sheets -->
     <script>
         let allParetoRows = [];
         let filteredParetoRows = [];
@@ -675,51 +690,76 @@
             if(container) container.scrollTop = 0;
         }
 
-        // --- LOGIKA FILTER DASHBOARD & DROPDOWN OTOMATIS ---
+        // --- LOGIKA FILTER DASHBOARD & DROPDOWN BERDASARKAN INDEKS GOOGLE SHEETS ---
+        // Col 0: Unit, Col 1: Tgl, Col 10: Durasi, Col 12: Major (M), Col 14: Sub (O), Col 19: Cluster (T), Col 21: Year (V), Col 22: Month (W)
         function populateFilterOptions() {
+            let units = new Set();
             let years = new Set();
             let clusters = new Set();
             let majors = new Set();
 
             allParetoRows.forEach(row => {
-                let dateStr = row[1] || ''; 
-                if (dateStr.length >= 4) {
-                    let year = dateStr.substring(0, 4);
-                    if(!isNaN(year)) years.add(year);
-                }
-                if (row[3]) clusters.add(row[3].trim()); 
-                if (row[12]) majors.add(row[12].trim()); 
+                let unit = row[0] || '';       // Kolom Unit (Index 0)
+                let major = row[12] || '';     // Kolom M / Major Component (Index 12)
+                let cluster = row[19] || '';   // Kolom T / Cluster (Index 19)
+                let year = row[21] || '';      // Kolom V / Year (Index 21)
+                
+                if (unit.trim()) units.add(unit.trim());
+                if (major.trim()) majors.add(major.trim());
+                if (cluster.trim()) clusters.add(cluster.trim());
+                if (year.trim() && !isNaN(year.trim())) years.add(year.trim());
             });
 
+            // Populate Unit
+            let unitSel = document.getElementById('filter-unit');
+            if(unitSel) {
+                unitSel.innerHTML = '<option value="">Semua Unit</option>';
+                Array.from(units).sort().forEach(u => {
+                    unitSel.innerHTML += `<option value="${u}">${u}</option>`;
+                });
+            }
+
+            // Populate Year (Kolom V / Index 21)
             let yearSel = document.getElementById('filter-year');
-            yearSel.innerHTML = '<option value="">Semua Tahun</option>';
-            Array.from(years).sort().forEach(y => {
-                yearSel.innerHTML += `<option value="${y}">${y}</option>`;
-            });
+            if(yearSel) {
+                yearSel.innerHTML = '<option value="">Semua Tahun</option>';
+                Array.from(years).sort().forEach(y => {
+                    yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+                });
+            }
 
+            // Populate Cluster (Kolom T / Index 19)
             let clusterSel = document.getElementById('filter-cluster');
-            clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
-            Array.from(clusters).sort().forEach(c => {
-                clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
-            });
+            if(clusterSel) {
+                clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
+                Array.from(clusters).sort().forEach(c => {
+                    clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
+                });
+            }
 
+            // Populate Major Component (Kolom M / Index 12)
             let majorSel = document.getElementById('filter-major');
-            majorSel.innerHTML = '<option value="">Semua Major</option>';
-            Array.from(majors).sort().forEach(m => {
-                majorSel.innerHTML += `<option value="${m}">${m}</option>`;
-            });
+            if(majorSel) {
+                majorSel.innerHTML = '<option value="">Semua Major</option>';
+                Array.from(majors).sort().forEach(m => {
+                    majorSel.innerHTML += `<option value="${m}">${m}</option>`;
+                });
+            }
+            
             updateSubComponentDropdown();
         }
 
         function updateSubComponentDropdown() {
-            let selectedMajor = document.getElementById('filter-major').value;
+            let selectedMajor = document.getElementById('filter-major')?.value || '';
             let subSel = document.getElementById('filter-sub');
-            subSel.innerHTML = '<option value="">Semua Sub Component</option>';
+            if(!subSel) return;
+            
+            subSel.innerHTML = '<option value="">Semua Sub</option>';
 
             let subs = new Set();
             allParetoRows.forEach(row => {
-                let major = row[12] ? row[12].trim() : '';
-                let sub = row[13] ? row[13].trim() : ''; 
+                let major = row[12] ? row[12].trim() : ''; // Kolom M
+                let sub = row[14] ? row[14].trim() : '';   // Kolom O / Sub Component (Index 14)
                 if ((!selectedMajor || major === selectedMajor) && sub) {
                     subs.add(sub);
                 }
@@ -731,41 +771,44 @@
         }
 
         function resetParetoFilters() {
-            document.getElementById('filter-year').value = '';
-            document.getElementById('filter-month').value = '';
-            document.getElementById('filter-start-date').value = '';
-            document.getElementById('filter-end-date').value = '';
-            document.getElementById('filter-cluster').value = '';
-            document.getElementById('filter-major').value = '';
+            if(document.getElementById('filter-unit')) document.getElementById('filter-unit').value = '';
+            if(document.getElementById('filter-year')) document.getElementById('filter-year').value = '';
+            if(document.getElementById('filter-month')) document.getElementById('filter-month').value = '';
+            if(document.getElementById('filter-start-date')) document.getElementById('filter-start-date').value = '';
+            if(document.getElementById('filter-end-date')) document.getElementById('filter-end-date').value = '';
+            if(document.getElementById('filter-cluster')) document.getElementById('filter-cluster').value = '';
+            if(document.getElementById('filter-major')) document.getElementById('filter-major').value = '';
             updateSubComponentDropdown();
             applyParetoFilters();
         }
 
         function applyParetoFilters() {
-            let fYear = document.getElementById('filter-year').value;
-            let fMonth = document.getElementById('filter-month').value;
-            let fStart = document.getElementById('filter-start-date').value;
-            let fEnd = document.getElementById('filter-end-date').value;
-            let fCluster = document.getElementById('filter-cluster').value;
-            let fMajor = document.getElementById('filter-major').value;
-            let fSub = document.getElementById('filter-sub').value;
+            let fUnit = document.getElementById('filter-unit')?.value || '';
+            let fYear = document.getElementById('filter-year')?.value || '';
+            let fMonth = document.getElementById('filter-month')?.value || '';
+            let fStart = document.getElementById('filter-start-date')?.value || '';
+            let fEnd = document.getElementById('filter-end-date')?.value || '';
+            let fCluster = document.getElementById('filter-cluster')?.value || '';
+            let fMajor = document.getElementById('filter-major')?.value || '';
+            let fSub = document.getElementById('filter-sub')?.value || '';
 
             let resultData = allParetoRows.filter(row => {
-                let dateStr = row[1] || '';
-                let cluster = row[3] ? row[3].trim() : '';
-                let major = row[12] ? row[12].trim() : '';
-                let sub = row[13] ? row[13].trim() : '';
+                let unit = row[0] || '';         // Kolom 0
+                let dateStr = row[1] || '';      // Kolom 1
+                let major = row[12] || '';       // Kolom M (Index 12)
+                let sub = row[14] || '';         // Kolom O (Index 14)
+                let cluster = row[19] || '';     // Kolom T (Index 19)
+                let yearV = row[21] || '';       // Kolom V (Index 21)
+                let monthW = row[22] || '';      // Kolom W (Index 22)
 
-                if (fYear && !dateStr.includes(fYear)) return false;
-                if (fMonth && !dateStr.includes(`-${fMonth}-`) && !dateStr.startsWith(`${fYear}-${fMonth}`)) {
-                    let parts = dateStr.split(/[-/]/);
-                    if(parts.length >= 2 && parts[1] !== fMonth) return false;
-                }
+                if (fUnit && unit.trim() !== fUnit) return false;
+                if (fYear && yearV.trim() !== fYear) return false;
+                if (fMonth && !monthW.toLowerCase().includes(fMonth.toLowerCase())) return false;
                 if (fStart && dateStr < fStart) return false;
                 if (fEnd && dateStr > fEnd) return false;
-                if (fCluster && cluster !== fCluster) return false;
-                if (fMajor && major !== fMajor) return false;
-                if (fSub && sub !== fSub) return false;
+                if (fCluster && cluster.trim() !== fCluster) return false;
+                if (fMajor && major.trim() !== fMajor) return false;
+                if (fSub && sub.trim() !== fSub) return false;
 
                 return true;
             });
@@ -785,7 +828,7 @@
             let clusterDurasi = {};
 
             data.forEach(row => {
-                const rawDur = row[10] || '0';
+                const rawDur = row[10] || '0'; // Kolom Durasi (Index 10)
                 let duration = 0;
                 if (rawDur.includes(':')) {
                     const parts = rawDur.split(':');
@@ -795,10 +838,12 @@
                 }
                 totalDurasi += duration;
 
+                // Major Component (Kolom M / Index 12)
                 let major = row[12] && row[12].trim() !== '' ? row[12].trim() : 'Unknown';
                 majorCounts[major] = (majorCounts[major] || 0) + 1;
 
-                let cluster = row[3] && row[3].trim() !== '' ? row[3].trim() : 'Lainnya';
+                // Cluster (Kolom T / Index 19)
+                let cluster = row[19] && row[19].trim() !== '' ? row[19].trim() : 'Lainnya';
                 clusterDurasi[cluster] = (clusterDurasi[cluster] || 0) + duration;
             });
 
@@ -822,51 +867,69 @@
             let majorLabels = sortedMajors.map(item => item[0]);
             let majorValues = sortedMajors.map(item => item[1]);
 
-            const ctxBar = document.getElementById('paretoBarChart').getContext('2d');
-            if (barChartInstance) barChartInstance.destroy();
-            barChartInstance = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: majorLabels,
-                    datasets: [{
-                        label: 'Frekuensi',
-                        data: majorValues,
-                        backgroundColor: '#f97316',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
-                        x: { grid: { display: false } }
+            // Chart 1: Bar Chart Major Component
+            const ctxBar = document.getElementById('paretoBarChart')?.getContext('2d');
+            if (ctxBar) {
+                if (barChartInstance) barChartInstance.destroy();
+                barChartInstance = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: majorLabels,
+                        datasets: [{
+                            label: 'Frekuensi',
+                            data: majorValues,
+                            backgroundColor: '#f97316',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { 
+                                beginAtZero: true, 
+                                grid: { color: '#f1f5f9' },
+                                ticks: {
+                                    stepSize: 1,
+                                    precision: 0
+                                }
+                            },
+                            x: { grid: { display: false } }
+                        }
                     }
-                }
-            });
+                });
+            }
 
             let sortedClusters = Object.entries(clusterDurasi).sort((a,b) => b[1] - a[1]);
             let clusterLabels = sortedClusters.map(item => item[0]);
             let clusterValues = sortedClusters.map(item => item[1]);
 
-            const ctxCluster = document.getElementById('paretoClusterChart').getContext('2d');
-            if (clusterChartInstance) clusterChartInstance.destroy();
-            clusterChartInstance = new Chart(ctxCluster, {
-                type: 'doughnut',
-                data: {
-                    labels: clusterLabels,
-                    datasets: [{
-                        data: clusterValues,
-                        backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } } }
-                }
-            });
+            // Chart 2: Cluster Chart (Doughnut)
+            const ctxCluster = document.getElementById('paretoClusterChart')?.getContext('2d');
+            if (ctxCluster) {
+                if (clusterChartInstance) clusterChartInstance.destroy();
+                clusterChartInstance = new Chart(ctxCluster, {
+                    type: 'doughnut',
+                    data: {
+                        labels: clusterLabels,
+                        datasets: [{
+                            data: clusterValues,
+                            backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#6366f1']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { 
+                            legend: { 
+                                position: 'right', 
+                                labels: { boxWidth: 12, font: { size: 10 } } 
+                            } 
+                        }
+                    }
+                });
+            }
         }
 
         function renderMtbfChart() {
