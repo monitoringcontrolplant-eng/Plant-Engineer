@@ -44,7 +44,7 @@
 
     <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR NAVIGATOR -->
+        <!-- SIDEBAR NAVIGATOR (LENGKAP SEMUA MENU) -->
         <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
             <!-- Header Brand & Tombol Close Sidebar -->
@@ -61,7 +61,7 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu Lengkap Sesuai Struktur Hierarki -->
+            <!-- Navigation Menu Lengkap -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -93,7 +93,7 @@
                         <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
                     <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
-                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1 text-xs text-slate-300 hover:text-emerald-300">Unit Database</a>
+                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE (LIVE GOOGLE SHEETS)')" class="block py-1 text-xs text-emerald-300 font-bold hover:text-white">Unit Database</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit History</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Lifetime</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Policy</a>
@@ -297,11 +297,42 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (DARI POPULATION.HTML) -->
-                <div id="population-view" class="hidden h-full">
-                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
-                        <!-- Menambahkan ?v=1.1 untuk memaksa browser memuat versi population.html terbaru -->
-                        <iframe src="population.html?v=1.1" class="w-full h-full border-0"></iframe>
+                <!-- VIEW 3: UNIT DATABASE (LIVE GOOGLE SHEETS) -->
+                <div id="population-view" class="hidden h-full space-y-4">
+                    <div class="glass-panel p-4 rounded-2xl shadow-xl flex justify-between items-center">
+                        <div>
+                            <h2 class="font-bold text-slate-900 text-base">Database Unit (Live Google Sheets)</h2>
+                            <p class="text-xs text-slate-600">Data ditarik otomatis dari [POPULATION UNIT - Google Sheets](https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/edit?hl=id&gid=0#gid=0)</p>
+                        </div>
+                        <button onclick="loadUnitDatabaseFromSheet()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-rotate"></i> Refresh Data
+                        </button>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden p-4 h-[calc(100vh-220px)] flex flex-col">
+                        <div class="overflow-x-auto flex-1 custom-scrollbar">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead class="bg-slate-900 text-white sticky top-0 z-10">
+                                    <tr>
+                                        <th class="p-3">No</th>
+                                        <th class="p-3">Equipment</th>
+                                        <th class="p-3">C/N</th>
+                                        <th class="p-3">Cost Center</th>
+                                        <th class="p-3">Model</th>
+                                        <th class="p-3">Unit</th>
+                                        <th class="p-3">Cluster</th>
+                                        <th class="p-3">Machine S/N</th>
+                                        <th class="p-3">Status</th>
+                                        <th class="p-3">From</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="unitTableBody" class="divide-y divide-slate-200/60 bg-white/50">
+                                    <tr>
+                                        <td colspan="10" class="p-6 text-center text-slate-500">Memuat data dari Google Sheets...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -310,7 +341,7 @@
 
     </div>
 
-    <!-- Script Interaktif JS -->
+    <!-- Script Interaktif & Integrasi Google Sheets -->
     <script>
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -340,6 +371,59 @@
             document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
             closeSidebar();
+
+            // Jika menu Unit Database dibuka, muat otomatis datanya
+            if (viewId === 'population-view') {
+                loadUnitDatabaseFromSheet();
+            }
+        }
+
+        // Fungsi Otomatis Ambil Data dari Google Sheets
+        async function loadUnitDatabaseFromSheet() {
+            const csvUrl = 'https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=0';
+            const tableBody = document.getElementById('unitTableBody');
+            
+            tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data terbaru dari Google Sheets...</td></tr>`;
+
+            try {
+                const response = await fetch(csvUrl);
+                const dataText = await response.text();
+                
+                const rows = dataText.split('\n').map(row => {
+                    return row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                });
+
+                if (rows.length < 2) {
+                    tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-red-500">Tidak ada data ditemukan.</td></tr>`;
+                    return;
+                }
+
+                let htmlContent = '';
+                for (let i = 1; i < rows.length; i++) {
+                    const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
+                    if (!cols[1]) continue;
+
+                    htmlContent += `
+                        <tr class="hover:bg-white/80 transition-colors">
+                            <td class="p-3 font-medium">${cols[0] || i}</td>
+                            <td class="p-3 font-bold text-slate-900">${cols[1] || ''}</td>
+                            <td class="p-3 text-slate-600">${cols[2] || ''}</td>
+                            <td class="p-3 text-slate-600">${cols[3] || ''}</td>
+                            <td class="p-3 font-semibold text-indigo-900">${cols[4] || ''}</td>
+                            <td class="p-3 text-slate-600">${cols[5] || ''}</td>
+                            <td class="p-3"><span class="px-2 py-0.5 bg-cyan-100 text-cyan-800 rounded font-medium text-[10px]">${cols[6] || ''}</span></td>
+                            <td class="p-3 text-slate-600">${cols[7] || ''}</td>
+                            <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold text-[10px]">${cols[13] || 'RUNNING'}</span></td>
+                            <td class="p-3 text-slate-600">${cols[15] || ''}</td>
+                        </tr>
+                    `;
+                }
+
+                tableBody.innerHTML = htmlContent;
+            } catch (error) {
+                console.error("Gagal memuat Google Sheets:", error);
+                tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-red-500">Gagal memuat data. Pastikan Google Sheets sudah diset ke 'Anyone with the link can view'.</td></tr>`;
+            }
         }
     </script>
 </body>
