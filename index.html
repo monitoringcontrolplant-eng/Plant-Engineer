@@ -290,7 +290,7 @@
                 <!-- VIEW 3: POPULATION UNIT DATABASE -->
                 <div id="population-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex justify-between items-center shrink-0">
-                        <h2 class="font-bold text-slate-900 text-sm font-mono tracking-wide">UNIT DATABASE (POPULATION SHEET)</h2>
+                        <h2 class="font-bold text-slate-900 text-sm font-mono tracking-wide">UNIT DATABASE</h2>
                         <button onclick="loadDatabase('population')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2">
                             <i class="fa-solid fa-rotate"></i> REFRESH DATA
                         </button>
@@ -305,23 +305,59 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: DATABASE PARETO (FULL KOLOM A - Z LIVE GOOGLE SHEETS) -->
+                <!-- VIEW 4: DATABASE PARETO (DENGAN 100 LIMIT & PAGINATION) -->
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex justify-between items-center shrink-0">
                         <div>
-                            <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS TAB PARETO)</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Menarik seluruh kolom menyamping (A s/d Z) secara otomatis langsung dari tab Pareto.</p>
+                            <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS)</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Menampilkan maksimal 100 baris per halaman agar sistem tetap ringan.</p>
                         </div>
-                        <button onclick="loadDatabase('pareto')" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2">
+                        <button onclick="loadParetoData()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2">
                             <i class="fa-solid fa-rotate"></i> REFRESH PARETO
                         </button>
                     </div>
                     <div class="bg-white rounded-xl shadow-xs p-4 flex-1 flex flex-col overflow-hidden border border-slate-200">
                         <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-slate-200 bg-white">
                             <table id="paretoTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="paretoTableHead" class="bg-slate-900 text-white font-mono sticky top-0 z-20"></thead>
+                                <thead id="paretoTableHead" class="bg-slate-900 text-white font-mono sticky top-0 z-20">
+                                    <tr>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">IDUNIT</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">PPU</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">HM</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">TANGGAL B/D</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">JAM B/D</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">SPK / PENGERJAAN</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">TGL SPK START</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">SPK START</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">TGL SPK CLOSE</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">SPK CLOSE</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">DURATION</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">MAJOR COMPONENT</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE2</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">SUB-COMPONENT</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE3</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">DAMAGE</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE4</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">DO</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">CLUSTER</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">MODEL</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">YEAR</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">MONTH</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">WEEK</th>
+                                        <th class="p-3.5 font-bold border-r border-slate-700">SITE</th>
+                                    </tr>
+                                </thead>
                                 <tbody id="paretoTableBody" class="divide-y divide-slate-200"></tbody>
                             </table>
+                        </div>
+                        <!-- Navigasi Pagination Next Prev di Bagian Bawah -->
+                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-200 shrink-0">
+                            <span id="pagination-info" class="text-xs font-mono text-slate-500 font-semibold">Menampilkan 0 - 0 dari 0 data</span>
+                            <div class="flex space-x-2">
+                                <button onclick="changePage(-1)" id="prev-btn" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 disabled:opacity-50 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
+                                <button onclick="changePage(1)" id="next-btn" class="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 text-white rounded-lg text-xs font-mono font-bold transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -353,8 +389,12 @@
 
     </div>
 
-    <!-- Script Interaktif & Dynamic Column Google Sheets Integration -->
+    <!-- Script Interaktif, Dynamic Google Sheets, & Pagination (100 rows limit) -->
     <script>
+        let allParetoRows = [];
+        let currentPage = 1;
+        const rowsPerPage = 100;
+
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.remove('hidden');
@@ -384,17 +424,15 @@
             closeSidebar();
 
             if (viewId === 'population-view') loadDatabase('population');
-            if (viewId === 'pareto-database-view') loadDatabase('pareto');
+            if (viewId === 'pareto-database-view') loadParetoData();
             if (viewId === 'pareto-dashboard-view') calculateParetoStats();
         }
 
-        // Fungsi Universal untuk Memuat Kolom Lengkap dari Spreadsheet secara Dinamis
         async function loadDatabase(type) {
-            const gid = type === 'pareto' ? '782860436' : '0';
+            const gid = '0';
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=${gid}`;
-            
-            const tableHead = document.getElementById(type === 'pareto' ? 'paretoTableHead' : 'populationTableHead');
-            const tableBody = document.getElementById(type === 'pareto' ? 'paretoTableBody' : 'populationTableBody');
+            const tableHead = document.getElementById('populationTableHead');
+            const tableBody = document.getElementById('populationTableBody');
             
             if(!tableBody) return;
             tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-blue-600"></i> Memuat data dari Google Sheets...</td></tr>`;
@@ -402,22 +440,16 @@
             try {
                 const response = await fetch(csvUrl);
                 const dataText = await response.text();
-                
                 const rows = dataText.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
 
                 if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data di sheet ini.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data.</td></tr>`;
                     return;
                 }
 
                 const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
-                
                 let headHtml = '<tr>';
-                headers.forEach((h) => {
-                    if (h !== "") {
-                        headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider text-xs whitespace-nowrap">${h}</th>`;
-                    }
-                });
+                headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 whitespace-nowrap">${h}</th>`; });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
@@ -425,36 +457,103 @@
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
                     if (!cols.some(val => val !== "")) continue;
-
                     bodyHtml += `<tr class="hover:bg-blue-50/60 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
-                        if (headers[j] !== "") {
-                            bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
-                        }
+                        if (headers[j] !== "") bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
                     }
                     bodyHtml += `</tr>`;
                 }
-
                 tableBody.innerHTML = bodyHtml || `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono">Data kosong.</td></tr>`;
             } catch (error) {
-                console.error("Gagal memuat:", error);
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data. Pastikan akses Google Sheets sudah 'Anyone with the link can view'.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data.</td></tr>`;
             }
         }
 
-        async function loadParetoRawData() {
+        // Fungsi Load Pareto dengan Pembatasan & Pagination (100 baris per halaman)
+        async function loadParetoData() {
+            const tableHead = document.getElementById('paretoTableHead');
+            const tableBody = document.getElementById('paretoTableBody');
+            if(!tableBody) return;
+
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-orange-600"></i> Memuat data Pareto dari Google Sheets...</td></tr>`;
+
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
                 const text = await res.text();
                 const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-                return rows.slice(1).filter(r => r.some(val => val && val.trim() !== ""));
-            } catch(e) {
-                return [];
+
+                if (rows.length < 2) {
+                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data pada tab Pareto.</td></tr>`;
+                    return;
+                }
+
+                const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
+                let headHtml = '<tr>';
+                headers.forEach(h => {
+                    if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider text-xs whitespace-nowrap">${h}</th>`;
+                });
+                headHtml += '</tr>';
+                tableHead.innerHTML = headHtml;
+
+                // Simpan data mentah (kecuali header) yang tidak kosong
+                allParetoRows = rows.slice(1).filter(r => r.some(val => val && val.trim() !== ""));
+                currentPage = 1;
+                renderParetoTable();
+                calculateParetoStats();
+
+            } catch (e) {
+                console.error("Gagal memuat pareto:", e);
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data Pareto. Periksa koneksi atau akses link Google Sheets.</td></tr>`;
             }
         }
 
+        function renderParetoTable() {
+            const tableBody = document.getElementById('paretoTableBody');
+            const totalData = allParetoRows.length;
+
+            if (totalData === 0) {
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono">Data kosong.</td></tr>`;
+                document.getElementById('pagination-info').innerText = `Menampilkan 0 - 0 dari 0 data`;
+                document.getElementById('prev-btn').disabled = true;
+                document.getElementById('next-btn').disabled = true;
+                return;
+            }
+
+            const totalPages = Math.ceil(totalData / rowsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = Math.min(startIndex + rowsPerPage, totalData);
+            const sliceData = allParetoRows.slice(startIndex, endIndex);
+
+            let bodyHtml = '';
+            sliceData.forEach(row => {
+                const cols = row.map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
+                bodyHtml += `<tr class="hover:bg-orange-50/60 transition-colors">`;
+                for (let j = 0; j < cols.length; j++) {
+                    bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
+                }
+                bodyHtml += `</tr>`;
+            });
+
+            tableBody.innerHTML = bodyHtml;
+            document.getElementById('pagination-info').innerText = `Menampilkan ${startIndex + 1} - ${endIndex} dari ${totalData} data (Halaman ${currentPage}/${totalPages})`;
+            
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = currentPage === totalPages;
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderParetoTable();
+            // Scroll otomatis ke atas tabel saat pindah halaman
+            const container = document.querySelector('#pareto-database-view .overflow-y-auto');
+            if(container) container.scrollTop = 0;
+        }
+
         async function calculateParetoStats() {
-            const data = await loadParetoRawData();
+            const data = allParetoRows;
             const recEl = document.getElementById('stat-total-records');
             const durEl = document.getElementById('stat-total-duration');
             const topEl = document.getElementById('stat-top-component');
@@ -465,10 +564,18 @@
             let compCounts = {};
 
             data.forEach(row => {
-                const duration = parseFloat(row[11]) || 0; 
+                const rawDur = row[10] || '0';
+                let duration = 0;
+                if (rawDur.includes(':')) {
+                    const parts = rawDur.split(':');
+                    duration = parseFloat(parts[0]) + (parseFloat(parts[1]) || 0) / 60;
+                } else {
+                    duration = parseFloat(rawDur) || 0;
+                }
+                
                 totalDurasi += duration;
 
-                const majorComp = row[12] || 'Unknown'; 
+                const majorComp = row[12] && row[12].trim() !== '' ? row[12] : 'Unknown'; 
                 compCounts[majorComp] = (compCounts[majorComp] || 0) + 1;
             });
 
