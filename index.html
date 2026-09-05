@@ -297,56 +297,10 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (MACHPOP RANGE B:Z) -->
-                <div id="population-view" class="hidden space-y-4">
-                    <div class="glass-panel rounded-2xl shadow-2xl p-5 overflow-x-auto">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                                <i class="fa-solid fa-tractor text-emerald-600"></i> Live Equipment Population Data (MACHPOP)
-                            </h2>
-                            <button onclick="loadPopulationDataFromSheet()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-md">
-                                <i class="fa-solid fa-rotate"></i> Refresh Data
-                            </button>
-                        </div>
-                        <div class="max-h-[calc(100vh-220px)] overflow-y-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs whitespace-nowrap text-slate-900">
-                                <thead class="sticky top-0 bg-slate-900 text-white border-b border-slate-700 uppercase tracking-wider text-[11px]">
-                                    <tr>
-                                        <th class="p-3">NO</th>
-                                        <th class="p-3">CN</th>
-                                        <th class="p-3">MODEL</th>
-                                        <th class="p-3">HM</th>
-                                        <th class="p-3">HM LAST SERVICE</th>
-                                        <th class="p-3">TGL LAST SERVICE</th>
-                                        <th class="p-3">DOWNTIME STATUS</th>
-                                        <th class="p-3">SITUATION</th>
-                                        <th class="p-3">PLAN COMPONENT REPLACEMENT</th>
-                                        <th class="p-3">CRITICAL COMPONENT</th>
-                                        <th class="p-3">PAP BAD TREND</th>
-                                        <th class="p-3">REMARK PAP</th>
-                                        <th class="p-3">CRITICAL BACKLOG</th>
-                                        <th class="p-3">REMARK BACKLOG</th>
-                                        <th class="p-3">STATUS APAR</th>
-                                        <th class="p-3">STATUS ANSUL</th>
-                                        <th class="p-3">EXP APAR / ANSUL</th>
-                                        <th class="p-3">LAST COMMISSIONING</th>
-                                        <th class="p-3">DUE COMMISSIONING</th>
-                                        <th class="p-3">EXP STNK</th>
-                                        <th class="p-3">STATUS FABRICATION</th>
-                                        <th class="p-3">SCHEDULE MAINTENANCE</th>
-                                        <th class="p-3">REMARK SCHEDULE</th>
-                                        <th class="p-3">LOCATION</th>
-                                        <th class="p-3">POPULATION STATUS</th>
-                                        <th class="p-3">UPDATE DATE</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="population-tbody" class="divide-y divide-slate-300/40">
-                                    <tr>
-                                        <td colspan="26" class="p-6 text-center text-slate-600 italic">Memuat data dari Google Sheets MACHPOP (B:Z)...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (DARI POPULATION.HTML) -->
+                <div id="population-view" class="hidden h-full">
+                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
+                        <iframe src="population.html" class="w-full h-full border-0"></iframe>
                     </div>
                 </div>
 
@@ -357,8 +311,6 @@
 
     <!-- Script Interaktif JS -->
     <script>
-        const SPREADSHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1gGcUNOZusmIA8ucpQDnax83SPA-F-s9525JeFABkuew/gviz/tq?tqx=out:csv&sheet=MACHPOP&range=B:Z';
-
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.remove('hidden');
@@ -387,100 +339,6 @@
             document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
             closeSidebar();
-
-            if (viewId === 'population-view') {
-                loadPopulationDataFromSheet();
-            }
-        }
-
-        function parseCSVRow(text) {
-            const result = [];
-            let cell = '';
-            let inQuotes = false;
-            
-            for (let i = 0; i < text.length; i++) {
-                const char = text[i];
-                if (char === '"') {
-                    if (inQuotes && text[i + 1] === '"') {
-                        cell += '"';
-                        i++;
-                    } else {
-                        inQuotes = !inQuotes;
-                    }
-                } else if (char === ',' && !inQuotes) {
-                    result.push(cell.trim());
-                    cell = '';
-                } else {
-                    cell += char;
-                }
-            }
-            result.push(cell.trim());
-            return result;
-        }
-
-        async function loadPopulationDataFromSheet() {
-            const tbody = document.getElementById('population-tbody');
-            if (!tbody) return;
-
-            tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-slate-600 italic">Sedang mengambil data dari sheet MACHPOP (Kolom B:Z)...</td></tr>`;
-
-            try {
-                const response = await fetch(SPREADSHEET_CSV_URL);
-                const csvText = await response.text();
-                
-                const rawRows = csvText.split(/\r?\n/);
-                tbody.innerHTML = '';
-
-                let dataCount = 0;
-
-                for (let i = 1; i < rawRows.length; i++) {
-                    if (!rawRows[i].trim()) continue;
-                    
-                    const col = parseCSVRow(rawRows[i]);
-                    if (!col[0] || col[0] === '""') continue;
-                    
-                    dataCount++;
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-white/40 transition-colors";
-                    
-                    tr.innerHTML = `
-                        <td class="p-3 font-bold">${dataCount}</td>
-                        <td class="p-3 font-bold text-indigo-900">${col[0] || '-'}</td>
-                        <td class="p-3 font-bold">${col[1] || '-'}</td>
-                        <td class="p-3 font-bold text-emerald-800">${col[2] || '-'}</td>
-                        <td class="p-3">${col[3] || '-'}</td>
-                        <td class="p-3">${col[4] || '-'}</td>
-                        <td class="p-3">${col[5] || '-'}</td>
-                        <td class="p-3">${col[6] || '-'}</td>
-                        <td class="p-3">${col[7] || '-'}</td>
-                        <td class="p-3">${col[8] || '-'}</td>
-                        <td class="p-3">${col[9] || '-'}</td>
-                        <td class="p-3">${col[10] || '-'}</td>
-                        <td class="p-3">${col[11] || '-'}</td>
-                        <td class="p-3">${col[12] || '-'}</td>
-                        <td class="p-3">${col[13] || '-'}</td>
-                        <td class="p-3">${col[14] || '-'}</td>
-                        <td class="p-3">${col[15] || '-'}</td>
-                        <td class="p-3">${col[16] || '-'}</td>
-                        <td class="p-3">${col[17] || '-'}</td>
-                        <td class="p-3">${col[18] || '-'}</td>
-                        <td class="p-3">${col[19] || '-'}</td>
-                        <td class="p-3">${col[20] || '-'}</td>
-                        <td class="p-3">${col[21] || '-'}</td>
-                        <td class="p-3 font-bold">${col[22] || '-'}</td>
-                        <td class="p-3">${col[23] || '-'}</td>
-                        <td class="p-3">${col[24] || '-'}</td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-
-                if (dataCount === 0) {
-                    tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-slate-600 italic">Data kosong pada sheet MACHPOP.</td></tr>`;
-                }
-            } catch (error) {
-                console.error("Gagal memuat data populasi:", error);
-                tbody.innerHTML = `<tr><td colspan="26" class="p-6 text-center text-rose-600 font-bold">Gagal memuat data dari Google Sheets. Pastikan akses Google Sheets diset ke "Anyone with the link".</td></tr>`;
-            }
         }
     </script>
 </body>
