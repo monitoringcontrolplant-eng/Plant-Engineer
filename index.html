@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js CDN untuk Dashboard Pareto -->
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .custom-scrollbar::-webkit-scrollbar {
@@ -38,7 +38,6 @@
         <!-- SIDEBAR NAVIGATOR -->
         <aside id="main-sidebar" class="w-72 bg-slate-900 text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
-            <!-- Header Brand -->
             <div class="h-16 flex items-center justify-between px-5 border-b border-slate-800 shrink-0">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
                     <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shadow-md">
@@ -54,12 +53,9 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
-
-                <!-- 1. DASHBOARD -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-house w-5 text-blue-400"></i>
                             <span>DASHBOARD</span>
@@ -68,17 +64,11 @@
                     </button>
                     <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Plant Performance Overview</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Fleet Availability</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Breakdown Trend</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Top Failure Component</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Cost Impact</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Action Monitoring</a>
                     </div>
                 </div>
 
-                <!-- 2. POPULATION UNIT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-tractor w-5 text-emerald-400"></i>
                             <span>POPULATION UNIT</span>
@@ -87,31 +77,11 @@
                     </button>
                     <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('population-view', 'UNIT DATABASE (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-emerald-400 font-bold hover:text-emerald-300">Unit Database</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Unit History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Lifetime</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Policy</a>
                     </div>
                 </div>
 
-                <!-- 3. CONDITION MONITORING -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-line w-5 text-purple-400"></i>
-                            <span>CONDITION MONITORING</span>
-                        </div>
-                        <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Inova Index</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Oil Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">VHMS Monitoring</a>
-                    </div>
-                </div>
-
-                <!-- 4. PARETO PROBLEM -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-chart-column w-5 text-orange-400"></i>
                             <span>PARETO PROBLEM</span>
@@ -123,115 +93,10 @@
                         <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Dashboard Pareto</a>
                     </div>
                 </div>
-
-                <!-- 5. FAILURE ANALYSIS (FAR) -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-wrench w-5 text-rose-400"></i>
-                            <span>FAILURE ANALYSIS (FAR)</span>
-                        </div>
-                        <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Create FAR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">RCA Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">PICA</a>
-                    </div>
-                </div>
-
-                <!-- 6. BACKLOG MANAGEMENT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-clipboard-list w-5 text-amber-400"></i>
-                            <span>BACKLOG MANAGEMENT</span>
-                        </div>
-                        <i id="backlog-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs text-amber-300 font-bold hover:text-white">Finding List / Backlog System</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Priority & Risk</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Planning & Execution</a>
-                    </div>
-                </div>
-
-                <!-- 7. RELIABILITY DASHBOARD -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-pie w-5 text-blue-400"></i>
-                            <span>RELIABILITY DASHBOARD</span>
-                        </div>
-                        <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-1.5 text-xs text-blue-300 font-bold hover:text-white">MTBF & MTTR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Repeat Failure</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bad Actor Component</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Reliability Ranking</a>
-                    </div>
-                </div>
-
-                <!-- 8. KNOWLEDGE MANAGEMENT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-book w-5 text-yellow-400"></i>
-                            <span>KNOWLEDGE MANAGEMENT</span>
-                        </div>
-                        <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Lesson Learned</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Troubleshooting Guide</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Standard Repair (WI / SOP)</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Failure Library</a>
-                    </div>
-                </div>
-
-                <!-- 9. ENGINEERING TOOLS -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-screwdriver-wrench w-5 text-teal-400"></i>
-                            <span>ENGINEERING TOOLS</span>
-                        </div>
-                        <i id="tools-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Torque Calculator</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bearing Life Calculator</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Shaft Stress Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Life Calculator</a>
-                    </div>
-                </div>
-
-                <!-- 10. USER MANAGEMENT -->
-                <div>
-                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-users w-5 text-indigo-400"></i>
-                            <span>USER MANAGEMENT</span>
-                        </div>
-                        <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
-                    </button>
-                    <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Admin</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Plant Engineer</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Supervisor</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Mechanic</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Viewer</a>
-                    </div>
-                </div>
-
             </nav>
 
-            <!-- User Info Footer -->
             <div class="p-4 border-t border-slate-800 bg-slate-950 flex items-center space-x-3 shrink-0">
-                <div class="w-9 h-9 rounded-lg bg-blue-600/20 flex items-center justify-center font-bold text-blue-400 text-xs border border-blue-500/30">
-                    PE
-                </div>
+                <div class="w-9 h-9 rounded-lg bg-blue-600/20 flex items-center justify-center font-bold text-blue-400 text-xs border border-blue-500/30">PE</div>
                 <div>
                     <p class="text-xs font-bold text-white tracking-wide">Plant Engineer</p>
                     <p class="text-[10px] text-slate-400 font-mono">Administrator</p>
@@ -239,10 +104,9 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA -->
+        <!-- MAIN CONTENT -->
         <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
 
-            <!-- Header Atas -->
             <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-20 shadow-xs shrink-0">
                 <div class="flex items-center space-x-4">
                     <button onclick="openSidebar()" class="p-2.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition-all border border-slate-200 flex items-center justify-center shadow-xs">
@@ -257,7 +121,6 @@
                 </div>
             </header>
 
-            <!-- CONTAINER CONTENT -->
             <div class="flex-1 p-6 space-y-6">
 
                 <!-- VIEW 1: DASHBOARD UTAMA -->
@@ -282,14 +145,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 2: BACKLOG MANAGEMENT -->
-                <div id="backlog-view" class="hidden h-full">
-                    <div class="bg-white rounded-xl shadow-xs overflow-hidden h-[calc(100vh-140px)] border border-slate-200">
-                        <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
-                    </div>
-                </div>
-
-                <!-- VIEW 3: POPULATION UNIT DATABASE -->
+                <!-- VIEW 2: POPULATION UNIT -->
                 <div id="population-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex justify-between items-center shrink-0">
                         <h2 class="font-bold text-slate-900 text-sm font-mono tracking-wide">UNIT DATABASE</h2>
@@ -307,24 +163,17 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: DATABASE PARETO -->
+                <!-- VIEW 3: DATABASE PARETO -->
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                         <div>
-                            <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS)</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Menampilkan maksimal 100 baris per halaman.</p>
+                            <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM</h2>
                         </div>
-                        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
-                            <div class="relative">
-                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                                <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari ID Unit / Masalah..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-500 w-60 font-mono">
-                            </div>
-                            <button onclick="loadParetoData()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-xs shrink-0">
-                                <i class="fa-solid fa-rotate"></i> REFRESH
-                            </button>
+                        <div class="flex items-center gap-3">
+                            <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari data..." class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
+                            <button onclick="loadParetoData()" class="px-4 py-2 bg-orange-600 text-white rounded-lg text-xs font-mono font-bold">REFRESH</button>
                         </div>
                     </div>
-
                     <div class="bg-white rounded-xl shadow-xs p-4 flex-1 flex flex-col overflow-hidden border border-slate-200">
                         <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-slate-200 bg-white">
                             <table id="paretoTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
@@ -332,50 +181,39 @@
                                 <tbody id="paretoTableBody" class="divide-y divide-slate-200"></tbody>
                             </table>
                         </div>
-                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-200 shrink-0">
-                            <span id="pagination-info" class="text-xs font-mono text-slate-500 font-semibold">Menampilkan 0 - 0 dari 0 data</span>
-                            <div class="flex space-x-2">
-                                <button onclick="changePage(-1)" id="prev-btn" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 disabled:opacity-50 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
-                                <button onclick="changePage(1)" id="next-btn" class="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 text-white rounded-lg text-xs font-mono font-bold transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN TANGGAL DARI KOLOM G / INDEX 6) -->
+                <!-- VIEW 4: DASHBOARD PARETO ANALYTICS (6 GRAFIK LENGKAP) -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
-                    <!-- Panel Filter Menyamping -->
+                    <!-- Filter Panel -->
                     <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 space-y-4">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-slate-900 font-mono tracking-wide uppercase">FILTER DASHBOARD PARETO</h2>
-                                <p class="text-xs text-slate-500">Filter data berdasarkan Unit, Tanggal SPK Start (Col G), Tahun (Col V), Bulan (Col W), Major (Col M), Sub (Col O), & Cluster (Col T).</p>
+                                <p class="text-xs text-slate-500">Filter berdasarkan Tgl SPK Start (Col G), Unit (Col A), Tahun (Col V), Bulan (Col W), Major (Col M), Sub (Col O), Cluster (Col T).</p>
                             </div>
-                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5">
-                                <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Reset Filter
                             </button>
                         </div>
 
-                        <!-- Barisan Filter Lengkap -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
-                            <!-- 1. Unit -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Unit</label>
-                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                                     <option value="">Semua Unit</option>
                                 </select>
                             </div>
-                            <!-- 2. Tahun (Kolom V / Index 21) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tahun (Col V)</label>
-                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                                     <option value="">Semua Tahun</option>
                                 </select>
                             </div>
-                            <!-- 3. Bulan (Kolom W / Index 22) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Bulan (Col W)</label>
-                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                                     <option value="">Semua Bulan</option>
                                     <option value="Jan">Jan</option><option value="Feb">Feb</option><option value="Mar">Mar</option>
                                     <option value="Apr">Apr</option><option value="May">May</option><option value="Jun">Jun</option>
@@ -383,41 +221,36 @@
                                     <option value="Oct">Oct</option><option value="Nov">Nov</option><option value="Dec">Dec</option>
                                 </select>
                             </div>
-                            <!-- 4. Tanggal Awal (Mengacu ke Col G / Index 6) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tgl Awal (Col G)</label>
-                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                             </div>
-                            <!-- 5. Tanggal Finish (Mengacu ke Col G / Index 6) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tgl Finish (Col G)</label>
-                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                             </div>
-                            <!-- 6. Cluster (Kolom T / Index 19) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Cluster (Col T)</label>
-                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                                     <option value="">Semua Cluster</option>
                                 </select>
                             </div>
-                            <!-- 7. Major Component (Kolom M / Index 12) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Major (Col M)</label>
-                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                                     <option value="">Semua Major</option>
                                 </select>
                             </div>
-                            <!-- 8. Sub Component (Kolom O / Index 14) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Sub Comp (Col O)</label>
-                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono">
                                     <option value="">Semua Sub</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Kartu Statistik -->
+                    <!-- Kartu Ringkasan -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs border-l-4 border-l-orange-500">
                             <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Total Record Problem</p>
@@ -433,63 +266,61 @@
                         </div>
                     </div>
 
-                    <!-- Grafik Chart Visual -->
+                    <!-- 6 GRID GRAFIK (LAYOUT SESUAI REFERENSI GAMBAR ANDA) -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frekuensi Kerusakan per Major Component</h3>
+                        <!-- 1. Frequency Component -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-96">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frequency Component (Major)</h3>
                             <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
-                                <canvas id="paretoBarChart"></canvas>
+                                <canvas id="chartFreqComp"></canvas>
                             </div>
                         </div>
-                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-pie text-blue-600 mr-2"></i> Durasi Downtime per Cluster</h3>
+                        <!-- 2. Duration Component -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-96">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-slate-700 mr-2"></i> Duration Component (Major)</h3>
                             <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
-                                <canvas id="paretoClusterChart"></canvas>
+                                <canvas id="chartDurComp"></canvas>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- VIEW 6: RELIABILITY MTBF & MTTR -->
-                <div id="reliability-mtbf-view" class="hidden space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-600">
-                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Overall MTBF</p>
-                            <h3 class="text-2xl font-black text-slate-900 mt-1 font-mono">92.4 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
+                        <!-- 3. Frequency - Sub Component -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-96">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frequency - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartFreqSub"></canvas>
+                            </div>
                         </div>
-                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600">
-                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Overall MTTR</p>
-                            <h3 class="text-2xl font-black text-slate-900 mt-1 font-mono">3.5 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
+                        <!-- 4. Duration - Sub Component -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-96">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-slate-700 mr-2"></i> Duration - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartDurSub"></canvas>
+                            </div>
                         </div>
-                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-purple-600">
-                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">System Reliability Rate</p>
-                            <h3 class="text-2xl font-black text-purple-600 mt-1 font-mono">96.2%</h3>
+                        <!-- 5. Frequency - Per Unit -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-96">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frequency - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartFreqUnit"></canvas>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
-                        <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-line text-blue-600 mr-2"></i> Tren Bulanan MTBF & MTTR</h3>
-                        <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
-                            <canvas id="mtbfChart"></canvas>
+                        <!-- 6. Duration - Per Unit -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-96">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-slate-700 mr-2"></i> Duration - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartDurUnit"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
         </main>
-
     </div>
 
-    <!-- Script JavaScript Terintegrasi & Sinkronisasi Tanggal ke Kolom G (Index 6) -->
     <script>
         let allParetoRows = [];
         let filteredParetoRows = [];
-        let currentPage = 1;
-        const rowsPerPage = 100;
-
-        let barChartInstance = null;
-        let clusterChartInstance = null;
-        let mtbfChartInstance = null;
+        let chartInstances = {};
 
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -507,16 +338,11 @@
         }
 
         function selectView(viewId, title) {
-            ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view', 'reliability-mtbf-view'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.classList.add('hidden');
+            ['dashboard-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
             });
-            
-            const targetView = document.getElementById(viewId);
-            if(targetView) targetView.classList.remove('hidden');
-            
-            const pageTitle = document.getElementById('page-title');
-            if(pageTitle) pageTitle.innerText = title;
+            document.getElementById(viewId).classList.remove('hidden');
+            document.getElementById('page-title').innerText = title;
             closeSidebar();
 
             if (viewId === 'population-view') loadDatabase('population');
@@ -524,9 +350,6 @@
             if (viewId === 'pareto-dashboard-view') {
                 if(allParetoRows.length === 0) loadParetoData();
                 else applyParetoFilters();
-            }
-            if (viewId === 'reliability-mtbf-view') {
-                renderMtbfChart();
             }
         }
 
@@ -538,12 +361,10 @@
                 let inQuotes = false;
                 let entry = '';
                 let line = lines[i];
-                
                 for (let j = 0; j < line.length; j++) {
                     let char = line[j];
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
+                    if (char === '"') inQuotes = !inQuotes;
+                    else if (char === ',' && !inQuotes) {
                         row.push(entry.trim().replace(/^"|"$/g, ''));
                         entry = '';
                     } else {
@@ -551,447 +372,195 @@
                     }
                 }
                 row.push(entry.trim().replace(/^"|"$/g, ''));
-                if (row.some(val => val !== "")) {
-                    result.push(row);
-                }
+                if (row.some(val => val !== "")) result.push(row);
             }
             return result;
         }
 
-        // Helper untuk normalisasi format tanggal (DD/MM/YYYY atau YYYY-MM-DD menjadi YYYY-MM-DD untuk perbandingan)
         function formatDateToStandard(dateStr) {
             if (!dateStr) return '';
             dateStr = dateStr.trim();
-            // Jika formatnya DD/MM/YYYY
             if (dateStr.includes('/')) {
                 let parts = dateStr.split('/');
                 if (parts.length === 3) {
                     let day = parts[0].padStart(2, '0');
                     let month = parts[1].padStart(2, '0');
                     let year = parts[2];
-                    // Tangani jika tahun berada di depan (YYYY/MM/DD)
-                    if (year.length === 4 && parts[0].length === 2 && Number(parts[0]) > 31) {
-                        // kemungkinan YYYY/MM/DD
-                        return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
-                    }
+                    if (year.length === 4 && Number(parts[0]) > 31) return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
                     return `${year}-${month}-${day}`;
                 }
             }
-            return dateStr; // Asumsi sudah YYYY-MM-DD
+            return dateStr;
         }
 
         async function loadDatabase(type) {
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=0`;
-            const tableHead = document.getElementById('populationTableHead');
             const tableBody = document.getElementById('populationTableBody');
-            
-            if(!tableBody) return;
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-blue-600"></i> Memuat data dari Google Sheets...</td></tr>`;
-
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat data...</td></tr>`;
             try {
-                const response = await fetch(csvUrl);
-                const dataText = await response.text();
-                const rows = parseCSV(dataText);
-
-                if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data.</td></tr>`;
-                    return;
-                }
-
-                const headers = rows[0];
-                let headHtml = '<tr>';
-                headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 whitespace-nowrap">${h}</th>`; });
-                headHtml += '</tr>';
-                tableHead.innerHTML = headHtml;
-
-                let bodyHtml = '';
-                for (let i = 1; i < rows.length; i++) {
-                    const cols = rows[i];
-                    bodyHtml += `<tr class="hover:bg-blue-50/60 transition-colors">`;
-                    for (let j = 0; j < headers.length; j++) {
-                        bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
-                    }
-                    bodyHtml += `</tr>`;
-                }
-                tableBody.innerHTML = bodyHtml;
-            } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data.</td></tr>`;
+                const res = await fetch(csvUrl);
+                const rows = parseCSV(await res.text());
+                document.getElementById('populationTableHead').innerHTML = `<tr>` + rows[0].map(h => `<th class="p-3.5 border-r border-slate-700 whitespace-nowrap">${h}</th>`).join('') + `</tr>`;
+                tableBody.innerHTML = rows.slice(1).map(cols => `<tr>` + cols.map(c => `<td class="p-3 border-r border-slate-200 whitespace-nowrap">${c || ''}</td>`).join('') + `</tr>`).join('');
+            } catch (e) {
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600">Gagal memuat data.</td></tr>`;
             }
         }
 
         async function loadParetoData() {
-            const tableHead = document.getElementById('paretoTableHead');
-            const tableBody = document.getElementById('paretoTableBody');
-            if(!tableBody) return;
-
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-orange-600"></i> Memuat data Pareto dari Google Sheets...</td></tr>`;
-
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
-                const text = await res.text();
-                const rows = parseCSV(text);
-
-                if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data pada tab Pareto.</td></tr>`;
-                    return;
-                }
-
-                const headers = rows[0];
-                let headHtml = '<tr>';
-                headers.forEach(h => {
-                    if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider text-xs whitespace-nowrap">${h}</th>`;
-                });
-                headHtml += '</tr>';
-                tableHead.innerHTML = headHtml;
-
+                const rows = parseCSV(await res.text());
+                document.getElementById('paretoTableHead').innerHTML = `<tr>` + rows[0].map(h => `<th class="p-3.5 border-r border-slate-700 whitespace-nowrap">${h}</th>`).join('') + `</tr>`;
                 allParetoRows = rows.slice(1);
                 filteredParetoRows = [...allParetoRows];
-                currentPage = 1;
-
+                document.getElementById('paretoTableBody').innerHTML = filteredParetoRows.map(r => `<tr>` + r.map(c => `<td class="p-3 border-r border-slate-200 whitespace-nowrap">${c || ''}</td>`).join('') + `</tr>`).join('');
                 populateFilterOptions();
-                renderParetoTable();
                 applyParetoFilters();
-
             } catch (e) {
-                console.error("Gagal memuat pareto:", e);
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data Pareto.</td></tr>`;
+                console.error(e);
             }
         }
 
         function filterParetoData() {
             const keyword = document.getElementById('paretoSearchInput').value.toLowerCase();
-            if (!keyword) {
-                filteredParetoRows = [...allParetoRows];
-            } else {
-                filteredParetoRows = allParetoRows.filter(row => row.some(cell => cell.toLowerCase().includes(keyword)));
-            }
-            currentPage = 1;
-            renderParetoTable();
-        }
-
-        function renderParetoTable() {
-            const tableBody = document.getElementById('paretoTableBody');
-            const totalData = filteredParetoRows.length;
-
-            if (totalData === 0) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono">Data tidak ditemukan.</td></tr>`;
-                document.getElementById('pagination-info').innerText = `Menampilkan 0 dari 0 data`;
-                document.getElementById('prev-btn').disabled = true;
-                document.getElementById('next-btn').disabled = true;
-                return;
-            }
-
-            const totalPages = Math.ceil(totalData / rowsPerPage);
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
-
-            const startIndex = (currentPage - 1) * rowsPerPage;
-            const endIndex = Math.min(startIndex + rowsPerPage, totalData);
-            const sliceData = filteredParetoRows.slice(startIndex, endIndex);
-
-            let bodyHtml = '';
-            sliceData.forEach(row => {
-                bodyHtml += `<tr class="hover:bg-orange-50/60 transition-colors">`;
-                for (let j = 0; j < row.length; j++) {
-                    bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${row[j] || ''}</td>`;
-                }
-                bodyHtml += `</tr>`;
-            });
-
-            tableBody.innerHTML = bodyHtml;
-            document.getElementById('pagination-info').innerText = `Menampilkan ${startIndex + 1} - ${endIndex} dari ${totalData} data (Halaman ${currentPage}/${totalPages})`;
-            document.getElementById('prev-btn').disabled = currentPage === 1;
-            document.getElementById('next-btn').disabled = currentPage === totalPages;
-        }
-
-        function changePage(direction) {
-            currentPage += direction;
-            renderParetoTable();
-            const container = document.querySelector('#pareto-database-view .overflow-y-auto');
-            if(container) container.scrollTop = 0;
+            filteredParetoRows = !keyword ? [...allParetoRows] : allParetoRows.filter(r => r.some(c => c.toLowerCase().includes(keyword)));
+            document.getElementById('paretoTableBody').innerHTML = filteredParetoRows.map(r => `<tr>` + r.map(c => `<td class="p-3 border-r border-slate-200 whitespace-nowrap">${c || ''}</td>`).join('') + `</tr>`).join('');
         }
 
         function populateFilterOptions() {
-            let units = new Set();
-            let years = new Set();
-            let clusters = new Set();
-            let majors = new Set();
-
+            let units = new Set(), years = new Set(), clusters = new Set(), majors = new Set();
             allParetoRows.forEach(row => {
-                let unit = row[0] || '';       // Kolom Unit (Index 0)
-                let major = row[12] || '';     // Kolom M / Major Component (Index 12)
-                let cluster = row[19] || '';   // Kolom T / Cluster (Index 19)
-                let year = row[21] || '';      // Kolom V / Year (Index 21)
-                
-                if (unit.trim()) units.add(unit.trim());
-                if (major.trim()) majors.add(major.trim());
-                if (cluster.trim()) clusters.add(cluster.trim());
-                if (year.trim() && !isNaN(year.trim())) years.add(year.trim());
+                if (row[0]?.trim()) units.add(row[0].trim());
+                if (row[12]?.trim()) majors.add(row[12].trim());
+                if (row[19]?.trim()) clusters.add(row[19].trim());
+                if (row[21]?.trim() && !isNaN(row[21].trim())) years.add(row[21].trim());
             });
 
-            let unitSel = document.getElementById('filter-unit');
-            if(unitSel) {
-                unitSel.innerHTML = '<option value="">Semua Unit</option>';
-                Array.from(units).sort().forEach(u => {
-                    unitSel.innerHTML += `<option value="${u}">${u}</option>`;
-                });
-            }
-
-            let yearSel = document.getElementById('filter-year');
-            if(yearSel) {
-                yearSel.innerHTML = '<option value="">Semua Tahun</option>';
-                Array.from(years).sort().forEach(y => {
-                    yearSel.innerHTML += `<option value="${y}">${y}</option>`;
-                });
-            }
-
-            let clusterSel = document.getElementById('filter-cluster');
-            if(clusterSel) {
-                clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
-                Array.from(clusters).sort().forEach(c => {
-                    clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
-                });
-            }
-
-            let majorSel = document.getElementById('filter-major');
-            if(majorSel) {
-                majorSel.innerHTML = '<option value="">Semua Major</option>';
-                Array.from(majors).sort().forEach(m => {
-                    majorSel.innerHTML += `<option value="${m}">${m}</option>`;
-                });
-            }
-            
+            document.getElementById('filter-unit').innerHTML = '<option value="">Semua Unit</option>' + Array.from(units).sort().map(u => `<option value="${u}">${u}</option>`).join('');
+            document.getElementById('filter-year').innerHTML = '<option value="">Semua Tahun</option>' + Array.from(years).sort().map(y => `<option value="${y}">${y}</option>`).join('');
+            document.getElementById('filter-cluster').innerHTML = '<option value="">Semua Cluster</option>' + Array.from(clusters).sort().map(c => `<option value="${c}">${c}</option>`).join('');
+            document.getElementById('filter-major').innerHTML = '<option value="">Semua Major</option>' + Array.from(majors).sort().map(m => `<option value="${m}">${m}</option>`).join('');
             updateSubComponentDropdown();
         }
 
         function updateSubComponentDropdown() {
             let selectedMajor = document.getElementById('filter-major')?.value || '';
-            let subSel = document.getElementById('filter-sub');
-            if(!subSel) return;
-            
-            subSel.innerHTML = '<option value="">Semua Sub</option>';
-
             let subs = new Set();
             allParetoRows.forEach(row => {
-                let major = row[12] ? row[12].trim() : ''; // Kolom M
-                let sub = row[14] ? row[14].trim() : '';   // Kolom O / Sub Component (Index 14)
-                if ((!selectedMajor || major === selectedMajor) && sub) {
-                    subs.add(sub);
+                if ((!selectedMajor || (row[12] && row[12].trim() === selectedMajor)) && row[14]?.trim()) {
+                    subs.add(row[14].trim());
                 }
             });
-
-            Array.from(subs).sort().forEach(s => {
-                subSel.innerHTML += `<option value="${s}">${s}</option>`;
-            });
+            document.getElementById('filter-sub').innerHTML = '<option value="">Semua Sub</option>' + Array.from(subs).sort().map(s => `<option value="${s}">${s}</option>`).join('');
         }
 
         function resetParetoFilters() {
-            if(document.getElementById('filter-unit')) document.getElementById('filter-unit').value = '';
-            if(document.getElementById('filter-year')) document.getElementById('filter-year').value = '';
-            if(document.getElementById('filter-month')) document.getElementById('filter-month').value = '';
-            if(document.getElementById('filter-start-date')) document.getElementById('filter-start-date').value = '';
-            if(document.getElementById('filter-end-date')) document.getElementById('filter-end-date').value = '';
-            if(document.getElementById('filter-cluster')) document.getElementById('filter-cluster').value = '';
-            if(document.getElementById('filter-major')) document.getElementById('filter-major').value = '';
+            ['filter-unit', 'filter-year', 'filter-month', 'filter-start-date', 'filter-end-date', 'filter-cluster', 'filter-major', 'filter-sub'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
             updateSubComponentDropdown();
             applyParetoFilters();
         }
 
         function applyParetoFilters() {
-            let fUnit = document.getElementById('filter-unit')?.value || '';
-            let fYear = document.getElementById('filter-year')?.value || '';
-            let fMonth = document.getElementById('filter-month')?.value || '';
-            let fStart = document.getElementById('filter-start-date')?.value || '';
-            let fEnd = document.getElementById('filter-end-date')?.value || '';
-            let fCluster = document.getElementById('filter-cluster')?.value || '';
-            let fMajor = document.getElementById('filter-major')?.value || '';
-            let fSub = document.getElementById('filter-sub')?.value || '';
+            let fUnit = document.getElementById('filter-unit').value;
+            let fYear = document.getElementById('filter-year').value;
+            let fMonth = document.getElementById('filter-month').value;
+            let fStart = document.getElementById('filter-start-date').value;
+            let fEnd = document.getElementById('filter-end-date').value;
+            let fCluster = document.getElementById('filter-cluster').value;
+            let fMajor = document.getElementById('filter-major').value;
+            let fSub = document.getElementById('filter-sub').value;
 
             let resultData = allParetoRows.filter(row => {
-                let unit = row[0] || '';         // Kolom 0
-                let tglSpkStartRaw = row[6] || ''; // Kolom G / TGL SPK START (Index 6)
-                let major = row[12] || '';       // Kolom M (Index 12)
-                let sub = row[14] || '';         // Kolom O (Index 14)
-                let cluster = row[19] || '';     // Kolom T (Index 19)
-                let yearV = row[21] || '';       // Kolom V (Index 21)
-                let monthW = row[22] || '';      // Kolom W (Index 22)
+                if (fUnit && row[0]?.trim() !== fUnit) return false;
+                if (fYear && row[21]?.trim() !== fYear) return false;
+                if (fMonth && !row[22]?.toLowerCase().includes(fMonth.toLowerCase())) return false;
+                if (fCluster && row[19]?.trim() !== fCluster) return false;
+                if (fMajor && row[12]?.trim() !== fMajor) return false;
+                if (fSub && row[14]?.trim() !== fSub) return false;
 
-                if (fUnit && unit.trim() !== fUnit) return false;
-                if (fYear && yearV.trim() !== fYear) return false;
-                if (fMonth && !monthW.toLowerCase().includes(fMonth.toLowerCase())) return false;
-                if (fCluster && cluster.trim() !== fCluster) return false;
-                if (fMajor && major.trim() !== fMajor) return false;
-                if (fSub && sub.trim() !== fSub) return false;
-
-                // Filter rentang tanggal berdasarkan Kolom G (Index 6)
                 if (fStart || fEnd) {
-                    let standardDate = formatDateToStandard(tglSpkStartRaw);
+                    let standardDate = formatDateToStandard(row[6]);
                     if (standardDate) {
-                        // Ambil hanya bagian YYYY-MM-DD jika ada jamnya
                         let cleanDate = standardDate.split(' ')[0];
                         if (fStart && cleanDate < fStart) return false;
                         if (fEnd && cleanDate > fEnd) return false;
-                    } else if (fStart || fEnd) {
-                        // Jika baris data tidak memiliki tanggal di kolom G tapi filter diaktifkan
-                        return false;
-                    }
+                    } else return false;
                 }
-
                 return true;
             });
 
-            updateParetoDashboardStatsAndCharts(resultData);
+            updateDashboardStatsAndCharts(resultData);
         }
 
-        function updateParetoDashboardStatsAndCharts(data) {
-            const recEl = document.getElementById('stat-total-records');
-            const durEl = document.getElementById('stat-total-duration');
-            const topEl = document.getElementById('stat-top-component');
-
-            if(recEl) recEl.innerText = `${data.length} Data`;
+        function updateDashboardStatsAndCharts(data) {
+            document.getElementById('stat-total-records').innerText = `${data.length} Data`;
 
             let totalDurasi = 0;
-            let majorCounts = {};
-            let clusterDurasi = {};
+            let freqComp = {}, durComp = {}, freqSub = {}, durSub = {}, freqUnit = {}, durUnit = {};
 
             data.forEach(row => {
-                const rawDur = row[10] || '0'; // Kolom Durasi (Index 10)
-                let duration = 0;
-                if (rawDur.includes(':')) {
-                    const parts = rawDur.split(':');
-                    duration = parseFloat(parts[0]) + (parseFloat(parts[1]) || 0) / 60;
-                } else {
-                    duration = parseFloat(rawDur) || 0;
-                }
+                let rawDur = row[10] || '0';
+                let duration = rawDur.includes(':') ? (parseFloat(rawDur.split(':')[0]) + parseFloat(rawDur.split(':')[1])/60) : (parseFloat(rawDur) || 0);
                 totalDurasi += duration;
 
-                // Major Component (Kolom M / Index 12)
-                let major = row[12] && row[12].trim() !== '' ? row[12].trim() : 'Unknown';
-                majorCounts[major] = (majorCounts[major] || 0) + 1;
+                let major = row[12]?.trim() || 'Unknown';
+                let sub = row[14]?.trim() || 'Unknown';
+                let unit = row[0]?.trim() || 'Unknown';
 
-                // Cluster (Kolom T / Index 19)
-                let cluster = row[19] && row[19].trim() !== '' ? row[19].trim() : 'Lainnya';
-                clusterDurasi[cluster] = (clusterDurasi[cluster] || 0) + duration;
+                freqComp[major] = (freqComp[major] || 0) + 1;
+                durComp[major] = (durComp[major] || 0) + duration;
+
+                freqSub[sub] = (freqSub[sub] || 0) + 1;
+                durSub[sub] = (durSub[sub] || 0) + duration;
+
+                freqUnit[unit] = (freqUnit[unit] || 0) + 1;
+                durUnit[unit] = (durUnit[unit] || 0) + duration;
             });
 
-            if(durEl) durEl.innerText = `${totalDurasi.toFixed(1)} Jam`;
+            document.getElementById('stat-total-duration').innerText = `${totalDurasi.toFixed(1)} Jam`;
+            let topComp = Object.entries(freqComp).sort((a,b) => b[1] - a[1])[0]?.[0] || '-';
+            document.getElementById('stat-top-component').innerText = topComp;
 
-            let topComp = '-';
-            let maxCount = 0;
-            for (let comp in majorCounts) {
-                if (majorCounts[comp] > maxCount) {
-                    maxCount = majorCounts[comp];
-                    topComp = comp;
-                }
-            }
-            if(topEl) topEl.innerText = topComp;
-
-            renderCharts(majorCounts, clusterDurasi);
+            renderBarChart('chartFreqComp', freqComp, '#f97316', 'Frequency');
+            renderBarChart('chartDurComp', durComp, '#475569', 'Jam');
+            renderBarChart('chartFreqSub', freqSub, '#f97316', 'Frequency');
+            renderBarChart('chartDurSub', durSub, '#475569', 'Jam');
+            renderBarChart('chartFreqUnit', freqUnit, '#f97316', 'Frequency');
+            renderBarChart('chartDurUnit', durUnit, '#475569', 'Jam');
         }
 
-        function renderCharts(majorCounts, clusterDurasi) {
-            let sortedMajors = Object.entries(majorCounts).sort((a,b) => b[1] - a[1]).slice(0, 8);
-            let majorLabels = sortedMajors.map(item => item[0]);
-            let majorValues = sortedMajors.map(item => item[1]);
+        function renderBarChart(canvasId, dataObj, color, unitLabel) {
+            let sorted = Object.entries(dataObj).sort((a,b) => b[1] - a[1]).slice(0, 10);
+            let labels = sorted.map(i => i[0]);
+            let values = sorted.map(i => i[1]);
 
-            const ctxBar = document.getElementById('paretoBarChart')?.getContext('2d');
-            if (ctxBar) {
-                if (barChartInstance) barChartInstance.destroy();
-                barChartInstance = new Chart(ctxBar, {
-                    type: 'bar',
-                    data: {
-                        labels: majorLabels,
-                        datasets: [{
-                            label: 'Frekuensi',
-                            data: majorValues,
-                            backgroundColor: '#f97316',
-                            borderRadius: 6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            y: { 
-                                beginAtZero: true, 
-                                grid: { color: '#f1f5f9' },
-                                ticks: {
-                                    stepSize: 1,
-                                    precision: 0
-                                }
-                            },
-                            x: { grid: { display: false } }
-                        }
-                    }
-                });
-            }
+            const ctx = document.getElementById(canvasId)?.getContext('2d');
+            if (!ctx) return;
 
-            let sortedClusters = Object.entries(clusterDurasi).sort((a,b) => b[1] - a[1]);
-            let clusterLabels = sortedClusters.map(item => item[0]);
-            let clusterValues = sortedClusters.map(item => item[1]);
-
-            const ctxCluster = document.getElementById('paretoClusterChart')?.getContext('2d');
-            if (ctxCluster) {
-                if (clusterChartInstance) clusterChartInstance.destroy();
-                clusterChartInstance = new Chart(ctxCluster, {
-                    type: 'doughnut',
-                    data: {
-                        labels: clusterLabels,
-                        datasets: [{
-                            data: clusterValues,
-                            backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#6366f1']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { 
-                            legend: { 
-                                position: 'right', 
-                                labels: { boxWidth: 12, font: { size: 10 } } 
-                            } 
-                        }
-                    }
-                });
-            }
-        }
-
-        function renderMtbfChart() {
-            const ctxMtbf = document.getElementById('mtbfChart');
-            if (!ctxMtbf) return;
-            
-            if (mtbfChartInstance) mtbfChartInstance.destroy();
-            mtbfChartInstance = new Chart(ctxMtbf.getContext('2d'), {
-                type: 'line',
+            if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+            chartInstances[canvasId] = new Chart(ctx, {
+                type: 'bar',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'],
-                    datasets: [
-                        {
-                            label: 'MTBF (Jam)',
-                            data: [80, 85, 82, 88, 90, 89, 94, 91, 92.4],
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            fill: true,
-                            tension: 0.3
-                        },
-                        {
-                            label: 'MTTR (Jam)',
-                            data: [5.2, 4.8, 4.5, 4.1, 3.9, 3.8, 3.6, 3.5, 3.5],
-                            borderColor: '#2563eb',
-                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                            fill: true,
-                            tension: 0.3
-                        }
-                    ]
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: color,
+                        borderRadius: 4
+                    }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } },
+                    plugins: { legend: { display: false } },
                     scales: {
                         y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
-                        x: { grid: { display: false } }
+                        x: { 
+                            grid: { display: false },
+                            ticks: { font: { size: 10 }, maxRotation: 90, minRotation: 90 }
+                        }
                     }
                 }
             });
