@@ -52,7 +52,7 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu Lengkap 1-10 -->
+            <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -390,7 +390,6 @@
 
         // Fungsi Universal untuk Memuat Kolom Lengkap dari Spreadsheet secara Dinamis
         async function loadDatabase(type) {
-            // Gid 0 untuk tab pertama (Population), Gid 782860436 untuk tab Pareto
             const gid = type === 'pareto' ? '782860436' : '0';
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=${gid}`;
             
@@ -404,7 +403,6 @@
                 const response = await fetch(csvUrl);
                 const dataText = await response.text();
                 
-                // Parser CSV untuk menangani isi sel yang mungkin mengandung koma/tanda kutip
                 const rows = dataText.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
 
                 if (rows.length < 2) {
@@ -412,11 +410,10 @@
                     return;
                 }
 
-                // Ambil seluruh header dari baris pertama secara dinamis
                 const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
                 
                 let headHtml = '<tr>';
-                headers.forEach((h, index) => {
+                headers.forEach((h) => {
                     if (h !== "") {
                         headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider text-xs whitespace-nowrap">${h}</th>`;
                     }
@@ -425,10 +422,9 @@
                 tableHead.innerHTML = headHtml;
 
                 let bodyHtml = '';
-                // Looping isi baris data dari baris ke-2 sampai selesai
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
-                    if (!cols.some(val => val !== "")) continue; // Skip baris kosong
+                    if (!cols.some(val => val !== "")) continue;
 
                     bodyHtml += `<tr class="hover:bg-blue-50/60 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
@@ -469,11 +465,9 @@
             let compCounts = {};
 
             data.forEach(row => {
-                // Kolom DURATION (disesuaikan dengan indeks kolom waktu/durasi di sheet Pareto)
                 const duration = parseFloat(row[11]) || 0; 
                 totalDurasi += duration;
 
-                // Kolom Major Component
                 const majorComp = row[12] || 'Unknown'; 
                 compCounts[majorComp] = (compCounts[majorComp] || 0) + 1;
             });
