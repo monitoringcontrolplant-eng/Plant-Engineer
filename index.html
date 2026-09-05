@@ -3,377 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Engineering Integrated System (PEIS) - Executive Edition</title>
+    <title>Plant Engineering Integrated System (PEIS)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js CDN untuk Grafik Cluster -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 4px;
+            height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(202, 138, 4, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(202, 138, 4, 0.6);
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        /* Tema Terang, Mewah, & Elegan: Putih, Abu Mewah, dan Kuning Emas */
-        .bright-sidebar {
-            background: #ffffff;
-            border-right: 1px solid #e2e8f0;
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.03);
+        .glass-sidebar {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .bright-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .luxury-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-            transition: all 0.3s ease;
-        }
-        .luxury-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 30px -10px rgba(202, 138, 4, 0.12);
-            border-color: rgba(234, 179, 8, 0.4);
+        .glass-header {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="bg-[#f8fafc] font-sans antialiased text-slate-800 h-screen overflow-hidden flex flex-col">
+<body class="bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 font-sans antialiased text-slate-800 min-h-screen">
 
     <!-- OVERLAY LAYAR SAAT SIDEBAR TERBUKA -->
-    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/20 backdrop-blur-xs z-30 hidden transition-opacity duration-300"></div>
+    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden transition-opacity duration-300"></div>
 
-    <div class="flex h-screen overflow-hidden relative w-full">
+    <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR NAVIGATOR (TERANG, BERKELAS, PUTIH & EMAS) -->
-        <aside id="main-sidebar" class="w-80 bright-sidebar text-slate-700 flex flex-col z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 fixed lg:static top-0 bottom-0 left-0 h-full shrink-0">
+        <!-- SIDEBAR NAVIGATOR -->
+        <aside id="main-sidebar" class="w-80 glass-sidebar text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
-            <!-- Header Brand Sidebar -->
-            <div class="h-20 flex items-center justify-between px-6 border-b border-slate-100 shrink-0 bg-slate-50/50">
-                <div class="flex items-center space-x-3.5 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-md shadow-amber-500/20 text-white font-black text-xl">
-                        <i class="fa-solid fa-crown"></i>
-                    </div>
+            <!-- Header Brand & Tombol Close Sidebar -->
+            <div class="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
+                    <i class="fa-solid fa-gears text-cyan-400 text-2xl"></i>
                     <div>
-                        <span class="font-black text-lg tracking-wider text-slate-900 block leading-tight">PEIS</span>
-                        <span class="text-[9px] text-amber-600 font-bold tracking-widest block uppercase">Executive System</span>
+                        <span class="font-bold text-base tracking-wide text-white block leading-tight">PEIS</span>
+                        <span class="text-[10px] text-cyan-300/70 block tracking-wider">PLANT ENG INTEGRATED SYSTEM</span>
                     </div>
                 </div>
-                <button onclick="closeSidebar()" class="lg:hidden text-slate-400 hover:text-slate-900 p-2 rounded-xl hover:bg-slate-100 transition-colors">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+                <button onclick="closeSidebar()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition-colors" title="Tutup Sidebar">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
                 </button>
             </div>
 
-            <!-- Navigation Menu Lengkap (Otomatis Menutup Saat Diklik) -->
-            <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
+            <!-- Navigation Menu Lengkap Sesuai Struktur Hierarki -->
+            <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-pie w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Dashboard</span>
+                            <i class="fa-solid fa-house w-5 text-cyan-400"></i>
+                            <span>DASHBOARD</span>
                         </div>
                         <i id="dash-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="dash-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium transition-colors">Plant Performance Overview</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium transition-colors">Fleet Availability</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium transition-colors">Breakdown Trend</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium transition-colors">Top Failure Component</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium transition-colors">Cost Impact</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium transition-colors">Action Monitoring</a>
+                    <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Plant Performance Overview</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Fleet Availability</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Breakdown Trend</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Top Failure Component</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Cost Impact</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1 text-xs text-slate-300 hover:text-cyan-300">Action Monitoring</a>
                     </div>
                 </div>
 
                 <!-- 2. POPULATION UNIT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-truck-monster w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Population Unit</span>
+                            <i class="fa-solid fa-tractor w-5 text-emerald-400"></i>
+                            <span>POPULATION UNIT</span>
                         </div>
                         <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="pop-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Unit Database</a>
-                        <a href="#" onclick="selectView('population-view', 'UNIT HISTORY')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Unit History</a>
-                        <a href="#" onclick="selectView('population-view', 'COMPONENT LIFETIME')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Component Lifetime</a>
-                        <a href="#" onclick="selectView('population-view', 'COMPONENT POLICY')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Component Policy</a>
+                    <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1 text-xs text-slate-300 hover:text-emerald-300">Unit Database</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Unit History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Lifetime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Policy</a>
                     </div>
                 </div>
 
                 <!-- 3. CONDITION MONITORING -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-wave-square w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Condition Monitoring</span>
+                            <i class="fa-solid fa-chart-line w-5 text-purple-400"></i>
+                            <span>CONDITION MONITORING</span>
                         </div>
                         <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="cm-sub" class="hidden pl-5 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('cm-view', '01. INOVA INDEX')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">01. Inova Index</a>
-                        <a href="#" onclick="selectView('cm-view', '02. VHMS')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">02. VHMS</a>
-                        <a href="#" onclick="selectView('cm-view', '03. PAP')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">03. PAP</a>
-                        <a href="#" onclick="selectView('cm-view', '04. PPM')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">04. PPM</a>
-                        <a href="#" onclick="selectView('cm-view', '05. P2U')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">05. P2U</a>
-                        <a href="#" onclick="selectView('cm-view', '06. VITA')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">06. VITA</a>
-                        <a href="#" onclick="selectView('cm-view', '07. FOGC')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">07. FOGC</a>
-                        <a href="#" onclick="selectView('cm-view', '08. MONITORING DISC CLUTCH')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">08. Monitoring Disc Clutch</a>
-                        <a href="#" onclick="selectView('cm-view', '09. MEASUREMENT & TESTING ADJUSTING')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">09. Measurement & Testing Adjusting</a>
-                        <a href="#" onclick="selectView('cm-view', '10. DATA KOMTRAX')" class="block py-1.5 px-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-amber-100 rounded-lg font-medium transition-all">10. Data Komtrax</a>
+                    <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Inova Index</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Oil Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">VHMS Monitoring</a>
                     </div>
                 </div>
 
                 <!-- 4. FAILURE ANALYSIS (FAR) -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-magnifying-glass-chart w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Failure Analysis (FAR)</span>
+                            <i class="fa-solid fa-wrench w-5 text-rose-400"></i>
+                            <span>FAILURE ANALYSIS (FAR)</span>
                         </div>
                         <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="far-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('generic-view', 'CREATE FAR')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Create FAR</a>
-                        <a href="#" onclick="selectView('generic-view', 'RCA ANALYSIS')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">RCA Analysis</a>
-                        <a href="#" onclick="selectView('generic-view', 'PICA')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">PICA</a>
+                    <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Create FAR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">RCA Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">PICA</a>
                     </div>
                 </div>
 
                 <!-- 5. BACKLOG MANAGEMENT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-clipboard-check w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Backlog Management</span>
+                            <i class="fa-solid fa-clipboard-list w-5 text-amber-400"></i>
+                            <span>BACKLOG MANAGEMENT</span>
                         </div>
                         <i id="backlog-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="backlog-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs text-amber-600 font-bold hover:text-amber-700">Finding List / Backlog System</a>
-                        <a href="#" onclick="selectView('generic-view', 'PRIORITY & RISK')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Priority & Risk</a>
-                        <a href="#" onclick="selectView('generic-view', 'PLANNING & EXECUTION')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Planning & Execution</a>
+                    <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1 text-xs text-cyan-300 font-bold hover:text-white">Finding List / Backlog System</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Priority & Risk</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Planning & Execution</a>
                     </div>
                 </div>
 
                 <!-- 6. RELIABILITY DASHBOARD -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-shield-halved w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Reliability Dashboard</span>
+                            <i class="fa-solid fa-chart-pie w-5 text-blue-400"></i>
+                            <span>RELIABILITY DASHBOARD</span>
                         </div>
                         <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="rel-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('generic-view', 'MTBF & MTTR')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">MTBF & MTTR</a>
-                        <a href="#" onclick="selectView('generic-view', 'REPEAT FAILURE')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Repeat Failure</a>
-                        <a href="#" onclick="selectView('generic-view', 'BAD ACTOR COMPONENT')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Bad Actor Component</a>
-                        <a href="#" onclick="selectView('generic-view', 'RELIABILITY RANKING')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Reliability Ranking</a>
+                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">MTBF & MTTR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Repeat Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Bad Actor Component</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Reliability Ranking</a>
                     </div>
                 </div>
 
                 <!-- 7. KNOWLEDGE MANAGEMENT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-book-bookmark w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Knowledge Management</span>
+                            <i class="fa-solid fa-book w-5 text-yellow-400"></i>
+                            <span>KNOWLEDGE MANAGEMENT</span>
                         </div>
                         <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="km-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('generic-view', 'LESSON LEARNED')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Lesson Learned</a>
-                        <a href="#" onclick="selectView('generic-view', 'TROUBLESHOOTING GUIDE')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Troubleshooting Guide</a>
-                        <a href="#" onclick="selectView('generic-view', 'STANDARD REPAIR (WI / SOP)')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Standard Repair (WI / SOP)</a>
-                        <a href="#" onclick="selectView('generic-view', 'FAILURE LIBRARY')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Failure Library</a>
+                    <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Lesson Learned</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Troubleshooting Guide</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Standard Repair (WI / SOP)</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Failure Library</a>
                     </div>
                 </div>
 
                 <!-- 8. ENGINEERING TOOLS -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-toolbox w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>Engineering Tools</span>
+                            <i class="fa-solid fa-screwdriver-wrench w-5 text-teal-400"></i>
+                            <span>ENGINEERING TOOLS</span>
                         </div>
                         <i id="tools-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="tools-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('generic-view', 'TORQUE CALCULATOR')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Torque Calculator</a>
-                        <a href="#" onclick="selectView('generic-view', 'BEARING LIFE CALCULATOR')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Bearing Life Calculator</a>
-                        <a href="#" onclick="selectView('generic-view', 'SHAFT STRESS ANALYSIS')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Shaft Stress Analysis</a>
-                        <a href="#" onclick="selectView('generic-view', 'COMPONENT LIFE CALCULATOR')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Component Life Calculator</a>
+                    <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Torque Calculator</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Bearing Life Calculator</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Shaft Stress Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Component Life Calculator</a>
                     </div>
                 </div>
 
                 <!-- 9. USER MANAGEMENT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-bold uppercase rounded-xl text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-xl text-slate-200 hover:bg-white/10 transition-colors">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-user-gear w-5 text-amber-500 group-hover:scale-110 transition-transform"></i>
-                            <span>User Management</span>
+                            <i class="fa-solid fa-users w-5 text-indigo-400"></i>
+                            <span>USER MANAGEMENT</span>
                         </div>
                         <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
                     </button>
-                    <div id="user-sub" class="hidden pl-9 py-1 space-y-1 bg-slate-50/80 rounded-xl mt-1 border border-slate-100">
-                        <a href="#" onclick="selectView('generic-view', 'ADMIN MANAGEMENT')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Admin</a>
-                        <a href="#" onclick="selectView('generic-view', 'PLANT ENGINEER LIST')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Plant Engineer</a>
-                        <a href="#" onclick="selectView('generic-view', 'SUPERVISOR LIST')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Supervisor</a>
-                        <a href="#" onclick="selectView('generic-view', 'MECHANIC LIST')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Mechanic</a>
-                        <a href="#" onclick="selectView('generic-view', 'VIEWER LIST')" class="block py-1.5 text-xs text-slate-600 hover:text-amber-600 font-medium">Viewer</a>
+                    <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-black/30 rounded-xl mt-1">
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Admin</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Plant Engineer</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Supervisor</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Mechanic</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1 text-xs text-slate-300 hover:text-white">Viewer</a>
                     </div>
                 </div>
 
             </nav>
 
-            <!-- User Footer Profile -->
-            <div class="p-4 border-t border-slate-100 bg-slate-50/50 flex items-center space-x-3 shrink-0">
-                <div class="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center font-black text-white text-xs shadow-md">
+            <!-- User Info Footer -->
+            <div class="p-4 border-t border-white/10 bg-black/40 flex items-center space-x-3 shrink-0">
+                <div class="w-8 h-8 rounded-full bg-cyan-600/80 flex items-center justify-center font-bold text-white text-xs shadow-md border border-cyan-400/30">
                     PE
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-900">Plant Engineer</p>
-                    <p class="text-[10px] text-amber-600 font-semibold">Executive Access</p>
+                    <p class="text-xs font-bold text-white">Plant Engineer</p>
+                    <p class="text-[10px] text-slate-400">Administrator</p>
                 </div>
             </div>
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-[#f8fafc]">
+        <main class="flex-1 flex flex-col overflow-y-auto relative w-full">
 
-            <!-- HEADER UTAMA -->
-            <header class="h-20 bright-header flex items-center justify-between px-8 sticky top-0 z-20 shadow-xs shrink-0">
+            <!-- Header Atas -->
+            <header class="h-16 glass-header flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg shrink-0">
                 <div class="flex items-center space-x-4">
-                    <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-amber-500 hover:text-white text-slate-700 transition-all border border-slate-200 flex items-center justify-center shadow-xs" title="Buka Menu">
+                    <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all shadow-sm border border-white/10 flex items-center justify-center" title="Buka Menu Navigasi">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
-                    <div>
-                        <h1 id="page-title" class="text-lg font-black text-slate-900 tracking-tight uppercase">PLANT PERFORMANCE OVERVIEW</h1>
-                        <p class="text-xs text-slate-400 font-medium">Real-time Plant Engineering Integration</p>
-                    </div>
+                    <h1 id="page-title" class="text-lg font-bold text-white tracking-tight drop-shadow-sm uppercase">PLANT PERFORMANCE OVERVIEW</h1>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <div class="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-amber-50 border border-amber-200/60 rounded-full text-amber-700 text-xs font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                        <span>Site: Batu Hijau</span>
-                    </div>
-                    <span class="px-3.5 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-bold rounded-full">System Ready</span>
+                <div class="flex items-center space-x-4">
+                    <span class="px-3 py-1 bg-emerald-500/20 text-emerald-200 border border-emerald-500/30 text-xs font-medium rounded-full backdrop-blur-md">System Ready</span>
+                    <span class="text-xs text-slate-300 font-medium">Site: Batu Hijau</span>
                 </div>
             </header>
 
-            <!-- ISI KONTEN UTAMA -->
-            <div class="flex-1 p-8 space-y-6">
+            <!-- CONTAINER CONTENT -->
+            <div class="flex-1 p-6">
 
-                <!-- VIEW 1: DASHBOARD UTAMA + GRAFIK CLUSTER -->
+                <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-                        <div class="luxury-card p-5 rounded-2xl relative overflow-hidden">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avg MTBF</p>
-                            <h3 class="text-3xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-bold text-slate-400">Jam</span></h3>
-                            <div class="mt-2 inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">
-                                <i class="fa-solid fa-arrow-up mr-1"></i> +5.2% vs bln lalu
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTBF</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">84.5 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
+                            <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-arrow-up"></i> +5.2% vs bln lalu</p>
                         </div>
-                        <div class="luxury-card p-5 rounded-2xl relative overflow-hidden">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avg MTTR</p>
-                            <h3 class="text-3xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-bold text-slate-400">Jam</span></h3>
-                            <div class="mt-2 inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">
-                                <i class="fa-solid fa-arrow-down mr-1"></i> -12% pemulihan
-                            </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Avg MTTR</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">4.2 <span class="text-xs font-semibold text-slate-700">Jam</span></h3>
+                            <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-arrow-down"></i> -12% pemulihan</p>
                         </div>
-                        <div class="luxury-card p-5 rounded-2xl relative overflow-hidden">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Repeat Failure</p>
-                            <h3 class="text-3xl font-black text-rose-600 mt-1">2.8%</h3>
-                            <div class="mt-2 inline-flex items-center px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 text-[10px] font-bold">
-                                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Target: &lt; 2.0%
-                            </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Repeat Failure</p>
+                            <h3 class="text-2xl font-black text-rose-800 mt-1">2.8%</h3>
+                            <p class="text-[10px] text-rose-800 font-bold mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Target: &lt; 2.0%</p>
                         </div>
-                        <div class="luxury-card p-5 rounded-2xl relative overflow-hidden">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Biaya Maint.</p>
-                            <h3 class="text-3xl font-black text-slate-900 mt-1">$124.5K</h3>
-                            <div class="mt-2 inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">
-                                <i class="fa-solid fa-check mr-1"></i> 8% dibawah budget
-                            </div>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Biaya Maint.</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1">$124.5K</h3>
+                            <p class="text-[10px] text-emerald-800 font-bold mt-1"><i class="fa-solid fa-check"></i> 8% dibawah budget</p>
                         </div>
-                        <div class="luxury-card p-5 rounded-2xl relative overflow-hidden">
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Fleet Health</p>
-                            <h3 class="text-3xl font-black text-amber-600 mt-1">88 <span class="text-xs text-slate-400">/ 100</span></h3>
-                            <p class="text-[10px] text-slate-400 font-semibold mt-2">Skor PAP, VHMS, PPM</p>
+                        <div class="glass-panel p-4 rounded-2xl shadow-lg text-slate-900">
+                            <p class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Fleet Health</p>
+                            <h3 class="text-2xl font-black text-blue-900 mt-1">88 / 100</h3>
+                            <p class="text-[10px] text-slate-700 font-semibold mt-1">Skor PAP, VHMS, PPM</p>
                         </div>
                     </div>
 
-                    <!-- GRAFIK PENYEBARAN POPULASI BERDASARKAN CLUSTER -->
-                    <div class="luxury-card rounded-2xl p-6 space-y-4">
-                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                    <div class="glass-panel rounded-2xl shadow-xl p-5 space-y-4">
+                        <div class="flex justify-between items-center">
                             <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-chart-pie text-amber-500"></i> Penyebaran Populasi Unit Berdasarkan Cluster
+                                <i class="fa-solid fa-heart-pulse text-rose-600"></i> Equipment Health Score Monitor (0 - 100)
                             </h2>
-                            <span class="text-xs text-slate-400 font-medium">Live Distribution</span>
-                        </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                            <!-- Canvas Donut Chart -->
-                            <div class="h-64 flex items-center justify-center relative lg:col-span-1">
-                                <canvas id="clusterChart"></canvas>
-                            </div>
-                            <!-- Keterangan Detail Cluster -->
-                            <div class="lg:col-span-2 space-y-3">
-                                <p class="text-xs text-slate-500">Distribusi unit alat berat berdasarkan pengelompokan cluster operasional site saat ini:</p>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                                        <span class="text-xs font-bold text-slate-700">Mining - Others</span>
-                                        <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-700 text-xs font-bold">Dominan</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                                        <span class="text-xs font-bold text-slate-700">Production Loading</span>
-                                        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-bold">Active</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                                        <span class="text-xs font-bold text-slate-700">Hauling Support</span>
-                                        <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 text-xs font-bold">Stable</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                                        <span class="text-xs font-bold text-slate-700">Auxiliary</span>
-                                        <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-xs font-bold">Standby</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- VIEW 2: BACKLOG MANAGEMENT -->
+                <!-- VIEW 2: INTEGRATED BACKLOG MANAGEMENT -->
                 <div id="backlog-view" class="hidden h-full">
-                    <div class="luxury-card rounded-2xl overflow-hidden h-[calc(100vh-160px)] shadow-lg">
+                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
                         <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                     </div>
                 </div>
 
-                <!-- VIEW 3: POPULATION VIEW -->
+                <!-- VIEW 3: EQUIPMENT POPULATION VIEW (DARI POPULATION.HTML) -->
                 <div id="population-view" class="hidden h-full">
-                    <div class="luxury-card rounded-2xl overflow-hidden h-[calc(100vh-160px)] shadow-lg">
+                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden h-[calc(100vh-140px)]">
+                        <!-- Menambahkan ?v=1.1 untuk memaksa browser memuat versi population.html terbaru -->
                         <iframe src="population.html?v=1.1" class="w-full h-full border-0"></iframe>
-                    </div>
-                </div>
-
-                <!-- VIEW 4: GENERIC VIEW (UNTUK CONDITION MONITORING / LAINNYA) -->
-                <div id="cm-view" class="hidden space-y-4">
-                    <div class="luxury-card rounded-2xl p-8 text-center py-20">
-                        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-2xl mb-4 shadow-inner">
-                            <i class="fa-solid fa-folder-open"></i>
-                        </div>
-                        <h2 id="cm-dynamic-title" class="font-black text-slate-900 text-xl uppercase tracking-wide">Modul Aktif</h2>
-                        <p class="text-xs text-slate-500 mt-2">Halaman dan direktori data untuk modul ini siap diakses.</p>
                     </div>
                 </div>
 
@@ -382,7 +310,7 @@
 
     </div>
 
-    <!-- Script JavaScript Interaktif, Auto-Close Sidebar, & Grafik Cluster -->
+    <!-- Script Interaktif JS -->
     <script>
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -397,70 +325,22 @@
         function toggleSubmenu(menuId, arrowId) {
             const submenu = document.getElementById(menuId);
             const arrow = document.getElementById(arrowId);
+            
             if (submenu && arrow) {
                 submenu.classList.toggle('hidden');
                 arrow.classList.toggle('rotate-180');
             }
         }
 
-        // Fungsi memilih view yang otomatis menutup sidebar
         function selectView(viewId, title) {
             document.getElementById('dashboard-view').classList.add('hidden');
             document.getElementById('backlog-view').classList.add('hidden');
             document.getElementById('population-view').classList.add('hidden');
-            const cmView = document.getElementById('cm-view');
-            if(cmView) cmView.classList.add('hidden');
             
-            const targetView = document.getElementById(viewId);
-            if(targetView) targetView.classList.remove('hidden');
-
-            if (viewId === 'cm-view') {
-                document.getElementById('cm-dynamic-title').innerText = title;
-            }
-
+            document.getElementById(viewId).classList.remove('hidden');
             document.getElementById('page-title').innerText = title;
-            
-            // OTOMATIS MENUTUP SIDEBAR SAAT MENU DIKLIK
             closeSidebar();
         }
-
-        // Render Chart.js untuk Cluster Populasi
-        window.addEventListener('DOMContentLoaded', () => {
-            const ctx = document.getElementById('clusterChart');
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Mining - Others', 'Production Loading', 'Hauling Support', 'Auxiliary'],
-                        datasets: [{
-                            data: [43, 25, 18, 14],
-                            backgroundColor: [
-                                '#f59e0b', // Amber
-                                '#3b82f6', // Biru
-                                '#10b981', // Hijau
-                                '#64748b'  // Abu-abu
-                            ],
-                            borderWidth: 2,
-                            borderColor: '#ffffff'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    boxWidth: 12,
-                                    font: { size: 11, family: 'sans-serif' }
-                                }
-                            }
-                        },
-                        cutout: '70%'
-                    }
-                });
-            }
-        });
     </script>
 </body>
 </html>
