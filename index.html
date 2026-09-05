@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN untuk Dashboard Pareto -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
@@ -118,7 +120,7 @@
                     </button>
                     <div id="pareto-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Database Pareto</a>
-                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Dashboard</a>
+                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Dashboard Pareto</a>
                     </div>
                 </div>
 
@@ -305,17 +307,24 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: DATABASE PARETO (DENGAN 100 LIMIT & PAGINATION AMAN DARI KOMA) -->
+                <!-- VIEW 4: DATABASE PARETO -->
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
-                    <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex justify-between items-center shrink-0">
+                    <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                         <div>
                             <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS)</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Menampilkan maksimal 100 baris per halaman agar sistem tetap ringan.</p>
+                            <p class="text-xs text-slate-500 mt-0.5">Menampilkan maksimal 100 baris per halaman.</p>
                         </div>
-                        <button onclick="loadParetoData()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-rotate"></i> REFRESH PARETO
-                        </button>
+                        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
+                            <div class="relative">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari ID Unit / Masalah..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:border-orange-500 w-60 font-mono">
+                            </div>
+                            <button onclick="loadParetoData()" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-xs shrink-0">
+                                <i class="fa-solid fa-rotate"></i> REFRESH
+                            </button>
+                        </div>
                     </div>
+
                     <div class="bg-white rounded-xl shadow-xs p-4 flex-1 flex flex-col overflow-hidden border border-slate-200">
                         <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-slate-200 bg-white">
                             <table id="paretoTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
@@ -323,7 +332,6 @@
                                 <tbody id="paretoTableBody" class="divide-y divide-slate-200"></tbody>
                             </table>
                         </div>
-                        <!-- Navigasi Pagination Next Prev di Bagian Bawah -->
                         <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-200 shrink-0">
                             <span id="pagination-info" class="text-xs font-mono text-slate-500 font-semibold">Menampilkan 0 - 0 dari 0 data</span>
                             <div class="flex space-x-2">
@@ -334,23 +342,94 @@
                     </div>
                 </div>
 
-                <!-- VIEW 5: DASHBOARD PARETO -->
+                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN FILTER MENYAMPING & CHART) -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-xs border border-slate-200">
-                        <h2 class="text-base font-bold text-slate-900 font-mono mb-2">DASHBOARD ANALISIS PARETO</h2>
-                        <p class="text-xs text-slate-500 mb-6">Analisis otomatis berdasarkan data yang diinput ke Google Sheets tab Pareto.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="p-4 bg-orange-50 border border-orange-200 rounded-xl">
-                                <p class="text-xs font-mono font-bold text-orange-700 uppercase">Total Record Problem</p>
-                                <h3 id="stat-total-records" class="text-2xl font-black text-orange-900 mt-2 font-mono">0 Data</h3>
+                    <!-- Panel Filter Menyamping -->
+                    <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-slate-900 font-mono tracking-wide uppercase">FILTER DASHBOARD PARETO</h2>
+                                <p class="text-xs text-slate-500">Filter data secara real-time untuk analisis komponen & durasi.</p>
                             </div>
-                            <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                                <p class="text-xs font-mono font-bold text-blue-700 uppercase">Total Durasi Breakdown</p>
-                                <h3 id="stat-total-duration" class="text-2xl font-black text-blue-900 mt-2 font-mono">0 Jam</h3>
+                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tahun</label>
+                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                    <option value="">Semua Tahun</option>
+                                </select>
                             </div>
-                            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
-                                <p class="text-xs font-mono font-bold text-rose-700 uppercase">Top Major Component</p>
-                                <h3 id="stat-top-component" class="text-lg font-bold text-rose-900 mt-2 font-mono">-</h3>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Bulan</label>
+                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                    <option value="">Semua Bulan</option>
+                                    <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
+                                    <option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option>
+                                    <option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option>
+                                    <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tanggal Awal</label>
+                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tanggal Finish</label>
+                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Cluster</label>
+                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                    <option value="">Semua Cluster</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Major Component</label>
+                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                    <option value="">Semua Major</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Sub Component</label>
+                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
+                                    <option value="">Semua Sub Component</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Statistik -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs border-l-4 border-l-orange-500">
+                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Total Record Problem</p>
+                            <h3 id="stat-total-records" class="text-2xl font-black text-slate-900 mt-1 font-mono">0 Data</h3>
+                        </div>
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs border-l-4 border-l-blue-600">
+                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Total Durasi Breakdown</p>
+                            <h3 id="stat-total-duration" class="text-2xl font-black text-slate-900 mt-1 font-mono">0 Jam</h3>
+                        </div>
+                        <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-xs border-l-4 border-l-rose-600">
+                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Top Major Component</p>
+                            <h3 id="stat-top-component" class="text-lg font-bold text-slate-900 mt-1 font-mono">-</h3>
+                        </div>
+                    </div>
+
+                    <!-- Grafik Chart Visual -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frekuensi Kerusakan per Major Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="paretoBarChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-pie text-blue-600 mr-2"></i> Durasi Downtime per Cluster</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="paretoClusterChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -361,11 +440,15 @@
 
     </div>
 
-    <!-- Script Interaktif & CSV Parser yang Aman Terhadap Koma -->
+    <!-- Script JavaScript Terintegrasi -->
     <script>
         let allParetoRows = [];
+        let filteredParetoRows = [];
         let currentPage = 1;
         const rowsPerPage = 100;
+
+        let barChartInstance = null;
+        let clusterChartInstance = null;
 
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -397,10 +480,13 @@
 
             if (viewId === 'population-view') loadDatabase('population');
             if (viewId === 'pareto-database-view') loadParetoData();
-            if (viewId === 'pareto-dashboard-view') calculateParetoStats();
+            if (viewId === 'pareto-dashboard-view') {
+                if(allParetoRows.length === 0) loadParetoData();
+                else applyParetoFilters();
+            }
         }
 
-        // Fungsi Parser CSV Pintar (Menghindari pecahan koma di dalam tanda kutip deskripsi)
+        // Parser CSV Aman Koma
         function parseCSV(text) {
             let lines = text.split('\n');
             let result = [];
@@ -430,8 +516,7 @@
         }
 
         async function loadDatabase(type) {
-            const gid = '0';
-            const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=${gid}`;
+            const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=0`;
             const tableHead = document.getElementById('populationTableHead');
             const tableBody = document.getElementById('populationTableBody');
             
@@ -463,7 +548,7 @@
                     }
                     bodyHtml += `</tr>`;
                 }
-                tableBody.innerHTML = bodyHtml || `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono">Data kosong.</td></tr>`;
+                tableBody.innerHTML = bodyHtml;
             } catch (error) {
                 tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data.</td></tr>`;
             }
@@ -495,23 +580,37 @@
                 tableHead.innerHTML = headHtml;
 
                 allParetoRows = rows.slice(1);
+                filteredParetoRows = [...allParetoRows];
                 currentPage = 1;
+
+                populateFilterOptions();
                 renderParetoTable();
-                calculateParetoStats();
+                applyParetoFilters(); // Update statistik & chart awal
 
             } catch (e) {
                 console.error("Gagal memuat pareto:", e);
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data Pareto. Periksa koneksi atau akses link Google Sheets.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data Pareto.</td></tr>`;
             }
+        }
+
+        function filterParetoData() {
+            const keyword = document.getElementById('paretoSearchInput').value.toLowerCase();
+            if (!keyword) {
+                filteredParetoRows = [...allParetoRows];
+            } else {
+                filteredParetoRows = allParetoRows.filter(row => row.some(cell => cell.toLowerCase().includes(keyword)));
+            }
+            currentPage = 1;
+            renderParetoTable();
         }
 
         function renderParetoTable() {
             const tableBody = document.getElementById('paretoTableBody');
-            const totalData = allParetoRows.length;
+            const totalData = filteredParetoRows.length;
 
             if (totalData === 0) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono">Data kosong.</td></tr>`;
-                document.getElementById('pagination-info').innerText = `Menampilkan 0 - 0 dari 0 data`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-mono">Data tidak ditemukan.</td></tr>`;
+                document.getElementById('pagination-info').innerText = `Menampilkan 0 dari 0 data`;
                 document.getElementById('prev-btn').disabled = true;
                 document.getElementById('next-btn').disabled = true;
                 return;
@@ -523,7 +622,7 @@
 
             const startIndex = (currentPage - 1) * rowsPerPage;
             const endIndex = Math.min(startIndex + rowsPerPage, totalData);
-            const sliceData = allParetoRows.slice(startIndex, endIndex);
+            const sliceData = filteredParetoRows.slice(startIndex, endIndex);
 
             let bodyHtml = '';
             sliceData.forEach(row => {
@@ -536,7 +635,6 @@
 
             tableBody.innerHTML = bodyHtml;
             document.getElementById('pagination-info').innerText = `Menampilkan ${startIndex + 1} - ${endIndex} dari ${totalData} data (Halaman ${currentPage}/${totalPages})`;
-            
             document.getElementById('prev-btn').disabled = currentPage === 1;
             document.getElementById('next-btn').disabled = currentPage === totalPages;
         }
@@ -548,16 +646,118 @@
             if(container) container.scrollTop = 0;
         }
 
-        async function calculateParetoStats() {
-            const data = allParetoRows;
+        // --- LOGIKA FILTER DASHBOARD & DROPDOWN OTOMATIS ---
+        function populateFilterOptions() {
+            let years = new Set();
+            let clusters = new Set();
+            let majors = new Set();
+
+            allParetoRows.forEach(row => {
+                let dateStr = row[1] || ''; // Asumsi Kolom Tanggal (Sesuaikan jika indeks berbeda)
+                if (dateStr.length >= 4) {
+                    let year = dateStr.substring(0, 4);
+                    if(!isNaN(year)) years.add(year);
+                }
+                if (row[3]) clusters.add(row[3].trim()); // Asumsi Cluster
+                if (row[12]) majors.add(row[12].trim()); // Asumsi Major Component
+            });
+
+            // Populate Year
+            let yearSel = document.getElementById('filter-year');
+            yearSel.innerHTML = '<option value="">Semua Tahun</option>';
+            Array.from(years).sort().forEach(y => {
+                yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+            });
+
+            // Populate Cluster
+            let clusterSel = document.getElementById('filter-cluster');
+            clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
+            Array.from(clusters).sort().forEach(c => {
+                clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+
+            // Populate Major Component
+            let majorSel = document.getElementById('filter-major');
+            majorSel.innerHTML = '<option value="">Semua Major</option>';
+            Array.from(majors).sort().forEach(m => {
+                majorSel.innerHTML += `<option value="${m}">${m}</option>`;
+            });
+            updateSubComponentDropdown();
+        }
+
+        function updateSubComponentDropdown() {
+            let selectedMajor = document.getElementById('filter-major').value;
+            let subSel = document.getElementById('filter-sub');
+            subSel.innerHTML = '<option value="">Semua Sub Component</option>';
+
+            let subs = new Set();
+            allParetoRows.forEach(row => {
+                let major = row[12] ? row[12].trim() : '';
+                let sub = row[13] ? row[13].trim() : ''; // Asumsi Sub Component
+                if ((!selectedMajor || major === selectedMajor) && sub) {
+                    subs.add(sub);
+                }
+            });
+
+            Array.from(subs).sort().forEach(s => {
+                subSel.innerHTML += `<option value="${s}">${s}</option>`;
+            });
+        }
+
+        function resetParetoFilters() {
+            document.getElementById('filter-year').value = '';
+            document.getElementById('filter-month').value = '';
+            document.getElementById('filter-start-date').value = '';
+            document.getElementById('filter-end-date').value = '';
+            document.getElementById('filter-cluster').value = '';
+            document.getElementById('filter-major').value = '';
+            updateSubComponentDropdown();
+            applyParetoFilters();
+        }
+
+        function applyParetoFilters() {
+            let fYear = document.getElementById('filter-year').value;
+            let fMonth = document.getElementById('filter-month').value;
+            let fStart = document.getElementById('filter-start-date').value;
+            let fEnd = document.getElementById('filter-end-date').value;
+            let fCluster = document.getElementById('filter-cluster').value;
+            let fMajor = document.getElementById('filter-major').value;
+            let fSub = document.getElementById('filter-sub').value;
+
+            let resultData = allParetoRows.filter(row => {
+                let dateStr = row[1] || '';
+                let cluster = row[3] ? row[3].trim() : '';
+                let major = row[12] ? row[12].trim() : '';
+                let sub = row[13] ? row[13].trim() : '';
+
+                if (fYear && !dateStr.includes(fYear)) return false;
+                if (fMonth && !dateStr.includes(`-${fMonth}-`) && !dateStr.startsWith(`${fYear}-${fMonth}`)) {
+                    // Cek format tanggal sederhana
+                    let parts = dateStr.split(/[-/]/);
+                    if(parts.length >= 2 && parts[1] !== fMonth) return false;
+                }
+                if (fStart && dateStr < fStart) return false;
+                if (fEnd && dateStr > fEnd) return false;
+                if (fCluster && cluster !== fCluster) return false;
+                if (fMajor && major !== fMajor) return false;
+                if (fSub && sub !== fSub) return false;
+
+                return true;
+            });
+
+            updateParetoDashboardStatsAndCharts(resultData);
+        }
+
+        function updateParetoDashboardStatsAndCharts(data) {
             const recEl = document.getElementById('stat-total-records');
             const durEl = document.getElementById('stat-total-duration');
             const topEl = document.getElementById('stat-top-component');
 
             if(recEl) recEl.innerText = `${data.length} Data`;
-            
+
             let totalDurasi = 0;
-            let compCounts = {};
+            let majorCounts = {};
+            let clusterDurasi = {};
 
             data.forEach(row => {
                 const rawDur = row[10] || '0';
@@ -568,24 +768,84 @@
                 } else {
                     duration = parseFloat(rawDur) || 0;
                 }
-                
                 totalDurasi += duration;
 
-                const majorComp = row[12] && row[12].trim() !== '' ? row[12] : 'Unknown'; 
-                compCounts[majorComp] = (compCounts[majorComp] || 0) + 1;
+                let major = row[12] && row[12].trim() !== '' ? row[12].trim() : 'Unknown';
+                majorCounts[major] = (majorCounts[major] || 0) + 1;
+
+                let cluster = row[3] && row[3].trim() !== '' ? row[3].trim() : 'Lainnya';
+                clusterDurasi[cluster] = (clusterDurasi[cluster] || 0) + duration;
             });
 
             if(durEl) durEl.innerText = `${totalDurasi.toFixed(1)} Jam`;
 
             let topComp = '-';
             let maxCount = 0;
-            for (let comp in compCounts) {
-                if (compCounts[comp] > maxCount) {
-                    maxCount = compCounts[comp];
+            for (let comp in majorCounts) {
+                if (majorCounts[comp] > maxCount) {
+                    maxCount = majorCounts[comp];
                     topComp = comp;
                 }
             }
             if(topEl) topEl.innerText = topComp;
+
+            renderCharts(majorCounts, clusterDurasi);
+        }
+
+        function renderCharts(majorCounts, clusterDurasi) {
+            // Sort Major Counts terbanyak untuk Chart Bar
+            let sortedMajors = Object.entries(majorCounts).sort((a,b) => b[1] - a[1]).slice(0, 8);
+            let majorLabels = sortedMajors.map(item => item[0]);
+            let majorValues = sortedMajors.map(item => item[1]);
+
+            // Chart 1: Bar Chart Major Component
+            const ctxBar = document.getElementById('paretoBarChart').getContext('2d');
+            if (barChartInstance) barChartInstance.destroy();
+            barChartInstance = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: majorLabels,
+                    datasets: [{
+                        label: 'Frekuensi',
+                        data: majorValues,
+                        backgroundColor: '#f97316',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Sort Cluster Durasi
+            let sortedClusters = Object.entries(clusterDurasi).sort((a,b) => b[1] - a[1]);
+            let clusterLabels = sortedClusters.map(item => item[0]);
+            let clusterValues = sortedClusters.map(item => item[1]);
+
+            // Chart 2: Cluster Chart
+            const ctxCluster = document.getElementById('paretoClusterChart').getContext('2d');
+            if (clusterChartInstance) clusterChartInstance.destroy();
+            clusterChartInstance = new Chart(ctxCluster, {
+                type: 'doughnut',
+                data: {
+                    labels: clusterLabels,
+                    datasets: [{
+                        data: clusterValues,
+                        backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } } }
+                }
+            });
         }
     </script>
 </body>
