@@ -10,11 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 4px;
         }
         .glass-panel {
@@ -297,11 +301,11 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: UNIT DATABASE (LIVE GOOGLE SHEETS) -->
-                <div id="population-view" class="hidden h-full space-y-4">
-                    <div class="glass-panel p-4 rounded-2xl shadow-xl flex justify-between items-center">
+                <!-- VIEW 3: UNIT DATABASE (LIVE GOOGLE SHEETS A-U) -->
+                <div id="population-view" class="hidden h-full flex flex-col space-y-4">
+                    <div class="glass-panel p-4 rounded-2xl shadow-xl flex justify-between items-center shrink-0">
                         <div>
-                            <h2 class="font-bold text-slate-900 text-base">Database Unit (Live Google Sheets)</h2>
+                            <h2 class="font-bold text-slate-900 text-base">Database Unit (Live Google Sheets Kolom A - U)</h2>
                             <p class="text-xs text-slate-600">Data ditarik otomatis dari [POPULATION UNIT - Google Sheets](https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/edit?hl=id&gid=0#gid=0)</p>
                         </div>
                         <button onclick="loadUnitDatabaseFromSheet()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-2">
@@ -309,26 +313,16 @@
                         </button>
                     </div>
 
-                    <div class="glass-panel rounded-2xl shadow-2xl overflow-hidden p-4 h-[calc(100vh-220px)] flex flex-col">
-                        <div class="overflow-x-auto flex-1 custom-scrollbar">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead class="bg-slate-900 text-white sticky top-0 z-10">
-                                    <tr>
-                                        <th class="p-3">No</th>
-                                        <th class="p-3">Equipment</th>
-                                        <th class="p-3">C/N</th>
-                                        <th class="p-3">Cost Center</th>
-                                        <th class="p-3">Model</th>
-                                        <th class="p-3">Unit</th>
-                                        <th class="p-3">Cluster</th>
-                                        <th class="p-3">Machine S/N</th>
-                                        <th class="p-3">Status</th>
-                                        <th class="p-3">From</th>
-                                    </tr>
+                    <!-- Kotak Tabel dengan Scroll Horizontal (Bisa digeser kanan-kiri & atas-bawah) -->
+                    <div class="glass-panel rounded-2xl shadow-2xl p-4 flex-1 flex flex-col overflow-hidden">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar border border-white/40 rounded-xl bg-white/40">
+                            <table id="unitTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
+                                <thead id="unitTableHead" class="bg-slate-900 text-white sticky top-0 z-20 shadow">
+                                    <!-- Header akan di-generate otomatis sesuai kolom sheets A-U -->
                                 </thead>
-                                <tbody id="unitTableBody" class="divide-y divide-slate-200/60 bg-white/50">
+                                <tbody id="unitTableBody" class="divide-y divide-slate-200/60">
                                     <tr>
-                                        <td colspan="10" class="p-6 text-center text-slate-500">Memuat data dari Google Sheets...</td>
+                                        <td class="p-6 text-center text-slate-500">Memuat data lengkap dari Google Sheets...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -341,7 +335,7 @@
 
     </div>
 
-    <!-- Script Interaktif & Integrasi Google Sheets -->
+    <!-- Script Interaktif & Integrasi Google Sheets A-U -->
     <script>
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -372,18 +366,18 @@
             document.getElementById('page-title').innerText = title;
             closeSidebar();
 
-            // Jika menu Unit Database dibuka, muat otomatis datanya
             if (viewId === 'population-view') {
                 loadUnitDatabaseFromSheet();
             }
         }
 
-        // Fungsi Otomatis Ambil Data dari Google Sheets
+        // Fungsi Ambil Data & Render Kolom A sampai U Otomatis
         async function loadUnitDatabaseFromSheet() {
             const csvUrl = 'https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=0';
+            const tableHead = document.getElementById('unitTableHead');
             const tableBody = document.getElementById('unitTableBody');
             
-            tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data terbaru dari Google Sheets...</td></tr>`;
+            tableBody.innerHTML = `<tr><td class="p-6 text-center text-slate-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengambil data lengkap dari Google Sheets...</td></tr>`;
 
             try {
                 const response = await fetch(csvUrl);
@@ -394,35 +388,40 @@
                 });
 
                 if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-red-500">Tidak ada data ditemukan.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td class="p-6 text-center text-red-500">Tidak ada data ditemukan.</td></tr>`;
                     return;
                 }
 
-                let htmlContent = '';
+                // 1. Buat Header dari Baris Pertama (Judul Kolom A-U)
+                const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
+                let headHtml = '<tr>';
+                headers.forEach(h => {
+                    if(h !== "") {
+                        headHtml += `<th class="p-3 font-bold border-r border-slate-700">${h}</th>`;
+                    }
+                });
+                headHtml += '</tr>';
+                tableHead.innerHTML = headHtml;
+
+                // 2. Buat Isi Baris Data (Dari Baris 2 sampai habis)
+                let bodyHtml = '';
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
-                    if (!cols[1]) continue;
+                    if (!cols[1]) continue; // Lewati baris kosong
 
-                    htmlContent += `
-                        <tr class="hover:bg-white/80 transition-colors">
-                            <td class="p-3 font-medium">${cols[0] || i}</td>
-                            <td class="p-3 font-bold text-slate-900">${cols[1] || ''}</td>
-                            <td class="p-3 text-slate-600">${cols[2] || ''}</td>
-                            <td class="p-3 text-slate-600">${cols[3] || ''}</td>
-                            <td class="p-3 font-semibold text-indigo-900">${cols[4] || ''}</td>
-                            <td class="p-3 text-slate-600">${cols[5] || ''}</td>
-                            <td class="p-3"><span class="px-2 py-0.5 bg-cyan-100 text-cyan-800 rounded font-medium text-[10px]">${cols[6] || ''}</span></td>
-                            <td class="p-3 text-slate-600">${cols[7] || ''}</td>
-                            <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold text-[10px]">${cols[13] || 'RUNNING'}</span></td>
-                            <td class="p-3 text-slate-600">${cols[15] || ''}</td>
-                        </tr>
-                    `;
+                    bodyHtml += `<tr class="hover:bg-white/80 transition-colors">`;
+                    for (let j = 0; j < headers.length; j++) {
+                        if(headers[j] !== "") {
+                            bodyHtml += `<td class="p-3 border-r border-slate-200/60 text-slate-700">${cols[j] || ''}</td>`;
+                        }
+                    }
+                    bodyHtml += `</tr>`;
                 }
 
-                tableBody.innerHTML = htmlContent;
+                tableBody.innerHTML = bodyHtml;
             } catch (error) {
                 console.error("Gagal memuat Google Sheets:", error);
-                tableBody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-red-500">Gagal memuat data. Pastikan Google Sheets sudah diset ke 'Anyone with the link can view'.</td></tr>`;
+                tableBody.innerHTML = `<tr><td class="p-6 text-center text-red-500">Gagal memuat data. Pastikan Google Sheets sudah diset ke 'Anyone with the link can view'.</td></tr>`;
             }
         }
     </script>
