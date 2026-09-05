@@ -52,7 +52,7 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu Lengkap 1-10 -->
+            <!-- Navigation Menu -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -68,9 +68,6 @@
                         <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Plant Performance Overview</a>
                         <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Fleet Availability</a>
                         <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Breakdown Trend</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Top Failure Component</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Cost Impact</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Action Monitoring</a>
                     </div>
                 </div>
 
@@ -85,9 +82,6 @@
                     </button>
                     <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('population-view', 'UNIT DATABASE (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-emerald-400 font-bold hover:text-emerald-300">Unit Database</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Unit History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Lifetime</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Policy</a>
                     </div>
                 </div>
 
@@ -101,9 +95,7 @@
                         <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
                     <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Inova Index</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Oil Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">VHMS Monitoring</a>
                     </div>
                 </div>
 
@@ -117,7 +109,7 @@
                         <i id="pareto-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
                     <div id="pareto-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Database Pareto</a>
+                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO (LIVE GOOGLE SHEETS FULL STRUCTURE)')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Database Pareto</a>
                         <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Dashboard</a>
                     </div>
                 </div>
@@ -133,8 +125,6 @@
                     </button>
                     <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Create FAR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">RCA Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">PICA</a>
                     </div>
                 </div>
 
@@ -149,8 +139,6 @@
                     </button>
                     <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs text-amber-300 font-bold hover:text-white">Finding List / Backlog System</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Priority & Risk</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Planning & Execution</a>
                     </div>
                 </div>
 
@@ -165,9 +153,6 @@
                     </button>
                     <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">MTBF & MTTR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Repeat Failure</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bad Actor Component</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Reliability Ranking</a>
                     </div>
                 </div>
 
@@ -182,9 +167,6 @@
                     </button>
                     <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Lesson Learned</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Troubleshooting Guide</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Standard Repair (WI / SOP)</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Failure Library</a>
                     </div>
                 </div>
 
@@ -199,9 +181,6 @@
                     </button>
                     <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Torque Calculator</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bearing Life Calculator</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Shaft Stress Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Life Calculator</a>
                     </div>
                 </div>
 
@@ -215,11 +194,7 @@
                         <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
                     <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Admin</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Plant Engineer</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Supervisor</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Mechanic</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Viewer</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Admin List</a>
                     </div>
                 </div>
 
@@ -305,12 +280,12 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: DATABASE PARETO (TAB PARETO) -->
+                <!-- VIEW 4: DATABASE PARETO (FULL STRUCTURE DARI TAB PARETO) -->
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex justify-between items-center shrink-0">
                         <div>
-                            <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS)</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Menarik data dari tab PARETO (IDUNIT s/d SITE)</p>
+                            <h2 class="font-bold text-orange-600 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (FULL COLUMNS STRUCTURE)</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Menarik semua kolom live dari tab Pareto Google Sheets Anda tanpa terpotong.</p>
                         </div>
                         <button onclick="loadDatabase('pareto')" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2">
                             <i class="fa-solid fa-rotate"></i> REFRESH PARETO
@@ -330,7 +305,7 @@
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
                     <div class="bg-white p-6 rounded-xl shadow-xs border border-slate-200">
                         <h2 class="text-base font-bold text-slate-900 font-mono mb-2">DASHBOARD ANALISIS PARETO</h2>
-                        <p class="text-xs text-slate-500 mb-6">Ringkasan grafik breakdown berdasarkan inputan sheet Pareto Anda.</p>
+                        <p class="text-xs text-slate-500 mb-6">Analisis otomatis dari struktur lengkap data Pareto.</p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="p-4 bg-orange-50 border border-orange-200 rounded-xl">
                                 <p class="text-xs font-mono font-bold text-orange-700 uppercase">Total Record Problem</p>
@@ -353,7 +328,7 @@
 
     </div>
 
-    <!-- Script Interaktif & Fetch Live Sheets -->
+    <!-- Script Interaktif & Full Structure Google Sheets Reader -->
     <script>
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -388,6 +363,7 @@
             if (viewId === 'pareto-dashboard-view') calculateParetoStats();
         }
 
+        // Fungsi Universal untuk Memuat SEMUA KOLOM (Full Structure A-Z) dari Google Sheets CSV
         async function loadDatabase(type) {
             const gid = type === 'pareto' ? '782860436' : '0';
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=${gid}`;
@@ -396,45 +372,47 @@
             const tableBody = document.getElementById(type === 'pareto' ? 'paretoTableBody' : 'populationTableBody');
             
             if(!tableBody) return;
-            tableBody.innerHTML = `<tr><td class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-blue-600"></i> Memuat data dari Google Sheets...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="20" class="p-8 text-center text-slate-500 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-blue-600"></i> Memuat struktur lengkap Google Sheets...</td></tr>`;
 
             try {
                 const response = await fetch(csvUrl);
                 const dataText = await response.text();
                 
+                // Parser CSV yang aman terhadap koma di dalam tanda kutip
                 const rows = dataText.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
 
                 if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td class="p-8 text-center text-rose-600 font-mono">Belum ada data di sheet ini.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="20" class="p-8 text-center text-rose-600 font-mono">Belum ada data di sheet ini.</td></tr>`;
                     return;
                 }
 
+                // Ambil semua header secara dinamis dari baris pertama spreadsheet
                 const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
+                
                 let headHtml = '<tr>';
-                headers.forEach(h => {
-                    if(h !== "") headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider">${h}</th>`;
+                headers.forEach((h, index) => {
+                    headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider text-xs">${h || 'COL ' + (index + 1)}</th>`;
                 });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
                 let bodyHtml = '';
+                // Looping seluruh baris data sheet
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
-                    if (!cols[0]) continue;
+                    if (!cols.some(val => val !== "")) continue; // Skip baris kosong
 
                     bodyHtml += `<tr class="hover:bg-blue-50/60 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
-                        if(headers[j] !== "") {
-                            bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium">${cols[j] || ''}</td>`;
-                        }
+                        bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium">${cols[j] || ''}</td>`;
                     }
                     bodyHtml += `</tr>`;
                 }
 
-                tableBody.innerHTML = bodyHtml || `<tr><td class="p-8 text-center text-slate-500 font-mono">Data kosong.</td></tr>`;
+                tableBody.innerHTML = bodyHtml || `<tr><td colspan="20" class="p-8 text-center text-slate-500 font-mono">Data kosong.</td></tr>`;
             } catch (error) {
                 console.error("Gagal memuat:", error);
-                tableBody.innerHTML = `<tr><td class="p-8 text-center text-rose-600 font-mono">Gagal memuat data. Pastikan akses Google Sheets sudah 'Anyone with the link can view'.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="20" class="p-8 text-center text-rose-600 font-mono">Gagal memuat data. Pastikan akses Google Sheets sudah 'Anyone with the link can view'.</td></tr>`;
             }
         }
 
@@ -443,7 +421,7 @@
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
                 const text = await res.text();
                 const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-                return rows.slice(1).filter(r => r[0] && r[0].trim() !== "");
+                return rows.slice(1).filter(r => r.some(val => val && val.trim() !== ""));
             } catch(e) {
                 return [];
             }
@@ -461,9 +439,11 @@
             let compCounts = {};
 
             data.forEach(row => {
-                const duration = parseFloat(row[10]) || 0; 
+                // Kolom DURATION (indeks ke-11 atau sesuai urutan sheet)
+                const duration = parseFloat(row[11]) || 0; 
                 totalDurasi += duration;
 
+                // Kolom JOR COMPONENT atau sejenisnya
                 const majorComp = row[12] || 'Unknown'; 
                 compCounts[majorComp] = (compCounts[majorComp] || 0) + 1;
             });
