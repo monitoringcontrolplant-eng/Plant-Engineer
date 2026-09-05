@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Manajemen Populer Machine (BSS)</title>
+    <title>POPULATION UNIT</title>
+    <!-- SheetJS Library untuk Import & Export Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -23,9 +25,22 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .excel-tools {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
         .form-group {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 10px;
             margin-bottom: 20px;
             background: #e9ecef;
@@ -37,6 +52,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             width: 100%;
+            font-size: 12px;
         }
         .btn {
             padding: 8px 15px;
@@ -44,12 +60,15 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 12px;
         }
         .btn-add { background-color: #28a745; color: white; }
         .btn-edit { background-color: #ffc107; color: black; }
         .btn-delete { background-color: #dc3545; color: white; }
         .btn-save { background-color: #007bff; color: white; }
         .btn-cancel { background-color: #6c757d; color: white; }
+        .btn-export { background-color: #1d6f42; color: white; }
+        .btn-import { background-color: #17a2b8; color: white; }
         
         .table-responsive {
             overflow-x: auto;
@@ -59,7 +78,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
-            font-size: 13px;
+            font-size: 12px;
         }
         th, td {
             border: 1px solid #dee2e6;
@@ -72,6 +91,7 @@
             color: white;
             position: sticky;
             top: 0;
+            z-index: 10;
         }
         tr:nth-child(even) { background-color: #f8f9fa; }
         .action-btns {
@@ -83,31 +103,51 @@
 <body>
 
 <div class="container">
-    <h2>Sistem Update Populer Alat Berat (BSS)</h2>
+    <div class="toolbar">
+        <h2>POPULATION UNIT</h2>
+        <!-- Fitur Import & Export Excel -->
+        <div class="excel-tools">
+            <input type="file" id="excelFile" accept=".xlsx, .xls, .csv" style="display: none;" onchange="importExcel(event)">
+            <button class="btn btn-import" onclick="document.getElementById('excelFile').click()">📁 Import Excel</button>
+            <button class="btn btn-export" onclick="exportExcel()">📥 Export Excel</button>
+        </div>
+    </div>
 
-    <!-- Form Input / Edit Data -->
+    <!-- Form Input / Edit Data (20 Input Fields) -->
     <div class="form-group" id="dataForm">
         <input type="hidden" id="editIndex" value="-1">
-        <input type="text" id="equipment" placeholder="Equipment (cth: EX20009206)">
-        <input type="text" id="cn" placeholder="C/N (cth: X9206)">
-        <input type="text" id="cluster" placeholder="Cluster (cth: NING - LOADING OB)">
-        <input type="text" id="machineSn" placeholder="Machine S/N">
-        <input type="text" id="engineModel" placeholder="Engine Model">
-        <input type="text" id="engineSn" placeholder="Engine S/N">
-        <input type="text" id="mfgYear" placeholder="Mfg. Year">
-        <input type="text" id="deliveryDate" placeholder="Delivery Date">
+        <input type="text" id="equipment" placeholder="EQUIPMENT *">
+        <input type="text" id="cn" placeholder="C/N">
+        <input type="text" id="costCenter" placeholder="COST CENTER">
+        <input type="text" id="model" placeholder="MODEL">
+        <input type="text" id="unit" placeholder="UNIT">
+        <input type="text" id="cluster" placeholder="CLUSTER">
+        <input type="text" id="machineSn" placeholder="MACHINE S/N">
+        <input type="text" id="engineModel" placeholder="ENGINE MODEL">
+        <input type="text" id="engineSn" placeholder="ENGINE S/N">
+        <input type="text" id="mfgYear" placeholder="MFG. YEAR">
+        <input type="text" id="deliveryDate" placeholder="DELIVERY DATE">
         <select id="remark">
-            <option value="EXISTING">EXISTING</option>
-            <option value="NEW">NEW</option>
-            <option value="REPLACEMENT">REPLACEMENT</option>
+            <option value="EXISTING">REMARK: EXISTING</option>
+            <option value="NEW">REMARK: NEW</option>
+            <option value="REPLACEMENT">REMARK: REPLACEMENT</option>
         </select>
-        <div>
+        <input type="text" id="statusUnit" placeholder="STATUS UNIT">
+        <input type="text" id="section" placeholder="SECTION">
+        <input type="text" id="hmInitialSite" placeholder="HM INITIAL SITE">
+        <input type="text" id="from" placeholder="FROM">
+        <input type="text" id="statusCommissioning" placeholder="STATUS COMMISSIONING">
+        <input type="text" id="hmUpdate" placeholder="HM UPDATE">
+        <input type="text" id="warranty" placeholder="WARRANTY">
+        <input type="text" id="status" placeholder="STATUS">
+        
+        <div style="grid-column: 1 / -1; display: flex; gap: 10px; margin-top: 5px;">
             <button class="btn btn-add" id="btnSubmit" onclick="saveData()">Tambah Data</button>
             <button class="btn btn-cancel" id="btnCancel" onclick="resetForm()" style="display:none;">Batal</button>
         </div>
     </div>
 
-    <!-- Tabel Data Populasi Unit -->
+    <!-- Tabel Data Populasi Unit (21 Kolom) -->
     <div class="table-responsive">
         <table>
             <thead>
@@ -115,6 +155,9 @@
                     <th>NO</th>
                     <th>EQUIPMENT</th>
                     <th>C/N</th>
+                    <th>COST CENTER</th>
+                    <th>MODEL</th>
+                    <th>UNIT</th>
                     <th>CLUSTER</th>
                     <th>MACHINE S/N</th>
                     <th>ENGINE MODEL</th>
@@ -122,28 +165,50 @@
                     <th>MFG. YEAR</th>
                     <th>DELIVERY DATE</th>
                     <th>REMARK</th>
+                    <th>STATUS UNIT</th>
+                    <th>SECTION</th>
+                    <th>HM INITIAL SITE</th>
+                    <th>FROM</th>
+                    <th>STATUS COMMISSIONING</th>
+                    <th>HM UPDATE</th>
+                    <th>WARRANTY</th>
+                    <th>STATUS</th>
                     <th>ACTION</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <!-- Data akan dimuat secara dinamis via JavaScript -->
+                <!-- Data dimuat secara dinamis -->
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
-    // Data Awal (Dikutip dari tangkapan layar)
+    // Data Awal dengan Struktur Kolom Baru
     let machineData = [
-        { equipment: "EX20009206", cn: "X9206", cluster: "NING - LOADING OB", machineSn: "20346", engineModel: "SAA12V140E-3", engineSn: "", mfgYear: "", deliveryDate: "", remark: "EXISTING" },
-        { equipment: "EX20009169", cn: "X169", cluster: "NING - LOADING OB", machineSn: "J10019", engineModel: "SAA12V140E-3", engineSn: "", mfgYear: "", deliveryDate: "", remark: "EXISTING" },
-        { equipment: "EX20009205", cn: "X9205", cluster: "NING - LOADING OB", machineSn: "20339", engineModel: "SAA12V140E-3", engineSn: "CC-510781", mfgYear: "2011", deliveryDate: "", remark: "EXISTING" },
-        { equipment: "EX20009253", cn: "X9253", cluster: "NING - LOADING OB", machineSn: "20343", engineModel: "SAA12V140E-3", engineSn: "", mfgYear: "2011", deliveryDate: "", remark: "EXISTING" },
-        { equipment: "EX20009492", cn: "X9492", cluster: "NING - LOADING OB", machineSn: "J20007", engineModel: "SAA12V140E-7", engineSn: "900149", mfgYear: "2024", deliveryDate: "16-Mar-24", remark: "EXISTING" },
-        { equipment: "EX20009493", cn: "X9493", cluster: "NING - LOADING OB", machineSn: "30135", engineModel: "SAA12V140E-7", engineSn: "900401", mfgYear: "", deliveryDate: "", remark: "EXISTING" }
+        {
+            equipment: "EX20009206", cn: "X9206", costCenter: "CC-101", model: "EX2000", unit: "EXCAVATOR",
+            cluster: "NING - LOADING OB", machineSn: "20346", engineModel: "SAA12V140E-3", engineSn: "ENG-9206",
+            mfgYear: "2010", deliveryDate: "12-Jan-10", remark: "EXISTING", statusUnit: "RFU", section: "PLANT",
+            hmInitialSite: "1200", from: "JAKARTA", statusCommissioning: "PASSED", hmUpdate: "14500", warranty: "EXPIRED", status: "ACTIVE"
+        },
+        {
+            equipment: "EX20009169", cn: "X169", costCenter: "CC-101", model: "EX2000", unit: "EXCAVATOR",
+            cluster: "NING - LOADING OB", machineSn: "J10019", engineModel: "SAA12V140E-3", engineSn: "ENG-9169",
+            mfgYear: "2011", deliveryDate: "15-May-11", remark: "EXISTING", statusUnit: "RFU", section: "PLANT",
+            hmInitialSite: "800", from: "BALIKPAPAN", statusCommissioning: "PASSED", hmUpdate: "18200", warranty: "EXPIRED", status: "ACTIVE"
+        }
     ];
 
-    // Fungsi Render Tabel
+    // Array Nama Kolom untuk Import & Export Excel
+    const fields = [
+        "equipment", "cn", "costCenter", "model", "unit", "cluster", 
+        "machineSn", "engineModel", "engineSn", "mfgYear", "deliveryDate", 
+        "remark", "statusUnit", "section", "hmInitialSite", "from", 
+        "statusCommissioning", "hmUpdate", "warranty", "status"
+    ];
+
+    // Render Tabel ke Layar
     function renderTable() {
         const tbody = document.getElementById("tableBody");
         tbody.innerHTML = "";
@@ -151,15 +216,26 @@
         machineData.forEach((item, index) => {
             let row = `<tr>
                 <td>${index + 1}</td>
-                <td>${item.equipment}</td>
-                <td>${item.cn}</td>
-                <td>${item.cluster}</td>
-                <td>${item.machineSn}</td>
-                <td>${item.engineModel}</td>
-                <td>${item.engineSn}</td>
-                <td>${item.mfgYear}</td>
-                <td>${item.deliveryDate}</td>
-                <td>${item.remark}</td>
+                <td>${item.equipment || ''}</td>
+                <td>${item.cn || ''}</td>
+                <td>${item.costCenter || ''}</td>
+                <td>${item.model || ''}</td>
+                <td>${item.unit || ''}</td>
+                <td>${item.cluster || ''}</td>
+                <td>${item.machineSn || ''}</td>
+                <td>${item.engineModel || ''}</td>
+                <td>${item.engineSn || ''}</td>
+                <td>${item.mfgYear || ''}</td>
+                <td>${item.deliveryDate || ''}</td>
+                <td>${item.remark || ''}</td>
+                <td>${item.statusUnit || ''}</td>
+                <td>${item.section || ''}</td>
+                <td>${item.hmInitialSite || ''}</td>
+                <td>${item.from || ''}</td>
+                <td>${item.statusCommissioning || ''}</td>
+                <td>${item.hmUpdate || ''}</td>
+                <td>${item.warranty || ''}</td>
+                <td>${item.status || ''}</td>
                 <td>
                     <div class="action-btns">
                         <button class="btn btn-edit" onclick="editData(${index})">Edit</button>
@@ -174,17 +250,11 @@
     // Tambah & Update Data
     function saveData() {
         const index = document.getElementById("editIndex").value;
-        const newData = {
-            equipment: document.getElementById("equipment").value,
-            cn: document.getElementById("cn").value,
-            cluster: document.getElementById("cluster").value,
-            machineSn: document.getElementById("machineSn").value,
-            engineModel: document.getElementById("engineModel").value,
-            engineSn: document.getElementById("engineSn").value,
-            mfgYear: document.getElementById("mfgYear").value,
-            deliveryDate: document.getElementById("deliveryDate").value,
-            remark: document.getElementById("remark").value
-        };
+        let newData = {};
+
+        fields.forEach(field => {
+            newData[field] = document.getElementById(field).value;
+        });
 
         if(!newData.equipment) {
             alert("Kolom Equipment wajib diisi!");
@@ -205,15 +275,12 @@
     function editData(index) {
         const item = machineData[index];
         document.getElementById("editIndex").value = index;
-        document.getElementById("equipment").value = item.equipment;
-        document.getElementById("cn").value = item.cn;
-        document.getElementById("cluster").value = item.cluster;
-        document.getElementById("machineSn").value = item.machineSn;
-        document.getElementById("engineModel").value = item.engineModel;
-        document.getElementById("engineSn").value = item.engineSn;
-        document.getElementById("mfgYear").value = item.mfgYear;
-        document.getElementById("deliveryDate").value = item.deliveryDate;
-        document.getElementById("remark").value = item.remark;
+
+        fields.forEach(field => {
+            if(document.getElementById(field)) {
+                document.getElementById(field).value = item[field] || "";
+            }
+        });
 
         document.getElementById("btnSubmit").innerText = "Update Data";
         document.getElementById("btnSubmit").className = "btn btn-save";
@@ -228,25 +295,116 @@
         }
     }
 
-    // Reset Form Input
+    // Reset Form
     function resetForm() {
         document.getElementById("editIndex").value = "-1";
-        document.getElementById("equipment").value = "";
-        document.getElementById("cn").value = "";
-        document.getElementById("cluster").value = "";
-        document.getElementById("machineSn").value = "";
-        document.getElementById("engineModel").value = "";
-        document.getElementById("engineSn").value = "";
-        document.getElementById("mfgYear").value = "";
-        document.getElementById("deliveryDate").value = "";
-        document.getElementById("remark").value = "EXISTING";
+        fields.forEach(field => {
+            if(document.getElementById(field)) {
+                if(field === "remark") {
+                    document.getElementById(field).value = "EXISTING";
+                } else {
+                    document.getElementById(field).value = "";
+                }
+            }
+        });
 
         document.getElementById("btnSubmit").innerText = "Tambah Data";
         document.getElementById("btnSubmit").className = "btn btn-add";
         document.getElementById("btnCancel").style.display = "none";
     }
 
-    // Muat data awal saat sistem dibuka
+    // Export Data ke File Excel (.xlsx)
+    function exportExcel() {
+        if(machineData.length === 0) {
+            alert("Tidak ada data untuk diekspor!");
+            return;
+        }
+
+        // Mapping Data agar Judul Header Excel Rapi & Sesuai
+        const exportData = machineData.map((item, index) => ({
+            "NO": index + 1,
+            "EQUIPMENT": item.equipment,
+            "C/N": item.cn,
+            "COST CENTER": item.costCenter,
+            "MODEL": item.model,
+            "UNIT": item.unit,
+            "CLUSTER": item.cluster,
+            "MACHINE S/N": item.machineSn,
+            "ENGINE MODEL": item.engineModel,
+            "ENGINE S/N": item.engineSn,
+            "MFG. YEAR": item.mfgYear,
+            "DELIVERY DATE": item.deliveryDate,
+            "REMARK": item.remark,
+            "STATUS UNIT": item.statusUnit,
+            "SECTION": item.section,
+            "HM INITIAL SITE": item.hmInitialSite,
+            "FROM": item.from,
+            "STATUS COMMISSIONING": item.statusCommissioning,
+            "HM UPDATE": item.hmUpdate,
+            "WARRANTY": item.warranty,
+            "STATUS": item.status
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "POPULATION UNIT");
+        
+        // Simpan File
+        XLSX.writeFile(workbook, "Data_Population_Unit.xlsx");
+    }
+
+    // Import Data dari File Excel
+    function importExcel(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+            if (jsonData.length === 0) {
+                alert("File Excel kosong atau format tidak sesuai!");
+                return;
+            }
+
+            // Normalisasi & Impor Data Baru
+            const importedData = jsonData.map(row => ({
+                equipment: row["EQUIPMENT"] || row["equipment"] || "",
+                cn: row["C/N"] || row["cn"] || "",
+                costCenter: row["COST CENTER"] || row["costCenter"] || "",
+                model: row["MODEL"] || row["model"] || "",
+                unit: row["UNIT"] || row["unit"] || "",
+                cluster: row["CLUSTER"] || row["cluster"] || "",
+                machineSn: row["MACHINE S/N"] || row["machineSn"] || "",
+                engineModel: row["ENGINE MODEL"] || row["engineModel"] || "",
+                engineSn: row["ENGINE S/N"] || row["engineSn"] || "",
+                mfgYear: row["MFG. YEAR"] || row["mfgYear"] || "",
+                deliveryDate: row["DELIVERY DATE"] || row["deliveryDate"] || "",
+                remark: row["REMARK"] || row["remark"] || "EXISTING",
+                statusUnit: row["STATUS UNIT"] || row["statusUnit"] || "",
+                section: row["SECTION"] || row["section"] || "",
+                hmInitialSite: row["HM INITIAL SITE"] || row["hmInitialSite"] || "",
+                from: row["FROM"] || row["from"] || "",
+                statusCommissioning: row["STATUS COMMISSIONING"] || row["statusCommissioning"] || "",
+                hmUpdate: row["HM UPDATE"] || row["hmUpdate"] || "",
+                warranty: row["WARRANTY"] || row["warranty"] || "",
+                status: row["STATUS"] || row["status"] || ""
+            }));
+
+            machineData = machineData.concat(importedData);
+            renderTable();
+            alert(`Berhasil mengimpor ${importedData.length} data dari Excel!`);
+            event.target.value = ''; // Reset input file
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // Inisialisasi awal saat halaman dibuka
     window.onload = renderTable;
 </script>
 
