@@ -305,7 +305,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 4: DATABASE PARETO (DENGAN 100 LIMIT & PAGINATION) -->
+                <!-- VIEW 4: DATABASE PARETO (DENGAN 100 LIMIT & PAGINATION AMAN DARI KOMA) -->
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="bg-white p-4 rounded-xl shadow-xs border border-slate-200 flex justify-between items-center shrink-0">
                         <div>
@@ -319,35 +319,7 @@
                     <div class="bg-white rounded-xl shadow-xs p-4 flex-1 flex flex-col overflow-hidden border border-slate-200">
                         <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-slate-200 bg-white">
                             <table id="paretoTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="paretoTableHead" class="bg-slate-900 text-white font-mono sticky top-0 z-20">
-                                    <tr>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">IDUNIT</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">PPU</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">HM</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">TANGGAL B/D</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">JAM B/D</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">SPK / PENGERJAAN</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">TGL SPK START</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">SPK START</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">TGL SPK CLOSE</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">SPK CLOSE</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">DURATION</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">MAJOR COMPONENT</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE2</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">SUB-COMPONENT</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE3</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">DAMAGE</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">CODE4</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">DO</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">CLUSTER</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">MODEL</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">YEAR</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">MONTH</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">WEEK</th>
-                                        <th class="p-3.5 font-bold border-r border-slate-700">SITE</th>
-                                    </tr>
-                                </thead>
+                                <thead id="paretoTableHead" class="bg-slate-900 text-white font-mono sticky top-0 z-20"></thead>
                                 <tbody id="paretoTableBody" class="divide-y divide-slate-200"></tbody>
                             </table>
                         </div>
@@ -389,7 +361,7 @@
 
     </div>
 
-    <!-- Script Interaktif, Dynamic Google Sheets, & Pagination (100 rows limit) -->
+    <!-- Script Interaktif & CSV Parser yang Aman Terhadap Koma -->
     <script>
         let allParetoRows = [];
         let currentPage = 1;
@@ -428,6 +400,35 @@
             if (viewId === 'pareto-dashboard-view') calculateParetoStats();
         }
 
+        // Fungsi Parser CSV Pintar (Menghindari pecahan koma di dalam tanda kutip deskripsi)
+        function parseCSV(text) {
+            let lines = text.split('\n');
+            let result = [];
+            for (let i = 0; i < lines.length; i++) {
+                let row = [];
+                let inQuotes = false;
+                let entry = '';
+                let line = lines[i];
+                
+                for (let j = 0; j < line.length; j++) {
+                    let char = line[j];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        row.push(entry.trim().replace(/^"|"$/g, ''));
+                        entry = '';
+                    } else {
+                        entry += char;
+                    }
+                }
+                row.push(entry.trim().replace(/^"|"$/g, ''));
+                if (row.some(val => val !== "")) {
+                    result.push(row);
+                }
+            }
+            return result;
+        }
+
         async function loadDatabase(type) {
             const gid = '0';
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=${gid}`;
@@ -440,14 +441,14 @@
             try {
                 const response = await fetch(csvUrl);
                 const dataText = await response.text();
-                const rows = dataText.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
+                const rows = parseCSV(dataText);
 
                 if (rows.length < 2) {
                     tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data.</td></tr>`;
                     return;
                 }
 
-                const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
+                const headers = rows[0];
                 let headHtml = '<tr>';
                 headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 whitespace-nowrap">${h}</th>`; });
                 headHtml += '</tr>';
@@ -455,11 +456,10 @@
 
                 let bodyHtml = '';
                 for (let i = 1; i < rows.length; i++) {
-                    const cols = rows[i].map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
-                    if (!cols.some(val => val !== "")) continue;
+                    const cols = rows[i];
                     bodyHtml += `<tr class="hover:bg-blue-50/60 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
-                        if (headers[j] !== "") bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
+                        bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
                     }
                     bodyHtml += `</tr>`;
                 }
@@ -469,7 +469,6 @@
             }
         }
 
-        // Fungsi Load Pareto dengan Pembatasan & Pagination (100 baris per halaman)
         async function loadParetoData() {
             const tableHead = document.getElementById('paretoTableHead');
             const tableBody = document.getElementById('paretoTableBody');
@@ -480,14 +479,14 @@
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
                 const text = await res.text();
-                const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
+                const rows = parseCSV(text);
 
                 if (rows.length < 2) {
                     tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-mono">Belum ada data pada tab Pareto.</td></tr>`;
                     return;
                 }
 
-                const headers = rows[0].map(h => h ? h.trim().replace(/^"|"$/g, '') : '');
+                const headers = rows[0];
                 let headHtml = '<tr>';
                 headers.forEach(h => {
                     if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-700 tracking-wider text-xs whitespace-nowrap">${h}</th>`;
@@ -495,8 +494,7 @@
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
-                // Simpan data mentah (kecuali header) yang tidak kosong
-                allParetoRows = rows.slice(1).filter(r => r.some(val => val && val.trim() !== ""));
+                allParetoRows = rows.slice(1);
                 currentPage = 1;
                 renderParetoTable();
                 calculateParetoStats();
@@ -529,10 +527,9 @@
 
             let bodyHtml = '';
             sliceData.forEach(row => {
-                const cols = row.map(c => c ? c.trim().replace(/^"|"$/g, '') : '');
                 bodyHtml += `<tr class="hover:bg-orange-50/60 transition-colors">`;
-                for (let j = 0; j < cols.length; j++) {
-                    bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
+                for (let j = 0; j < row.length; j++) {
+                    bodyHtml += `<td class="p-3 border-r border-slate-200 text-slate-700 font-medium whitespace-nowrap">${row[j] || ''}</td>`;
                 }
                 bodyHtml += `</tr>`;
             });
@@ -547,7 +544,6 @@
         function changePage(direction) {
             currentPage += direction;
             renderParetoTable();
-            // Scroll otomatis ke atas tabel saat pindah halaman
             const container = document.querySelector('#pareto-database-view .overflow-y-auto');
             if(container) container.scrollTop = 0;
         }
