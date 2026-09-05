@@ -34,7 +34,7 @@
 
     <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR NAVIGATOR (LENGKAP DARI A SAMPAI Z) -->
+        <!-- SIDEBAR NAVIGATOR -->
         <aside id="main-sidebar" class="w-72 bg-slate-900 text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
             <!-- Header Brand & Tombol Close -->
@@ -53,7 +53,7 @@
                 </button>
             </div>
 
-            <!-- Navigation Menu Lengkap (Disimpan Semua Tanpa Ada yang Hilang) -->
+            <!-- Navigation Menu Lengkap -->
             <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto custom-scrollbar">
 
                 <!-- 1. DASHBOARD -->
@@ -108,7 +108,22 @@
                     </div>
                 </div>
 
-                <!-- 4. FAILURE ANALYSIS (FAR) -->
+                <!-- 4. PARETO PROBLEM (BARU DITAMBAHKAN) -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-column w-5 text-orange-400"></i>
+                            <span>PARETO PROBLEM</span>
+                        </div>
+                        <i id="pareto-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="pareto-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
+                        <a href="#" onclick="selectView('dashboard-view', 'DATABASE PARETO')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Database Pareto</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'DASHBOARD PARETO')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Dashboard</a>
+                    </div>
+                </div>
+
+                <!-- 5. FAILURE ANALYSIS (FAR) -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -124,7 +139,7 @@
                     </div>
                 </div>
 
-                <!-- 5. BACKLOG MANAGEMENT -->
+                <!-- 6. BACKLOG MANAGEMENT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -140,7 +155,7 @@
                     </div>
                 </div>
 
-                <!-- 6. RELIABILITY DASHBOARD -->
+                <!-- 7. RELIABILITY DASHBOARD -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -157,7 +172,7 @@
                     </div>
                 </div>
 
-                <!-- 7. KNOWLEDGE MANAGEMENT -->
+                <!-- 8. KNOWLEDGE MANAGEMENT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -174,7 +189,7 @@
                     </div>
                 </div>
 
-                <!-- 8. ENGINEERING TOOLS -->
+                <!-- 9. ENGINEERING TOOLS -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -191,7 +206,7 @@
                     </div>
                 </div>
 
-                <!-- 9. USER MANAGEMENT -->
+                <!-- 10. USER MANAGEMENT -->
                 <div>
                     <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
@@ -347,7 +362,7 @@
             }
         }
 
-        // Fungsi Ambil Data & Render Kolom A sampai U Otomatis
+        // Fungsi Ambil Data & Render Kolom A sampai U Otomatis dari Google Sheets
         async function loadUnitDatabaseFromSheet() {
             const csvUrl = 'https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=0';
             const tableHead = document.getElementById('unitTableHead');
