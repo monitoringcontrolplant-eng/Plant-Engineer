@@ -35,7 +35,7 @@
 
     <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR NAVIGATOR (LENGKAP A - Z) -->
+        <!-- SIDEBAR NAVIGATOR -->
         <aside id="main-sidebar" class="w-72 bg-slate-900 text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full">
 
             <!-- Header Brand -->
@@ -342,14 +342,14 @@
                     </div>
                 </div>
 
-                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN FILTER MENYAMPING & CHART LENGKAP) -->
+                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN TANGGAL DARI KOLOM G / INDEX 6) -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
-                    <!-- Panel Filter Menyamping (8 Kolom Sesuai Indeks Google Sheets Anda) -->
+                    <!-- Panel Filter Menyamping -->
                     <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 space-y-4">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-slate-900 font-mono tracking-wide uppercase">FILTER DASHBOARD PARETO</h2>
-                                <p class="text-xs text-slate-500">Filter data berdasarkan Unit, Tahun (Col V), Bulan (Col W), Major (Col M), Sub (Col O), & Cluster (Col T).</p>
+                                <p class="text-xs text-slate-500">Filter data berdasarkan Unit, Tanggal SPK Start (Col G), Tahun (Col V), Bulan (Col W), Major (Col M), Sub (Col O), & Cluster (Col T).</p>
                             </div>
                             <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5">
                                 <i class="fa-solid fa-rotate-left"></i> Reset Filter
@@ -383,14 +383,14 @@
                                     <option value="Oct">Oct</option><option value="Nov">Nov</option><option value="Dec">Dec</option>
                                 </select>
                             </div>
-                            <!-- 4. Tanggal Awal -->
+                            <!-- 4. Tanggal Awal (Mengacu ke Col G / Index 6) -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tanggal Awal</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tgl Awal (Col G)</label>
                                 <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                             </div>
-                            <!-- 5. Tanggal Finish -->
+                            <!-- 5. Tanggal Finish (Mengacu ke Col G / Index 6) -->
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tanggal Finish</label>
+                                <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tgl Finish (Col G)</label>
                                 <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                             </div>
                             <!-- 6. Cluster (Kolom T / Index 19) -->
@@ -450,7 +450,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 6: RELIABILITY MTBF & MTTR (MENU TAMBAHAN) -->
+                <!-- VIEW 6: RELIABILITY MTBF & MTTR -->
                 <div id="reliability-mtbf-view" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-600">
@@ -480,7 +480,7 @@
 
     </div>
 
-    <!-- Script JavaScript Terintegrasi & Sinkronisasi Indeks Google Sheets -->
+    <!-- Script JavaScript Terintegrasi & Sinkronisasi Tanggal ke Kolom G (Index 6) -->
     <script>
         let allParetoRows = [];
         let filteredParetoRows = [];
@@ -530,7 +530,6 @@
             }
         }
 
-        // Parser CSV Aman Koma
         function parseCSV(text) {
             let lines = text.split('\n');
             let result = [];
@@ -557,6 +556,28 @@
                 }
             }
             return result;
+        }
+
+        // Helper untuk normalisasi format tanggal (DD/MM/YYYY atau YYYY-MM-DD menjadi YYYY-MM-DD untuk perbandingan)
+        function formatDateToStandard(dateStr) {
+            if (!dateStr) return '';
+            dateStr = dateStr.trim();
+            // Jika formatnya DD/MM/YYYY
+            if (dateStr.includes('/')) {
+                let parts = dateStr.split('/');
+                if (parts.length === 3) {
+                    let day = parts[0].padStart(2, '0');
+                    let month = parts[1].padStart(2, '0');
+                    let year = parts[2];
+                    // Tangani jika tahun berada di depan (YYYY/MM/DD)
+                    if (year.length === 4 && parts[0].length === 2 && Number(parts[0]) > 31) {
+                        // kemungkinan YYYY/MM/DD
+                        return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+                    }
+                    return `${year}-${month}-${day}`;
+                }
+            }
+            return dateStr; // Asumsi sudah YYYY-MM-DD
         }
 
         async function loadDatabase(type) {
@@ -629,7 +650,7 @@
 
                 populateFilterOptions();
                 renderParetoTable();
-                applyParetoFilters(); // Update statistik & chart awal
+                applyParetoFilters();
 
             } catch (e) {
                 console.error("Gagal memuat pareto:", e);
@@ -690,8 +711,6 @@
             if(container) container.scrollTop = 0;
         }
 
-        // --- LOGIKA FILTER DASHBOARD & DROPDOWN BERDASARKAN INDEKS GOOGLE SHEETS ---
-        // Col 0: Unit, Col 1: Tgl, Col 10: Durasi, Col 12: Major (M), Col 14: Sub (O), Col 19: Cluster (T), Col 21: Year (V), Col 22: Month (W)
         function populateFilterOptions() {
             let units = new Set();
             let years = new Set();
@@ -710,7 +729,6 @@
                 if (year.trim() && !isNaN(year.trim())) years.add(year.trim());
             });
 
-            // Populate Unit
             let unitSel = document.getElementById('filter-unit');
             if(unitSel) {
                 unitSel.innerHTML = '<option value="">Semua Unit</option>';
@@ -719,7 +737,6 @@
                 });
             }
 
-            // Populate Year (Kolom V / Index 21)
             let yearSel = document.getElementById('filter-year');
             if(yearSel) {
                 yearSel.innerHTML = '<option value="">Semua Tahun</option>';
@@ -728,7 +745,6 @@
                 });
             }
 
-            // Populate Cluster (Kolom T / Index 19)
             let clusterSel = document.getElementById('filter-cluster');
             if(clusterSel) {
                 clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
@@ -737,7 +753,6 @@
                 });
             }
 
-            // Populate Major Component (Kolom M / Index 12)
             let majorSel = document.getElementById('filter-major');
             if(majorSel) {
                 majorSel.innerHTML = '<option value="">Semua Major</option>';
@@ -794,7 +809,7 @@
 
             let resultData = allParetoRows.filter(row => {
                 let unit = row[0] || '';         // Kolom 0
-                let dateStr = row[1] || '';      // Kolom 1
+                let tglSpkStartRaw = row[6] || ''; // Kolom G / TGL SPK START (Index 6)
                 let major = row[12] || '';       // Kolom M (Index 12)
                 let sub = row[14] || '';         // Kolom O (Index 14)
                 let cluster = row[19] || '';     // Kolom T (Index 19)
@@ -804,11 +819,23 @@
                 if (fUnit && unit.trim() !== fUnit) return false;
                 if (fYear && yearV.trim() !== fYear) return false;
                 if (fMonth && !monthW.toLowerCase().includes(fMonth.toLowerCase())) return false;
-                if (fStart && dateStr < fStart) return false;
-                if (fEnd && dateStr > fEnd) return false;
                 if (fCluster && cluster.trim() !== fCluster) return false;
                 if (fMajor && major.trim() !== fMajor) return false;
                 if (fSub && sub.trim() !== fSub) return false;
+
+                // Filter rentang tanggal berdasarkan Kolom G (Index 6)
+                if (fStart || fEnd) {
+                    let standardDate = formatDateToStandard(tglSpkStartRaw);
+                    if (standardDate) {
+                        // Ambil hanya bagian YYYY-MM-DD jika ada jamnya
+                        let cleanDate = standardDate.split(' ')[0];
+                        if (fStart && cleanDate < fStart) return false;
+                        if (fEnd && cleanDate > fEnd) return false;
+                    } else if (fStart || fEnd) {
+                        // Jika baris data tidak memiliki tanggal di kolom G tapi filter diaktifkan
+                        return false;
+                    }
+                }
 
                 return true;
             });
@@ -867,7 +894,6 @@
             let majorLabels = sortedMajors.map(item => item[0]);
             let majorValues = sortedMajors.map(item => item[1]);
 
-            // Chart 1: Bar Chart Major Component
             const ctxBar = document.getElementById('paretoBarChart')?.getContext('2d');
             if (ctxBar) {
                 if (barChartInstance) barChartInstance.destroy();
@@ -905,7 +931,6 @@
             let clusterLabels = sortedClusters.map(item => item[0]);
             let clusterValues = sortedClusters.map(item => item[1]);
 
-            // Chart 2: Cluster Chart (Doughnut)
             const ctxCluster = document.getElementById('paretoClusterChart')?.getContext('2d');
             if (ctxCluster) {
                 if (clusterChartInstance) clusterChartInstance.destroy();
