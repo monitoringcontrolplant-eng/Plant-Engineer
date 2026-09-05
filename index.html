@@ -342,7 +342,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (DENGAN TANGGAL DARI KOLOM G / INDEX 6) -->
+                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (6 GRAFIK LENGKAP SEPERTI REFERENSI) -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
                     <!-- Panel Filter Menyamping -->
                     <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 space-y-4">
@@ -358,21 +358,18 @@
 
                         <!-- Barisan Filter Lengkap -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
-                            <!-- 1. Unit -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Unit</label>
                                 <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Unit</option>
                                 </select>
                             </div>
-                            <!-- 2. Tahun (Kolom V / Index 21) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tahun (Col V)</label>
                                 <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Tahun</option>
                                 </select>
                             </div>
-                            <!-- 3. Bulan (Kolom W / Index 22) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Bulan (Col W)</label>
                                 <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
@@ -383,31 +380,26 @@
                                     <option value="Oct">Oct</option><option value="Nov">Nov</option><option value="Dec">Dec</option>
                                 </select>
                             </div>
-                            <!-- 4. Tanggal Awal (Mengacu ke Col G / Index 6) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tgl Awal (Col G)</label>
                                 <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                             </div>
-                            <!-- 5. Tanggal Finish (Mengacu ke Col G / Index 6) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Tgl Finish (Col G)</label>
                                 <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                             </div>
-                            <!-- 6. Cluster (Kolom T / Index 19) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Cluster (Col T)</label>
                                 <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Cluster</option>
                                 </select>
                             </div>
-                            <!-- 7. Major Component (Kolom M / Index 12) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Major (Col M)</label>
                                 <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
                                     <option value="">Semua Major</option>
                                 </select>
                             </div>
-                            <!-- 8. Sub Component (Kolom O / Index 14) -->
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-600 mb-1">Sub Comp (Col O)</label>
                                 <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-mono focus:outline-none focus:border-orange-500">
@@ -433,18 +425,48 @@
                         </div>
                     </div>
 
-                    <!-- Grafik Chart Visual -->
+                    <!-- 6 GRAFIK PARETO GRID (2x3) -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- 1. Frequency Component -->
                         <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frekuensi Kerusakan per Major Component</h3>
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frequency Component</h3>
                             <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
-                                <canvas id="paretoBarChart"></canvas>
+                                <canvas id="chartFreqComp"></canvas>
                             </div>
                         </div>
+                        <!-- 2. Duration Component -->
                         <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-pie text-blue-600 mr-2"></i> Durasi Downtime per Cluster</h3>
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Duration Component</h3>
                             <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
-                                <canvas id="paretoClusterChart"></canvas>
+                                <canvas id="chartDurComp"></canvas>
+                            </div>
+                        </div>
+                        <!-- 3. Frequency - Sub Component -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frequency - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartFreqSub"></canvas>
+                            </div>
+                        </div>
+                        <!-- 4. Duration - Sub Component -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Duration - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartDurSub"></canvas>
+                            </div>
+                        </div>
+                        <!-- 5. Frequency - Per Unit -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-600 mr-2"></i> Frequency - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartFreqUnit"></canvas>
+                            </div>
+                        </div>
+                        <!-- 6. Duration - Per Unit -->
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-blue-600 mr-2"></i> Duration - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                                <canvas id="chartDurUnit"></canvas>
                             </div>
                         </div>
                     </div>
@@ -480,15 +502,14 @@
 
     </div>
 
-    <!-- Script JavaScript Terintegrasi & Sinkronisasi Tanggal ke Kolom G (Index 6) -->
+    <!-- Script JavaScript Lengkap dengan 6 Grafik Analitik Pareto -->
     <script>
         let allParetoRows = [];
         let filteredParetoRows = [];
         let currentPage = 1;
         const rowsPerPage = 100;
 
-        let barChartInstance = null;
-        let clusterChartInstance = null;
+        let chartInstances = {};
         let mtbfChartInstance = null;
 
         function openSidebar() {
@@ -844,10 +865,15 @@
             if(recEl) recEl.innerText = `${data.length} Data`;
 
             let totalDurasi = 0;
-            let majorCounts = {};
-            let clusterDurasi = {};
+            let compFreq = {};
+            let compDur = {};
+            let subFreq = {};
+            let subDur = {};
+            let unitFreq = {};
+            let unitDur = {};
 
             data.forEach(row => {
+                let unit = row[0] && row[0].trim() !== '' ? row[0].trim() : 'Unknown';
                 const rawDur = row[10] || '0';
                 let duration = 0;
                 if (rawDur.includes(':')) {
@@ -859,44 +885,53 @@
                 totalDurasi += duration;
 
                 let major = row[12] && row[12].trim() !== '' ? row[12].trim() : 'Unknown';
-                majorCounts[major] = (majorCounts[major] || 0) + 1;
+                compFreq[major] = (compFreq[major] || 0) + 1;
+                compDur[major] = (compDur[major] || 0) + duration;
 
-                let cluster = row[19] && row[19].trim() !== '' ? row[19].trim() : 'Lainnya';
-                clusterDurasi[cluster] = (clusterDurasi[cluster] || 0) + duration;
+                let sub = row[14] && row[14].trim() !== '' ? row[14].trim() : 'Unknown';
+                subFreq[sub] = (subFreq[sub] || 0) + 1;
+                subDur[sub] = (subDur[sub] || 0) + duration;
+
+                unitFreq[unit] = (unitFreq[unit] || 0) + 1;
+                unitDur[unit] = (unitDur[unit] || 0) + duration;
             });
 
             if(durEl) durEl.innerText = `${totalDurasi.toFixed(1)} Jam`;
 
             let topComp = '-';
             let maxCount = 0;
-            for (let comp in majorCounts) {
-                if (majorCounts[comp] > maxCount) {
-                    maxCount = majorCounts[comp];
+            for (let comp in compFreq) {
+                if (compFreq[comp] > maxCount) {
+                    maxCount = compFreq[comp];
                     topComp = comp;
                 }
             }
             if(topEl) topEl.innerText = topComp;
 
-            renderCharts(majorCounts, clusterDurasi);
+            renderSixCharts(compFreq, compDur, subFreq, subDur, unitFreq, unitDur);
         }
 
-        function renderCharts(majorCounts, clusterDurasi) {
-            let sortedMajors = Object.entries(majorCounts).sort((a,b) => b[1] - a[1]).slice(0, 8);
-            let majorLabels = sortedMajors.map(item => item[0]);
-            let majorValues = sortedMajors.map(item => item[1]);
+        function renderSixCharts(compFreq, compDur, subFreq, subDur, unitFreq, unitDur) {
+            // Helper untuk merender bar chart dengan styling seragam
+            function renderBar(canvasId, dataObj, color, isDuration = false, maxItems = 10) {
+                const ctx = document.getElementById(canvasId)?.getContext('2d');
+                if(!ctx) return;
 
-            const ctxBar = document.getElementById('paretoBarChart')?.getContext('2d');
-            if (ctxBar) {
-                if (barChartInstance) barChartInstance.destroy();
-                barChartInstance = new Chart(ctxBar, {
+                let sorted = Object.entries(dataObj).sort((a,b) => b[1] - a[1]).slice(0, maxItems);
+                let labels = sorted.map(item => item[0]);
+                let values = sorted.map(item => isDuration ? Number(item[1].toFixed(1)) : item[1]);
+
+                if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+
+                chartInstances[canvasId] = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: majorLabels,
+                        labels: labels,
                         datasets: [{
-                            label: 'Frekuensi',
-                            data: majorValues,
-                            backgroundColor: '#f97316',
-                            borderRadius: 6
+                            label: isDuration ? 'Durasi (Jam)' : 'Kasus',
+                            data: values,
+                            backgroundColor: color,
+                            borderRadius: 4
                         }]
                     },
                     options: {
@@ -907,45 +942,27 @@
                             y: { 
                                 beginAtZero: true, 
                                 grid: { color: '#f1f5f9' },
-                                ticks: {
-                                    stepSize: 1,
-                                    precision: 0
-                                }
+                                ticks: { font: { size: 10 } }
                             },
-                            x: { grid: { display: false } }
+                            x: { 
+                                grid: { display: false },
+                                ticks: { 
+                                    font: { size: 9 },
+                                    maxRotation: 45,
+                                    minRotation: 45
+                                }
+                            }
                         }
                     }
                 });
             }
 
-            let sortedClusters = Object.entries(clusterDurasi).sort((a,b) => b[1] - a[1]);
-            let clusterLabels = sortedClusters.map(item => item[0]);
-            let clusterValues = sortedClusters.map(item => item[1]);
-
-            const ctxCluster = document.getElementById('paretoClusterChart')?.getContext('2d');
-            if (ctxCluster) {
-                if (clusterChartInstance) clusterChartInstance.destroy();
-                clusterChartInstance = new Chart(ctxCluster, {
-                    type: 'doughnut',
-                    data: {
-                        labels: clusterLabels,
-                        datasets: [{
-                            data: clusterValues,
-                            backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#6366f1']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { 
-                            legend: { 
-                                position: 'right', 
-                                labels: { boxWidth: 12, font: { size: 10 } } 
-                            } 
-                        }
-                    }
-                });
-            }
+            renderBar('chartFreqComp', compFreq, '#f97316', false);
+            renderBar('chartDurComp', compDur, '#334155', true);
+            renderBar('chartFreqSub', subFreq, '#f97316', false);
+            renderBar('chartDurSub', subDur, '#334155', true);
+            renderBar('chartFreqUnit', unitFreq, '#f97316', false);
+            renderBar('chartDurUnit', unitDur, '#334155', true);
         }
 
         function renderMtbfChart() {
