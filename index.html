@@ -166,7 +166,7 @@
                         <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
                     <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1">
-                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">MTBF & MTTR</a>
+                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-1.5 text-xs text-blue-300 font-bold hover:text-white">MTBF & MTTR</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Repeat Failure</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bad Actor Component</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Reliability Ranking</a>
@@ -435,6 +435,31 @@
                     </div>
                 </div>
 
+                <!-- VIEW 6: RELIABILITY MTBF & MTTR (MENU TAMBAHAN) -->
+                <div id="reliability-mtbf-view" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-emerald-600">
+                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Overall MTBF</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1 font-mono">92.4 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-blue-600">
+                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Overall MTTR</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1 font-mono">3.5 <span class="text-xs font-semibold text-slate-500">Jam</span></h3>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 border-l-4 border-l-purple-600">
+                            <p class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">System Reliability Rate</p>
+                            <h3 class="text-2xl font-black text-purple-600 mt-1 font-mono">96.2%</h3>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow-xs border border-slate-200 flex flex-col h-80">
+                        <h3 class="text-xs font-bold text-slate-800 font-mono uppercase mb-3"><i class="fa-solid fa-chart-line text-blue-600 mr-2"></i> Tren Bulanan MTBF & MTTR</h3>
+                        <div class="flex-1 relative flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200 p-2">
+                            <canvas id="mtbfChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
 
@@ -449,6 +474,7 @@
 
         let barChartInstance = null;
         let clusterChartInstance = null;
+        let mtbfChartInstance = null;
 
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
@@ -466,7 +492,7 @@
         }
 
         function selectView(viewId, title) {
-            ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view'].forEach(id => {
+            ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view', 'reliability-mtbf-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.add('hidden');
             });
@@ -483,6 +509,9 @@
             if (viewId === 'pareto-dashboard-view') {
                 if(allParetoRows.length === 0) loadParetoData();
                 else applyParetoFilters();
+            }
+            if (viewId === 'reliability-mtbf-view') {
+                renderMtbfChart();
             }
         }
 
@@ -653,30 +682,27 @@
             let majors = new Set();
 
             allParetoRows.forEach(row => {
-                let dateStr = row[1] || ''; // Asumsi Kolom Tanggal (Sesuaikan jika indeks berbeda)
+                let dateStr = row[1] || ''; 
                 if (dateStr.length >= 4) {
                     let year = dateStr.substring(0, 4);
                     if(!isNaN(year)) years.add(year);
                 }
-                if (row[3]) clusters.add(row[3].trim()); // Asumsi Cluster
-                if (row[12]) majors.add(row[12].trim()); // Asumsi Major Component
+                if (row[3]) clusters.add(row[3].trim()); 
+                if (row[12]) majors.add(row[12].trim()); 
             });
 
-            // Populate Year
             let yearSel = document.getElementById('filter-year');
             yearSel.innerHTML = '<option value="">Semua Tahun</option>';
             Array.from(years).sort().forEach(y => {
                 yearSel.innerHTML += `<option value="${y}">${y}</option>`;
             });
 
-            // Populate Cluster
             let clusterSel = document.getElementById('filter-cluster');
             clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
             Array.from(clusters).sort().forEach(c => {
                 clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
             });
 
-            // Populate Major Component
             let majorSel = document.getElementById('filter-major');
             majorSel.innerHTML = '<option value="">Semua Major</option>';
             Array.from(majors).sort().forEach(m => {
@@ -693,7 +719,7 @@
             let subs = new Set();
             allParetoRows.forEach(row => {
                 let major = row[12] ? row[12].trim() : '';
-                let sub = row[13] ? row[13].trim() : ''; // Asumsi Sub Component
+                let sub = row[13] ? row[13].trim() : ''; 
                 if ((!selectedMajor || major === selectedMajor) && sub) {
                     subs.add(sub);
                 }
@@ -732,7 +758,6 @@
 
                 if (fYear && !dateStr.includes(fYear)) return false;
                 if (fMonth && !dateStr.includes(`-${fMonth}-`) && !dateStr.startsWith(`${fYear}-${fMonth}`)) {
-                    // Cek format tanggal sederhana
                     let parts = dateStr.split(/[-/]/);
                     if(parts.length >= 2 && parts[1] !== fMonth) return false;
                 }
@@ -793,12 +818,10 @@
         }
 
         function renderCharts(majorCounts, clusterDurasi) {
-            // Sort Major Counts terbanyak untuk Chart Bar
             let sortedMajors = Object.entries(majorCounts).sort((a,b) => b[1] - a[1]).slice(0, 8);
             let majorLabels = sortedMajors.map(item => item[0]);
             let majorValues = sortedMajors.map(item => item[1]);
 
-            // Chart 1: Bar Chart Major Component
             const ctxBar = document.getElementById('paretoBarChart').getContext('2d');
             if (barChartInstance) barChartInstance.destroy();
             barChartInstance = new Chart(ctxBar, {
@@ -823,12 +846,10 @@
                 }
             });
 
-            // Sort Cluster Durasi
             let sortedClusters = Object.entries(clusterDurasi).sort((a,b) => b[1] - a[1]);
             let clusterLabels = sortedClusters.map(item => item[0]);
             let clusterValues = sortedClusters.map(item => item[1]);
 
-            // Chart 2: Cluster Chart
             const ctxCluster = document.getElementById('paretoClusterChart').getContext('2d');
             if (clusterChartInstance) clusterChartInstance.destroy();
             clusterChartInstance = new Chart(ctxCluster, {
@@ -844,6 +865,46 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } } }
+                }
+            });
+        }
+
+        function renderMtbfChart() {
+            const ctxMtbf = document.getElementById('mtbfChart');
+            if (!ctxMtbf) return;
+            
+            if (mtbfChartInstance) mtbfChartInstance.destroy();
+            mtbfChartInstance = new Chart(ctxMtbf.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'],
+                    datasets: [
+                        {
+                            label: 'MTBF (Jam)',
+                            data: [80, 85, 82, 88, 90, 89, 94, 91, 92.4],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'MTTR (Jam)',
+                            data: [5.2, 4.8, 4.5, 4.1, 3.9, 3.8, 3.6, 3.5, 3.5],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
                 }
             });
         }
