@@ -1,52 +1,90 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Engineering Integrated System (PEIS) - Global Enterprise Edition</title>
+    <title>PEIS SYSTEM - Plant Engineering & Maintenance</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js CDN untuk Dashboard Pareto -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0B0F19',
+                        slateDark: '#0F172A',
+                        cardSlate: '#1E293B',
+                        cyberGold: '#F59E0B',
+                        cyanElectric: '#06B6D4',
+                        borderSlate: '#334155'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
+        /* Custom Glassmorphism & Neon Glow */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+        .neon-glow-amber {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+        }
+        /* Custom Scrollbar */
         .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0B0F19;
+            border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #334155;
-            border-radius: 4px;
+            border-radius: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #475569;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #0f172a;
-            border-radius: 4px;
-        }
     </style>
 </head>
-<body class="bg-slate-950 font-sans antialiased text-slate-100 min-h-screen selection:bg-blue-600 selection:text-white">
+<body class="bg-obsidian font-sans antialiased text-slate-100 min-h-screen selection:bg-cyanElectric selection:text-slate-900">
 
     <!-- OVERLAY SIDEBAR -->
-    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs z-30 hidden transition-opacity"></div>
+    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-obsidian/80 backdrop-blur-sm z-30 hidden transition-opacity"></div>
 
     <div class="flex h-screen overflow-hidden relative">
 
         <!-- SIDEBAR NAVIGATOR -->
-        <aside id="main-sidebar" class="w-72 bg-slate-900 text-slate-100 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full border-r border-slate-800">
+        <aside id="main-sidebar" class="w-72 bg-slateDark border-r border-borderSlate flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full select-none">
 
             <!-- Header Brand -->
-            <div class="h-16 flex items-center justify-between px-5 border-b border-slate-800 shrink-0">
+            <div class="h-16 flex items-center justify-between px-5 border-b border-borderSlate/60 shrink-0">
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
-                    <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shadow-md">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyanElectric to-blue-600 flex items-center justify-center neon-glow-cyan">
                         <i class="fa-solid fa-industry text-white text-base"></i>
                     </div>
                     <div>
-                        <span class="font-black text-sm tracking-wider text-white block leading-tight">PEIS SYSTEM</span>
-                        <span class="text-[10px] text-blue-400 font-semibold block tracking-widest">PLANT ENGINEERING</span>
+                        <span class="font-bold text-sm tracking-wider text-white block leading-tight">PEIS SYSTEM</span>
+                        <span class="text-[10px] text-cyanElectric font-mono block tracking-widest uppercase">Plant Engineering</span>
                     </div>
                 </div>
                 <button onclick="closeSidebar()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors">
@@ -59,33 +97,33 @@
 
                 <!-- 1. DASHBOARD -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-house w-5 text-blue-400"></i>
+                            <i class="fa-solid fa-house w-5 text-cyanElectric"></i>
                             <span>DASHBOARD</span>
                         </div>
                         <i id="dash-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
-                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Plant Performance Overview</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Fleet Availability</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Breakdown Trend</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Top Failure Component</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Cost Impact</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs text-slate-400 hover:text-blue-400">Action Monitoring</a>
+                    <div id="dash-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
+                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-xs text-slate-400 hover:text-cyanElectric transition-colors">Plant Performance Overview</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-xs text-slate-400 hover:text-cyanElectric transition-colors">Fleet Availability</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-xs text-slate-400 hover:text-cyanElectric transition-colors">Breakdown Trend</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-xs text-slate-400 hover:text-cyanElectric transition-colors">Top Failure Component</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-xs text-slate-400 hover:text-cyanElectric transition-colors">Cost Impact</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-xs text-slate-400 hover:text-cyanElectric transition-colors">Action Monitoring</a>
                     </div>
                 </div>
 
                 <!-- 2. POPULATION UNIT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-tractor w-5 text-emerald-400"></i>
                             <span>POPULATION UNIT</span>
                         </div>
                         <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="pop-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="selectView('population-view', 'UNIT DATABASE (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-emerald-400 font-bold hover:text-emerald-300">Unit Database</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Unit History</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Component Lifetime</a>
@@ -95,14 +133,14 @@
 
                 <!-- 3. CONDITION MONITORING -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-chart-line w-5 text-purple-400"></i>
                             <span>CONDITION MONITORING</span>
                         </div>
                         <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="cm-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Inova Index</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Oil Analysis</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">VHMS Monitoring</a>
@@ -111,29 +149,29 @@
 
                 <!-- 4. PARETO PROBLEM -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-column w-5 text-orange-400"></i>
+                            <i class="fa-solid fa-chart-column w-5 text-cyberGold"></i>
                             <span>PARETO PROBLEM</span>
                         </div>
                         <i id="pareto-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="pareto-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
-                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Database Pareto</a>
-                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-xs text-orange-300 font-bold hover:text-white">Dashboard Pareto</a>
+                    <div id="pareto-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
+                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO (LIVE GOOGLE SHEETS)')" class="block py-1.5 text-xs text-cyberGold font-bold hover:text-amber-300">Database Pareto</a>
+                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-xs text-cyberGold font-bold hover:text-amber-300">Dashboard Pareto</a>
                     </div>
                 </div>
 
                 <!-- 5. FAILURE ANALYSIS (FAR) -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-wrench w-5 text-rose-400"></i>
                             <span>FAILURE ANALYSIS (FAR)</span>
                         </div>
                         <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="far-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Create FAR</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">RCA Analysis</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">PICA</a>
@@ -142,14 +180,14 @@
 
                 <!-- 6. BACKLOG MANAGEMENT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-clipboard-list w-5 text-amber-400"></i>
                             <span>BACKLOG MANAGEMENT</span>
                         </div>
                         <i id="backlog-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="backlog-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="block py-1.5 text-xs text-amber-300 font-bold hover:text-white">Finding List / Backlog System</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Priority & Risk</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Planning & Execution</a>
@@ -158,15 +196,15 @@
 
                 <!-- 7. RELIABILITY DASHBOARD -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
-                            <i class="fa-solid fa-chart-pie w-5 text-blue-400"></i>
+                            <i class="fa-solid fa-chart-pie w-5 text-cyanElectric"></i>
                             <span>RELIABILITY DASHBOARD</span>
                         </div>
                         <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
-                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-1.5 text-xs text-blue-300 font-bold hover:text-white">MTBF & MTTR</a>
+                    <div id="rel-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
+                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-1.5 text-xs text-cyanElectric font-bold hover:text-white">MTBF & MTTR</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Repeat Failure</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bad Actor Component</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Reliability Ranking</a>
@@ -175,14 +213,14 @@
 
                 <!-- 8. KNOWLEDGE MANAGEMENT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-book w-5 text-yellow-400"></i>
                             <span>KNOWLEDGE MANAGEMENT</span>
                         </div>
                         <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="km-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Lesson Learned</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Troubleshooting Guide</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Standard Repair (WI / SOP)</a>
@@ -192,14 +230,14 @@
 
                 <!-- 9. ENGINEERING TOOLS -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('tools-sub', 'tools-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-screwdriver-wrench w-5 text-teal-400"></i>
                             <span>ENGINEERING TOOLS</span>
                         </div>
                         <i id="tools-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="tools-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Torque Calculator</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Bearing Life Calculator</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Shaft Stress Analysis</a>
@@ -209,14 +247,14 @@
 
                 <!-- 10. USER MANAGEMENT -->
                 <div>
-                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all group">
+                    <button type="button" onclick="toggleSubmenu('user-sub', 'user-arr')" class="w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg text-slate-300 hover:bg-slate-800/60 hover:text-white transition-all group">
                         <div class="flex items-center space-x-3">
                             <i class="fa-solid fa-users w-5 text-indigo-400"></i>
                             <span>USER MANAGEMENT</span>
                         </div>
                         <i id="user-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform"></i>
                     </button>
-                    <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/60 rounded-lg mt-1 border border-slate-800/50">
+                    <div id="user-sub" class="hidden pl-8 py-1 space-y-1 bg-slate-950/40 rounded-lg mt-1 border border-borderSlate/30">
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Admin</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Plant Engineer</a>
                         <a href="#" onclick="closeSidebar()" class="block py-1.5 text-xs text-slate-400 hover:text-white">Supervisor</a>
@@ -228,8 +266,8 @@
             </nav>
 
             <!-- User Info Footer -->
-            <div class="p-4 border-t border-slate-800 bg-slate-950 flex items-center space-x-3 shrink-0">
-                <div class="w-9 h-9 rounded-lg bg-blue-600/20 flex items-center justify-center font-bold text-blue-400 text-xs border border-blue-500/30">
+            <div class="p-4 border-t border-borderSlate/60 bg-slateDark/80 flex items-center space-x-3 shrink-0">
+                <div class="w-9 h-9 rounded-lg bg-slate-800 border border-borderSlate flex items-center justify-center font-mono text-xs text-cyberGold font-bold">
                     PE
                 </div>
                 <div>
@@ -240,19 +278,19 @@
         </aside>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-slate-950">
+        <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-gradient-to-br from-obsidian via-slateDark to-obsidian">
 
             <!-- Header Atas -->
-            <header class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-20 shadow-md shrink-0">
+            <header class="h-16 glass-panel border-b border-borderSlate/60 flex items-center justify-between px-6 sticky top-0 z-20 shadow-lg shrink-0">
                 <div class="flex items-center space-x-4">
-                    <button onclick="openSidebar()" class="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-slate-700 flex items-center justify-center shadow-xs">
+                    <button onclick="openSidebar()" class="p-2.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-borderSlate flex items-center justify-center shadow-sm">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
-                    <h1 id="page-title" class="text-sm font-black text-white tracking-wide uppercase font-mono">PLANT PERFORMANCE OVERVIEW</h1>
+                    <h1 id="page-title" class="text-sm font-black text-white tracking-wider uppercase font-mono">PLANT PERFORMANCE OVERVIEW</h1>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <span class="px-3 py-1 bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 text-[11px] font-mono font-bold rounded-full flex items-center gap-1.5 shadow-sm">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> ONLINE SYSTEM
+                    <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono font-bold rounded-full flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE SYSTEM
                     </span>
                 </div>
             </header>
@@ -263,19 +301,19 @@
                 <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-blue-600">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-cyanElectric">
                             <p class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">Avg MTBF</p>
                             <h3 class="text-2xl font-black text-white mt-1 font-mono">84.5 <span class="text-xs font-semibold text-slate-400">Jam</span></h3>
                         </div>
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-indigo-600">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-blue-500">
                             <p class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">Avg MTTR</p>
                             <h3 class="text-2xl font-black text-white mt-1 font-mono">4.2 <span class="text-xs font-semibold text-slate-400">Jam</span></h3>
                         </div>
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-rose-600">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-rose-500">
                             <p class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">Repeat Failure</p>
-                            <h3 class="text-2xl font-black text-rose-500 mt-1 font-mono">2.8%</h3>
+                            <h3 class="text-2xl font-black text-rose-400 mt-1 font-mono">2.8%</h3>
                         </div>
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-amber-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-cyberGold">
                             <p class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">Biaya Maint.</p>
                             <h3 class="text-2xl font-black text-white mt-1 font-mono">$124.5K</h3>
                         </div>
@@ -284,24 +322,24 @@
 
                 <!-- VIEW 2: BACKLOG MANAGEMENT -->
                 <div id="backlog-view" class="hidden h-full">
-                    <div class="bg-slate-900 rounded-xl shadow-md overflow-hidden h-[calc(100vh-140px)] border border-slate-800">
+                    <div class="glass-panel rounded-xl overflow-hidden h-[calc(100vh-140px)] border border-borderSlate">
                         <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                     </div>
                 </div>
 
                 <!-- VIEW 3: POPULATION UNIT DATABASE -->
                 <div id="population-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
-                    <div class="bg-slate-900 p-4 rounded-xl shadow-md border border-slate-800 flex justify-between items-center shrink-0">
+                    <div class="glass-panel p-4 rounded-xl border border-borderSlate flex justify-between items-center shrink-0">
                         <h2 class="font-bold text-white text-sm font-mono tracking-wide">UNIT DATABASE</h2>
-                        <button onclick="loadDatabase('population')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-sm">
+                        <button onclick="loadDatabase('population')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-md">
                             <i class="fa-solid fa-rotate"></i> REFRESH DATA
                         </button>
                     </div>
-                    <div class="bg-slate-900 rounded-xl shadow-md p-4 flex-1 flex flex-col overflow-hidden border border-slate-800">
-                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-slate-800 bg-slate-950">
+                    <div class="glass-panel rounded-xl p-4 flex-1 flex flex-col overflow-hidden border border-borderSlate">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-borderSlate bg-slate-900/60">
                             <table id="populationTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="populationTableHead" class="bg-slate-900 text-slate-200 font-mono sticky top-0 z-20 border-b border-slate-800"></thead>
-                                <tbody id="populationTableBody" class="divide-y divide-slate-800/60"></tbody>
+                                <thead id="populationTableHead" class="bg-slate-950 text-slate-200 font-mono sticky top-0 z-20 border-b border-borderSlate"></thead>
+                                <tbody id="populationTableBody" class="divide-y divide-borderSlate/40 text-slate-300"></tbody>
                             </table>
                         </div>
                     </div>
@@ -309,49 +347,49 @@
 
                 <!-- VIEW 4: DATABASE PARETO -->
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
-                    <div class="bg-slate-900 p-4 rounded-xl shadow-md border border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
+                    <div class="glass-panel p-4 rounded-xl border border-borderSlate flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                         <div>
-                            <h2 class="font-bold text-orange-400 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS)</h2>
+                            <h2 class="font-bold text-cyberGold text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM (LIVE GOOGLE SHEETS)</h2>
                             <p class="text-xs text-slate-400 mt-0.5">Menampilkan maksimal 100 baris per halaman.</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
                             <div class="relative">
                                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                                <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari ID Unit / Masalah..." class="pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-orange-500 w-60 font-mono">
+                                <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari ID Unit / Masalah..." class="pl-9 pr-4 py-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyanElectric w-60 font-mono transition-colors">
                             </div>
-                            <button onclick="loadParetoData()" class="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-sm shrink-0">
+                            <button onclick="loadParetoData()" class="px-4 py-2 bg-cyberGold/20 hover:bg-cyberGold/30 border border-cyberGold/40 text-cyberGold rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-2 neon-glow-amber shrink-0">
                                 <i class="fa-solid fa-rotate"></i> REFRESH
                             </button>
                         </div>
                     </div>
 
-                    <div class="bg-slate-900 rounded-xl shadow-md p-4 flex-1 flex flex-col overflow-hidden border border-slate-800">
-                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-slate-800 bg-slate-950">
+                    <div class="glass-panel rounded-xl p-4 flex-1 flex flex-col overflow-hidden border border-borderSlate">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-lg border border-borderSlate bg-slate-900/60">
                             <table id="paretoTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="paretoTableHead" class="bg-slate-900 text-slate-200 font-mono sticky top-0 z-20 border-b border-slate-800"></thead>
-                                <tbody id="paretoTableBody" class="divide-y divide-slate-800/60"></tbody>
+                                <thead id="paretoTableHead" class="bg-slate-950 text-slate-200 font-mono sticky top-0 z-20 border-b border-borderSlate"></thead>
+                                <tbody id="paretoTableBody" class="divide-y divide-borderSlate/40 text-slate-300"></tbody>
                             </table>
                         </div>
-                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-800 shrink-0">
-                            <span id="pagination-info" class="text-xs font-mono text-slate-400 font-semibold">Menampilkan 0 - 0 dari 0 data</span>
+                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-borderSlate/60 shrink-0 text-xs font-mono text-slate-400">
+                            <span id="pagination-info">Menampilkan 0 - 0 dari 0 data</span>
                             <div class="flex space-x-2">
-                                <button onclick="changePage(-1)" id="prev-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 rounded-lg text-xs font-mono font-bold transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
-                                <button onclick="changePage(1)" id="next-btn" class="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 disabled:opacity-40 text-white rounded-lg text-xs font-mono font-bold transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
+                                <button onclick="changePage(-1)" id="prev-btn" class="px-3 py-1.5 bg-slate-800 border border-borderSlate hover:bg-slate-700 disabled:opacity-40 text-slate-300 rounded-lg text-xs font-mono font-bold transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
+                                <button onclick="changePage(1)" id="next-btn" class="px-3 py-1.5 bg-cyanElectric/20 border border-cyanElectric/40 hover:bg-cyanElectric/30 disabled:opacity-40 text-cyanElectric rounded-lg text-xs font-mono font-bold transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (6 GRAFIK LENGKAP) -->
+                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS (6 GRAFIK LENGKAP SEPERTI REFERENSI) -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
                     <!-- Panel Filter Menyamping -->
-                    <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="glass-panel p-5 rounded-xl border border-borderSlate space-y-4">
+                        <div class="flex items-center justify-between border-b border-borderSlate/60 pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-white font-mono tracking-wide uppercase">FILTER DASHBOARD PARETO</h2>
                                 <p class="text-xs text-slate-400">Filter data berdasarkan Unit, Tanggal SPK Start (Col G), Tahun (Col V), Bulan (Col W), Major (Col M), Sub (Col O), & Cluster (Col T).</p>
                             </div>
-                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 border border-slate-700">
+                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-800 border border-borderSlate hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5">
                                 <i class="fa-solid fa-rotate-left"></i> Reset Filter
                             </button>
                         </div>
@@ -360,19 +398,19 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Unit</label>
-                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                                     <option value="">Semua Unit</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Tahun (Col V)</label>
-                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                                     <option value="">Semua Tahun</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Bulan (Col W)</label>
-                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                                     <option value="">Semua Bulan</option>
                                     <option value="Jan">Jan</option><option value="Feb">Feb</option><option value="Mar">Mar</option>
                                     <option value="Apr">Apr</option><option value="May">May</option><option value="Jun">Jun</option>
@@ -382,27 +420,27 @@
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Tgl Awal (Col G)</label>
-                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Tgl Finish (Col G)</label>
-                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Cluster (Col T)</label>
-                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                                     <option value="">Semua Cluster</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Major (Col M)</label>
-                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                                     <option value="">Semua Major</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Sub Comp (Col O)</label>
-                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-orange-500">
+                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-900/80 border border-borderSlate rounded-lg text-xs text-slate-200 font-mono focus:outline-none focus:border-cyanElectric">
                                     <option value="">Semua Sub</option>
                                 </select>
                             </div>
@@ -411,15 +449,15 @@
 
                     <!-- Kartu Statistik -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="p-5 bg-slate-900 border border-slate-800 rounded-xl shadow-md border-l-4 border-l-orange-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-cyberGold">
                             <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Total Record Problem</p>
                             <h3 id="stat-total-records" class="text-2xl font-black text-white mt-1 font-mono">0 Data</h3>
                         </div>
-                        <div class="p-5 bg-slate-900 border border-slate-800 rounded-xl shadow-md border-l-4 border-l-blue-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-cyanElectric">
                             <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Total Durasi Breakdown</p>
                             <h3 id="stat-total-duration" class="text-2xl font-black text-white mt-1 font-mono">0 Jam</h3>
                         </div>
-                        <div class="p-5 bg-slate-900 border border-slate-800 rounded-xl shadow-md border-l-4 border-l-rose-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-rose-500">
                             <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Top Major Component</p>
                             <h3 id="stat-top-component" class="text-lg font-bold text-white mt-1 font-mono">-</h3>
                         </div>
@@ -428,44 +466,44 @@
                     <!-- 6 GRAFIK PARETO GRID (2x3) -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- 1. Frequency Component -->
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-500 mr-2"></i> Frequency Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                        <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyberGold"></i> Frequency Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                                 <canvas id="chartFreqComp"></canvas>
                             </div>
                         </div>
                         <!-- 2. Duration Component -->
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-blue-500 mr-2"></i> Duration Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                        <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyanElectric"></i> Duration Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                                 <canvas id="chartDurComp"></canvas>
                             </div>
                         </div>
                         <!-- 3. Frequency - Sub Component -->
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-500 mr-2"></i> Frequency - Sub Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                        <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyberGold"></i> Frequency - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                                 <canvas id="chartFreqSub"></canvas>
                             </div>
                         </div>
                         <!-- 4. Duration - Sub Component -->
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-blue-500 mr-2"></i> Duration - Sub Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                        <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyanElectric"></i> Duration - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                                 <canvas id="chartDurSub"></canvas>
                             </div>
                         </div>
                         <!-- 5. Frequency - Per Unit -->
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-orange-500 mr-2"></i> Frequency - Per Unit</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                        <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyberGold"></i> Frequency - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                                 <canvas id="chartFreqUnit"></canvas>
                             </div>
                         </div>
                         <!-- 6. Duration - Per Unit -->
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-column text-blue-500 mr-2"></i> Duration - Per Unit</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                        <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyanElectric"></i> Duration - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                                 <canvas id="chartDurUnit"></canvas>
                             </div>
                         </div>
@@ -475,23 +513,23 @@
                 <!-- VIEW 6: RELIABILITY MTBF & MTTR -->
                 <div id="reliability-mtbf-view" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-emerald-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-emerald-400">
                             <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Overall MTBF</p>
                             <h3 class="text-2xl font-black text-white mt-1 font-mono">92.4 <span class="text-xs font-semibold text-slate-400">Jam</span></h3>
                         </div>
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-blue-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-cyanElectric">
                             <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Overall MTTR</p>
                             <h3 class="text-2xl font-black text-white mt-1 font-mono">3.5 <span class="text-xs font-semibold text-slate-400">Jam</span></h3>
                         </div>
-                        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 border-l-4 border-l-purple-500">
+                        <div class="glass-panel p-5 rounded-xl border-l-4 border-l-purple-400">
                             <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">System Reliability Rate</p>
                             <h3 class="text-2xl font-black text-purple-400 mt-1 font-mono">96.2%</h3>
                         </div>
                     </div>
 
-                    <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-800 flex flex-col h-80">
-                        <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3"><i class="fa-solid fa-chart-line text-blue-500 mr-2"></i> Tren Bulanan MTBF & MTTR</h3>
-                        <div class="flex-1 relative flex items-center justify-center bg-slate-950 rounded-lg border border-slate-800/80 p-2">
+                    <div class="glass-panel p-5 rounded-xl border border-borderSlate flex flex-col h-80">
+                        <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-line text-cyanElectric"></i> Tren Bulanan MTBF & MTTR</h3>
+                        <div class="flex-1 relative flex items-center justify-center bg-slate-900/40 rounded-lg border border-borderSlate/40 p-2">
                             <canvas id="mtbfChart"></canvas>
                         </div>
                     </div>
@@ -502,7 +540,7 @@
 
     </div>
 
-    <!-- Script JavaScript Lengkap dengan 6 Grafik Analitik Pareto -->
+    <!-- Script JavaScript Utuh -->
     <script>
         let allParetoRows = [];
         let filteredParetoRows = [];
@@ -603,7 +641,7 @@
             const tableBody = document.getElementById('populationTableBody');
             
             if(!tableBody) return;
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-emerald-500"></i> Memuat data dari Google Sheets...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-cyanElectric"></i> Memuat data dari Google Sheets...</td></tr>`;
 
             try {
                 const response = await fetch(csvUrl);
@@ -617,7 +655,7 @@
 
                 const headers = rows[0];
                 let headHtml = '<tr>';
-                headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-800 whitespace-nowrap text-slate-200">${h}</th>`; });
+                headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-borderSlate whitespace-nowrap">${h}</th>`; });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
@@ -626,7 +664,7 @@
                     const cols = rows[i];
                     bodyHtml += `<tr class="hover:bg-slate-800/50 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
-                        bodyHtml += `<td class="p-3 border-r border-slate-800/60 text-slate-300 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
+                        bodyHtml += `<td class="p-3 border-r border-borderSlate/40 text-slate-300 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
                     }
                     bodyHtml += `</tr>`;
                 }
@@ -641,7 +679,7 @@
             const tableBody = document.getElementById('paretoTableBody');
             if(!tableBody) return;
 
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-orange-500"></i> Memuat data Pareto dari Google Sheets...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-cyberGold"></i> Memuat data Pareto dari Google Sheets...</td></tr>`;
 
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
@@ -656,7 +694,7 @@
                 const headers = rows[0];
                 let headHtml = '<tr>';
                 headers.forEach(h => {
-                    if(h) headHtml += `<th class="p-3.5 font-bold border-r border-slate-800 tracking-wider text-xs whitespace-nowrap text-slate-200">${h}</th>`;
+                    if(h) headHtml += `<th class="p-3.5 font-bold border-r border-borderSlate tracking-wider text-xs whitespace-nowrap">${h}</th>`;
                 });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
@@ -710,7 +748,7 @@
             sliceData.forEach(row => {
                 bodyHtml += `<tr class="hover:bg-slate-800/50 transition-colors">`;
                 for (let j = 0; j < row.length; j++) {
-                    bodyHtml += `<td class="p-3 border-r border-slate-800/60 text-slate-300 font-medium whitespace-nowrap">${row[j] || ''}</td>`;
+                    bodyHtml += `<td class="p-3 border-r border-borderSlate/40 text-slate-300 font-medium whitespace-nowrap">${row[j] || ''}</td>`;
                 }
                 bodyHtml += `</tr>`;
             });
@@ -940,7 +978,7 @@
                         scales: {
                             y: { 
                                 beginAtZero: true, 
-                                grid: { color: '#1e293b' },
+                                grid: { color: 'rgba(51, 65, 85, 0.3)' },
                                 ticks: { font: { size: 10 }, color: '#94a3b8' }
                             },
                             x: { 
@@ -957,12 +995,12 @@
                 });
             }
 
-            renderBar('chartFreqComp', compFreq, '#f97316', false);
-            renderBar('chartDurComp', compDur, '#38bdf8', true);
-            renderBar('chartFreqSub', subFreq, '#f97316', false);
-            renderBar('chartDurSub', subDur, '#38bdf8', true);
-            renderBar('chartFreqUnit', unitFreq, '#f97316', false);
-            renderBar('chartDurUnit', unitDur, '#38bdf8', true);
+            renderBar('chartFreqComp', compFreq, '#F59E0B', false);
+            renderBar('chartDurComp', compDur, '#06B6D4', true);
+            renderBar('chartFreqSub', subFreq, '#F59E0B', false);
+            renderBar('chartDurSub', subDur, '#06B6D4', true);
+            renderBar('chartFreqUnit', unitFreq, '#F59E0B', false);
+            renderBar('chartDurUnit', unitDur, '#06B6D4', true);
         }
 
         function renderMtbfChart() {
@@ -986,8 +1024,8 @@
                         {
                             label: 'MTTR (Jam)',
                             data: [5.2, 4.8, 4.5, 4.1, 3.9, 3.8, 3.6, 3.5, 3.5],
-                            borderColor: '#38bdf8',
-                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            borderColor: '#06B6D4',
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
                             fill: true,
                             tension: 0.3
                         }
@@ -998,7 +1036,7 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 }, color: '#cbd5e1' } } },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+                        y: { beginAtZero: true, grid: { color: 'rgba(51, 65, 85, 0.3)' }, ticks: { color: '#94a3b8' } },
                         x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
                     }
                 }
