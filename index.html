@@ -1,498 +1,386 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PEIS SYSTEM - Fleet MPG Pro Style</title>
+    <title>PEIS Pro - Plant Engineering Integrated System</title>
+    
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        darkBg: '#090D16',
-                        sidebarBg: '#0D1322',
-                        cardBg: '#131C31',
-                        cardHover: '#1B2642',
-                        accentBlue: '#3B82F6',
-                        accentCyan: '#06B6D4',
-                        accentGreen: '#10B981',
-                        accentPurple: '#8B5CF6',
-                        accentRed: '#EF4444',
-                        accentGold: '#F59E0B',
-                        borderCol: '#22304A'
-                    },
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            900: '#0c4a6e',
+                        }
                     }
                 }
             }
         }
     </script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <style>
-        .glass-card {
-            background: rgba(19, 28, 49, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(34, 48, 74, 0.6);
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
         }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #090D16;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #22304A;
-            border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #3B82F6;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     </style>
 </head>
-<body class="bg-darkBg font-sans antialiased text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-slate-900">
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen selection:bg-sky-500 selection:text-white">
 
-    <!-- OVERLAY MOBILE -->
-    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+    <!-- OVERLAY SIDEBAR -->
+    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-30 hidden transition-all duration-300"></div>
 
     <div class="flex h-screen overflow-hidden relative">
 
-        <!-- SIDEBAR KIRI (Gaya Referensi) -->
-        <aside id="main-sidebar" class="w-72 bg-sidebarBg border-r border-borderCol flex flex-col z-50 shadow-2xl transition-transform duration-300 transform -translate-x-full lg:translate-x-0 fixed lg:static top-0 bottom-0 left-0 h-full select-none">
+        <!-- SIDEBAR NAVIGATOR (ELEGAN & DARK ENTERPRISE) -->
+        <aside id="main-sidebar" class="w-72 bg-slate-900 text-slate-300 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full border-r border-slate-800">
 
-            <!-- Brand Header -->
-            <div class="h-16 flex items-center justify-between px-5 border-b border-borderCol shrink-0">
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PRODUCTION PERFORMANCE DASHBOARD')">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                        <i class="fa-solid fa-gauge-high text-white text-sm"></i>
+            <!-- Header Brand -->
+            <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800/80 shrink-0">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-sky-500/20">
+                        <i class="fa-solid fa-industry text-white text-sm"></i>
                     </div>
                     <div>
-                        <span class="font-extrabold text-sm tracking-wide text-white block leading-tight">Fleet MPG Pro</span>
-                        <span class="text-[10px] text-cyan-400 font-mono block tracking-wider">PEIS System</span>
+                        <span class="font-bold text-sm tracking-wide text-white block leading-tight">PEIS <span class="text-sky-400 font-extrabold text-xs ml-0.5 uppercase tracking-wider bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20">PRO</span></span>
+                        <span class="text-[10px] text-slate-400 font-medium block tracking-wider uppercase">Plant Engineering</span>
                     </div>
                 </div>
-                <button onclick="closeSidebar()" class="lg:hidden text-slate-400 hover:text-white p-2">
+                <button onclick="closeSidebar()" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800/60 transition-colors">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <!-- Profile User Mini di Sidebar -->
-            <div class="mx-3 mt-4 p-3 rounded-2xl bg-cardBg border border-borderCol flex items-center justify-between">
+            <!-- Navigation Menu -->
+            <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto custom-scrollbar text-xs font-medium">
+
+                <!-- 1. DASHBOARD -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-house w-4 text-sky-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">DASHBOARD</span>
+                        </div>
+                        <i id="dash-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="dash-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-1.5 text-slate-400 hover:text-sky-400 transition-colors">Plant Performance Overview</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-1.5 text-slate-400 hover:text-sky-400 transition-colors">Fleet Availability</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-1.5 text-slate-400 hover:text-sky-400 transition-colors">Breakdown Trend</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-1.5 text-slate-400 hover:text-sky-400 transition-colors">Top Failure Component</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-1.5 text-slate-400 hover:text-sky-400 transition-colors">Cost Impact</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-1.5 text-slate-400 hover:text-sky-400 transition-colors">Action Monitoring</a>
+                    </div>
+                </div>
+
+                <!-- 2. POPULATION UNIT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-tractor w-4 text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">POPULATION UNIT</span>
+                        </div>
+                        <i id="pop-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="pop-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-1.5 text-emerald-400 font-semibold hover:text-emerald-300">Unit Database</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Unit History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Component Lifetime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Component Policy</a>
+                    </div>
+                </div>
+
+                <!-- 3. CONDITION MONITORING -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-line w-4 text-purple-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">CONDITION MONITORING</span>
+                        </div>
+                        <i id="cm-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="cm-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Inova Index</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Oil Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">VHMS Monitoring</a>
+                    </div>
+                </div>
+
+                <!-- 4. PARETO PROBLEM -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-column w-4 text-amber-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">PARETO PROBLEM</span>
+                        </div>
+                        <i id="pareto-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="pareto-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO')" class="block py-1.5 text-amber-300 font-semibold hover:text-white">Database Pareto</a>
+                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-1.5 text-amber-300 font-semibold hover:text-white">Dashboard Pareto</a>
+                    </div>
+                </div>
+
+                <!-- 5. FAILURE ANALYSIS -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-wrench w-4 text-rose-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">FAILURE ANALYSIS (FAR)</span>
+                        </div>
+                        <i id="far-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="far-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Create FAR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">RCA Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">PICA</a>
+                    </div>
+                </div>
+
+                <!-- 6. BACKLOG MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-clipboard-list w-4 text-sky-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">BACKLOG MANAGEMENT</span>
+                        </div>
+                        <i id="backlog-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="backlog-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG SYSTEM')" class="block py-1.5 text-sky-300 font-semibold hover:text-white">Finding List / Backlog System</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Priority & Risk</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Planning & Execution</a>
+                    </div>
+                </div>
+
+                <!-- 7. RELIABILITY DASHBOARD -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-chart-pie w-4 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">RELIABILITY DASHBOARD</span>
+                        </div>
+                        <i id="rel-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="rel-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-1.5 text-indigo-300 font-semibold hover:text-white">MTBF & MTTR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Repeat Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Bad Actor Component</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Reliability Ranking</a>
+                    </div>
+                </div>
+
+                <!-- 8. KNOWLEDGE MANAGEMENT -->
+                <div>
+                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800/70 hover:text-white transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-book w-4 text-teal-400 group-hover:scale-110 transition-transform"></i>
+                            <span class="tracking-wide">KNOWLEDGE BASE</span>
+                        </div>
+                        <i id="km-arr" class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-200"></i>
+                    </button>
+                    <div id="km-sub" class="hidden pl-9 pr-2 py-1 space-y-1 bg-slate-950/30 rounded-lg mt-1 border-l-2 border-slate-800">
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Lesson Learned</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Troubleshooting Guide</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Standard Repair (SOP)</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-1.5 text-slate-400 hover:text-white">Failure Library</a>
+                    </div>
+                </div>
+
+            </nav>
+
+            <!-- User Profile Footer -->
+            <div class="p-4 border-t border-slate-800/80 bg-slate-950/60 flex items-center justify-between shrink-0">
                 <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white font-mono">
-                        ED
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-sky-400 text-xs shadow-inner">
+                        PE
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-white">Edwin</p>
-                        <p class="text-[10px] text-slate-400">Maintenance Planner</p>
+                        <p class="text-xs font-semibold text-white leading-tight">Plant Engineer</p>
+                        <p class="text-[10px] text-slate-400">Enterprise Admin</p>
                     </div>
                 </div>
-                <i class="fa-solid fa-chevron-right text-xs text-slate-500"></i>
+                <i class="fa-solid fa-ellipsis-vertical text-slate-500 text-xs cursor-pointer hover:text-slate-300"></i>
             </div>
-
-            <!-- Search Command -->
-            <div class="px-3 mt-3">
-                <div class="relative">
-                    <input type="text" placeholder="Search Command..." class="w-full bg-cardBg border border-borderCol rounded-xl px-3 py-2 text-xs text-slate-300 placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
-                </div>
-            </div>
-
-            <!-- Navigasi Menu Sidebar -->
-            <nav class="flex-1 px-3 py-3 space-y-1 overflow-y-auto custom-scrollbar">
-                <a href="#" onclick="selectView('dashboard-view', 'PRODUCTION PERFORMANCE DASHBOARD')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-white bg-blue-600/20 border border-blue-500/30">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-house w-4 text-cyan-400"></i>
-                        <span>Home</span>
-                    </div>
-                </a>
-
-                <a href="#" onclick="selectView('dashboard-view', 'REALTIME DASHBOARD')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-chart-line w-4 text-slate-400"></i>
-                        <span>Realtime Dashboard</span>
-                    </div>
-                </a>
-
-                <a href="#" onclick="selectView('dashboard-view', 'REALTIME DASHBOARD - SITE')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-globe w-4 text-slate-400"></i>
-                        <span>Realtime Dashboard - Site</span>
-                    </div>
-                </a>
-
-                <!-- FleetGuidance with Badge -->
-                <a href="#" onclick="selectView('dashboard-view', 'FLEET GUIDANCE')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-compass w-4 text-amber-400"></i>
-                        <span>FleetGuidance</span>
-                    </div>
-                    <span class="px-1.5 py-0.5 bg-amber-500/20 text-amber-400 text-[9px] font-mono font-bold rounded">GUIDE</span>
-                </a>
-
-                <a href="#" onclick="selectView('population-view', 'POPULATION UNIT DATABASE')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-tractor w-4 text-emerald-400"></i>
-                        <span>Population Unit</span>
-                    </div>
-                </a>
-
-                <a href="#" onclick="selectView('backlog-view', 'BACKLOG MANAGEMENT SYSTEM')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-clipboard-list w-4 text-purple-400"></i>
-                        <span>Backlog / Findings</span>
-                    </div>
-                </a>
-
-                <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO PROBLEM')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-database w-4 text-amber-400"></i>
-                        <span>Database Pareto</span>
-                    </div>
-                </a>
-
-                <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-chart-column w-4 text-cyan-400"></i>
-                        <span>Dashboard Pareto</span>
-                    </div>
-                </a>
-
-                <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-cardHover hover:text-white transition-all">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-chart-pie w-4 text-emerald-400"></i>
-                        <span>Reliability Metrics</span>
-                    </div>
-                </a>
-
-                <div class="pt-2 pb-1 px-3 text-[10px] font-mono text-slate-500 uppercase tracking-widest">Modules</div>
-
-                <div class="space-y-1">
-                    <a href="#" onclick="closeSidebar()" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-cardHover hover:text-white"><span>Engineering</span><i class="fa-solid fa-chevron-right text-[9px]"></i></a>
-                    <a href="#" onclick="closeSidebar()" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-cardHover hover:text-white"><span>Asset Management</span><i class="fa-solid fa-chevron-right text-[9px]"></i></a>
-                    <a href="#" onclick="closeSidebar()" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-cardHover hover:text-white"><span>Operations</span><i class="fa-solid fa-chevron-right text-[9px]"></i></a>
-                    <a href="#" onclick="closeSidebar()" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-cardHover hover:text-white"><span>Maintenance</span><i class="fa-solid fa-chevron-right text-[9px]"></i></a>
-                    <a href="#" onclick="closeSidebar()" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-cardHover hover:text-white"><span>Supply Chain</span><i class="fa-solid fa-chevron-right text-[9px]"></i></a>
-                    <a href="#" onclick="closeSidebar()" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-400 hover:bg-cardHover hover:text-white"><span>Finance</span><i class="fa-solid fa-chevron-right text-[9px]"></i></a>
-                </div>
-            </nav>
         </aside>
 
-        <!-- KONTEN UTAMA -->
-        <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-darkBg">
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 flex flex-col overflow-y-auto relative w-full bg-slate-50">
 
-            <!-- Header Atas Mirip Referensi -->
-            <header class="h-16 glass-card border-b border-borderCol flex items-center justify-between px-6 sticky top-0 z-30 shrink-0">
+            <!-- Header Atas (Glassmorphism & Crisp Typography) -->
+            <header class="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-6 sticky top-0 z-20 shadow-2xs shrink-0">
                 <div class="flex items-center space-x-4">
-                    <button onclick="openSidebar()" class="lg:hidden p-2 rounded-xl bg-cardBg border border-borderCol text-slate-300 hover:text-white">
+                    <button onclick="openSidebar()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 text-slate-700 transition-all flex items-center justify-center">
                         <i class="fa-solid fa-bars text-base"></i>
                     </button>
                     <div>
-                        <h1 id="page-title" class="text-sm font-black text-white tracking-wider uppercase font-mono">PRODUCTION PERFORMANCE DASHBOARD</h1>
-                        <p class="text-[10px] text-slate-400">Fleet, production, availability, utilization, material request, and breakdown overview.</p>
+                        <h1 id="page-title" class="text-xs font-bold text-slate-900 tracking-wider uppercase font-mono">PLANT PERFORMANCE OVERVIEW</h1>
                     </div>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <span class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono font-bold rounded-full flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE
-                    </span>
+                <div class="flex items-center space-x-4">
+                    <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 rounded-full text-xs font-medium">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>System Live</span>
+                    </div>
+                    <div class="w-px h-5 bg-slate-200"></div>
+                    <button class="text-slate-500 hover:text-slate-800 transition-colors relative">
+                        <i class="fa-regular fa-bell text-base"></i>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-sky-500 rounded-full"></span>
+                    </button>
                 </div>
             </header>
 
-            <!-- KONTEN BERDASARKAN MENU -->
+            <!-- CONTAINER CONTENT -->
             <div class="flex-1 p-6 space-y-6">
 
-                <!-- 1. VIEW DASHBOARD UTAMA (Gaya Kartu Berwarna Sesuai Gambar Referensi) -->
+                <!-- VIEW 1: DASHBOARD UTAMA -->
                 <div id="dashboard-view" class="space-y-6">
-                    
-                    <!-- Baris Atas: Judul Besar & Filter Tanggal -->
-                    <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">
-                                <i class="fa-solid fa-gauge"></i>
-                            </div>
-                            <div>
-                                <h2 class="text-lg font-black text-white font-mono tracking-wide">Production Performance Dashboard</h2>
-                                <p class="text-xs text-cyan-400 font-mono mt-0.5">04-September-2026</p>
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 hover:shadow-md transition-shadow relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-sky-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider relative z-10">Avg MTBF</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-2 font-mono relative z-10">84.5 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full mt-3"><i class="fa-solid fa-arrow-up mr-1"></i> +4.2% bulan ini</span>
                         </div>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <div class="flex items-center space-x-2 bg-cardBg border border-borderCol px-3 py-1.5 rounded-xl text-xs font-mono">
-                                <span class="text-slate-400">Date Start</span>
-                                <input type="date" value="2026-09-01" class="bg-transparent text-white focus:outline-none">
-                            </div>
-                            <div class="flex items-center space-x-2 bg-cardBg border border-borderCol px-3 py-1.5 rounded-xl text-xs font-mono">
-                                <span class="text-slate-400">Date End</span>
-                                <input type="date" value="2026-09-04" class="bg-transparent text-white focus:outline-none">
-                            </div>
-                            <button class="px-4 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-lg shadow-cyan-500/20">Filter</button>
-                            <button class="px-4 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 font-bold font-mono text-xs rounded-xl transition-all">Clear</button>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 hover:shadow-md transition-shadow relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider relative z-10">Avg MTTR</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-2 font-mono relative z-10">4.2 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full mt-3"><i class="fa-solid fa-arrow-down mr-1"></i> -0.3 Jam</span>
                         </div>
-                    </div>
-
-                    <!-- Grid Kartu Warna-Warni Menyerupai Gambar Referensi -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                        
-                        <!-- Kartu Hijau: Production Slurry -->
-                        <div class="rounded-2xl p-5 bg-gradient-to-br from-emerald-600 to-emerald-800 shadow-xl border border-emerald-500/30 text-white flex flex-col justify-between">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fa-solid fa-industry text-emerald-200"></i>
-                                    <span class="text-xs font-mono font-bold tracking-wider uppercase text-emerald-100">Production - Slurry</span>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-xs text-emerald-200 font-mono">04-Sep-2026</span>
-                                    <span class="text-2xl font-black font-mono">0.00 m³</span>
-                                </div>
-                                <div class="flex justify-between items-baseline pt-2 border-t border-emerald-500/40">
-                                    <span class="text-xs text-emerald-200 font-mono">03-Sep-2026</span>
-                                    <span class="text-xl font-bold font-mono">1,256.00 m³</span>
-                                </div>
-                            </div>
-                            <div class="bg-emerald-950/40 px-3 py-1.5 rounded-xl text-[11px] font-mono flex justify-between items-center">
-                                <span class="text-emerald-300">Daily gap</span>
-                                <span class="font-bold text-white">▼ 1,256.00 m³</span>
-                            </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 hover:shadow-md transition-shadow relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-rose-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider relative z-10">Repeat Failure</p>
+                            <h3 class="text-2xl font-black text-rose-600 mt-2 font-mono relative z-10">2.8%</h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full mt-3"><i class="fa-solid fa-circle-exclamation mr-1"></i> Perlu perhatian</span>
                         </div>
-
-                        <!-- Kartu Biru: Availability All Unit -->
-                        <div class="rounded-2xl p-5 bg-gradient-to-br from-blue-600 to-blue-800 shadow-xl border border-blue-500/30 text-white flex flex-col justify-between">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fa-solid fa-circle-check text-blue-200"></i>
-                                    <span class="text-xs font-mono font-bold tracking-wider uppercase text-blue-100">Availability - All Unit</span>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-xs text-blue-200 font-mono">04-Sep-2026</span>
-                                    <span class="text-2xl font-black font-mono">100.00%</span>
-                                </div>
-                                <div class="flex justify-between items-baseline pt-2 border-t border-blue-500/40">
-                                    <span class="text-xs text-blue-200 font-mono">03-Sep-2026</span>
-                                    <span class="text-xl font-bold font-mono">86.07%</span>
-                                </div>
-                            </div>
-                            <div class="bg-blue-950/40 px-3 py-1.5 rounded-xl text-[11px] font-mono flex justify-between items-center">
-                                <span class="text-blue-200">Daily gap</span>
-                                <span class="font-bold text-emerald-300">▲ 13.93%</span>
-                            </div>
-                        </div>
-
-                        <!-- Kartu Cyan/Blue Terang: Utilization All Unit -->
-                        <div class="rounded-2xl p-5 bg-gradient-to-br from-cyan-600 to-cyan-800 shadow-xl border border-cyan-500/30 text-white flex flex-col justify-between">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fa-solid fa-bolt text-cyan-200"></i>
-                                    <span class="text-xs font-mono font-bold tracking-wider uppercase text-cyan-100">Utilization - All Unit</span>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-xs text-cyan-200 font-mono">04-Sep-2026</span>
-                                    <span class="text-2xl font-black font-mono">0.00%</span>
-                                </div>
-                                <div class="flex justify-between items-baseline pt-2 border-t border-cyan-500/40">
-                                    <span class="text-xs text-cyan-200 font-mono">03-Sep-2026</span>
-                                    <span class="text-xl font-bold font-mono">10.86%</span>
-                                </div>
-                            </div>
-                            <div class="bg-cyan-950/40 px-3 py-1.5 rounded-xl text-[11px] font-mono flex justify-between items-center">
-                                <span class="text-cyan-200">Daily gap</span>
-                                <span class="font-bold text-rose-300">▼ 10.86%</span>
-                            </div>
-                        </div>
-
-                        <!-- Kartu Ungu: Material Request All Site -->
-                        <div class="rounded-2xl p-5 bg-gradient-to-br from-purple-600 to-indigo-800 shadow-xl border border-purple-500/30 text-white flex flex-col justify-between">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fa-solid fa-box-archive text-purple-200"></i>
-                                    <span class="text-xs font-mono font-bold tracking-wider uppercase text-purple-100">Material Request - All Site</span>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-xs text-purple-200 font-mono">Total MR</span>
-                                    <span class="text-2xl font-black font-mono">25</span>
-                                </div>
-                                <div class="flex justify-between items-baseline pt-2 border-t border-purple-500/40">
-                                    <span class="text-xs text-purple-200 font-mono">P1 / P2 / P3</span>
-                                    <span class="text-sm font-bold font-mono">24 / 1 / 0</span>
-                                </div>
-                            </div>
-                            <div class="bg-purple-950/40 px-3 py-1.5 rounded-xl text-[11px] font-mono flex justify-between items-center">
-                                <span class="text-purple-200">Period</span>
-                                <span class="font-bold text-white">01 Sep - 04 Sep</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Baris Bawah Dashboard: MR Priority Mix & Breakdown List -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        
-                        <!-- MR Priority Mix -->
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-xs font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
-                                    <i class="fa-solid fa-list-check text-purple-400"></i> MR Priority Mix
-                                </h3>
-                                <span class="px-2.5 py-1 bg-purple-500/20 text-purple-400 font-mono text-[10px] font-bold rounded-lg">25 MR</span>
-                            </div>
-                            <div class="text-center py-4 bg-darkBg/40 rounded-xl mb-4 border border-borderCol/50">
-                                <span class="text-3xl font-black font-mono text-white block">25</span>
-                                <span class="text-[11px] text-slate-400 font-mono uppercase tracking-wider">Total material request</span>
-                            </div>
-                            <div class="space-y-3 font-mono text-xs">
-                                <div>
-                                    <div class="flex justify-between mb-1 text-slate-300"><span>P1</span><span>24</span></div>
-                                    <div class="w-full bg-darkBg h-2.5 rounded-full overflow-hidden border border-borderCol"><div class="bg-purple-500 h-full rounded-full" style="width: 96%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1 text-slate-300"><span>P2</span><span>1</span></div>
-                                    <div class="w-full bg-darkBg h-2.5 rounded-full overflow-hidden border border-borderCol"><div class="bg-blue-500 h-full rounded-full" style="width: 4%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between mb-1 text-slate-300"><span>P3</span><span>0</span></div>
-                                    <div class="w-full bg-darkBg h-2.5 rounded-full overflow-hidden border border-borderCol"><div class="bg-emerald-500 h-full rounded-full" style="width: 0%"></div></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Breakdown List - Site (Kartu Merah) -->
-                        <div class="glass-card p-5 rounded-2xl border border-rose-500/40 bg-gradient-to-br from-rose-950/40 via-cardBg to-cardBg">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-xs font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Breakdown List - Site
-                                </h3>
-                                <span class="px-2.5 py-1 bg-rose-500 text-slate-950 font-mono text-[10px] font-extrabold rounded-lg animate-pulse">6 Active</span>
-                            </div>
-                            <div class="space-y-2 font-mono text-xs">
-                                <div class="p-2.5 bg-darkBg/60 rounded-xl border border-rose-500/20 flex justify-between items-center">
-                                    <span class="text-slate-200">PPA - Adaro - MPG 04 - HPU BD Low Pressure</span>
-                                    <span class="px-2 py-0.5 bg-rose-500/20 text-rose-400 text-[10px] rounded font-bold">USM</span>
-                                </div>
-                                <div class="p-2.5 bg-darkBg/60 rounded-xl border border-rose-500/20 flex justify-between items-center">
-                                    <span class="text-slate-200">PPA - Adaro - MPG 08 - HPU BD Low Pressure</span>
-                                    <span class="px-2 py-0.5 bg-rose-500/20 text-rose-400 text-[10px] rounded font-bold">USM</span>
-                                </div>
-                                <div class="p-2.5 bg-darkBg/60 rounded-xl border border-rose-500/20 flex justify-between items-center">
-                                    <span class="text-slate-200">PPA - Adaro - MPG 22 - HPU BD Low Pressure</span>
-                                    <span class="px-2 py-0.5 bg-rose-500/20 text-rose-400 text-[10px] rounded font-bold">USM</span>
-                                </div>
-                                <div class="p-2.5 bg-darkBg/60 rounded-xl border border-rose-500/20 flex justify-between items-center">
-                                    <span class="text-slate-200">PPA - Adaro - MPG 46 88 1 - BD Repler Main Pump HPU</span>
-                                    <span class="px-2 py-0.5 bg-rose-500/20 text-rose-400 text-[10px] rounded font-bold">USM</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- 2. VIEW POPULATION UNIT DATABASE -->
-                <div id="population-view" class="hidden h-[calc(100vh-120px)] flex flex-col space-y-4">
-                    <div class="glass-card p-4 rounded-2xl border border-borderCol flex justify-between items-center shrink-0">
-                        <h2 class="font-bold text-white text-sm font-mono tracking-wide">UNIT DATABASE (LIVE GOOGLE SHEETS)</h2>
-                        <button onclick="loadDatabase('population')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 shadow-lg shadow-emerald-600/20">
-                            <i class="fa-solid fa-rotate"></i> REFRESH DATA
-                        </button>
-                    </div>
-                    <div class="glass-card rounded-2xl p-4 flex-1 flex flex-col overflow-hidden border border-borderCol">
-                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-xl border border-borderCol bg-darkBg/60">
-                            <table id="populationTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="populationTableHead" class="bg-sidebarBg text-slate-200 font-mono sticky top-0 z-20 border-b border-borderCol"></thead>
-                                <tbody id="populationTableBody" class="divide-y divide-borderCol/50 text-slate-300"></tbody>
-                            </table>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 hover:shadow-md transition-shadow relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider relative z-10">Biaya Maintenance</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-2 font-mono relative z-10">$124.5K</h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full mt-3">Sesuai Anggaran</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. VIEW BACKLOG MANAGEMENT -->
-                <div id="backlog-view" class="hidden h-[calc(100vh-120px)]">
-                    <div class="glass-card rounded-2xl overflow-hidden h-full border border-borderCol">
+                <!-- VIEW 2: BACKLOG MANAGEMENT -->
+                <div id="backlog-view" class="hidden h-full">
+                    <div class="bg-white rounded-2xl shadow-xs overflow-hidden h-[calc(100vh-140px)] border border-slate-200">
                         <iframe src="https://monitoringcontrolplant-eng.github.io/Dashboard-Backlog/?#login-username" class="w-full h-full border-0"></iframe>
                     </div>
                 </div>
 
-                <!-- 4. VIEW DATABASE PARETO -->
-                <div id="pareto-database-view" class="hidden h-[calc(100vh-120px)] flex flex-col space-y-4">
-                    <div class="glass-card p-4 rounded-2xl border border-borderCol flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
+                <!-- VIEW 3: POPULATION UNIT DATABASE -->
+                <div id="population-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-xs border border-slate-200/80 flex justify-between items-center shrink-0">
                         <div>
-                            <h2 class="font-bold text-amber-400 text-sm font-mono tracking-wide">DATABASE PARETO PROBLEM</h2>
-                            <p class="text-xs text-slate-400 mt-0.5">Menampilkan data tabel secara langsung dari Google Sheets.</p>
+                            <h2 class="font-bold text-slate-900 text-sm tracking-wide">UNIT DATABASE</h2>
+                            <p class="text-xs text-slate-500">Master data populasi unit terintegrasi.</p>
+                        </div>
+                        <button onclick="loadDatabase('population')" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-medium transition-all shadow-xs flex items-center gap-2">
+                            <i class="fa-solid fa-rotate text-xs"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-xs p-4 flex-1 flex flex-col overflow-hidden border border-slate-200/80">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-xl border border-slate-200/70 bg-white">
+                            <table id="populationTable" class="w-full border-collapse text-xs text-left whitespace-nowrap">
+                                <thead id="populationTableHead" class="bg-slate-900 text-slate-200 font-semibold sticky top-0 z-20"></thead>
+                                <tbody id="populationTableBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 4: DATABASE PARETO -->
+                <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
+                        <div>
+                            <h2 class="font-bold text-slate-900 text-sm tracking-wide">DATABASE PARETO PROBLEM</h2>
+                            <p class="text-xs text-slate-500">Live data catatan kerusakan & downtime.</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
                             <div class="relative">
                                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                                <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari ID Unit / Masalah..." class="pl-9 pr-4 py-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 w-60 font-mono">
+                                <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari Unit / Masalah..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white w-64 transition-all">
                             </div>
-                            <button onclick="loadParetoData()" class="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-400 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2">
-                                <i class="fa-solid fa-rotate"></i> REFRESH
+                            <button onclick="loadParetoData()" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-medium transition-all shadow-xs flex items-center gap-2 shrink-0">
+                                <i class="fa-solid fa-rotate"></i> Refresh
                             </button>
                         </div>
                     </div>
 
-                    <div class="glass-card rounded-2xl p-4 flex-1 flex flex-col overflow-hidden border border-borderCol">
-                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-xl border border-borderCol bg-darkBg/60">
-                            <table id="paretoTable" class="w-auto border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="paretoTableHead" class="bg-sidebarBg text-slate-200 font-mono sticky top-0 z-20 border-b border-borderCol"></thead>
-                                <tbody id="paretoTableBody" class="divide-y divide-borderCol/50 text-slate-300"></tbody>
+                    <div class="bg-white rounded-2xl shadow-xs p-4 flex-1 flex flex-col overflow-hidden border border-slate-200/80">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-xl border border-slate-200/70 bg-white">
+                            <table id="paretoTable" class="w-full border-collapse text-xs text-left whitespace-nowrap">
+                                <thead id="paretoTableHead" class="bg-slate-900 text-slate-200 font-semibold sticky top-0 z-20"></thead>
+                                <tbody id="paretoTableBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
                             </table>
                         </div>
-                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-borderCol shrink-0 text-xs font-mono text-slate-400">
-                            <span id="pagination-info">Menampilkan 0 - 0 dari 0 data</span>
+                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 shrink-0">
+                            <span id="pagination-info" class="text-xs text-slate-500 font-medium">Menampilkan 0 - 0 dari 0 data</span>
                             <div class="flex space-x-2">
-                                <button onclick="changePage(-1)" id="prev-btn" class="px-3 py-1.5 bg-cardBg border border-borderCol hover:bg-cardHover disabled:opacity-40 text-slate-300 rounded-xl text-xs font-mono font-bold transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
-                                <button onclick="changePage(1)" id="next-btn" class="px-3 py-1.5 bg-cyan-500/20 border border-cyan-500/40 hover:bg-cyan-500/30 disabled:opacity-40 text-cyan-400 rounded-xl text-xs font-mono font-bold transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
+                                <button onclick="changePage(-1)" id="prev-btn" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 rounded-lg text-xs font-medium transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
+                                <button onclick="changePage(1)" id="next-btn" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 disabled:opacity-40 text-white rounded-lg text-xs font-medium transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. VIEW DASHBOARD PARETO ANALYTICS (6 GRAFIK LENGKAP) -->
+                <!-- VIEW 5: DASHBOARD PARETO ANALYTICS -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
-                    <div class="glass-card p-5 rounded-2xl border border-borderCol space-y-4">
-                        <div class="flex items-center justify-between border-b border-borderCol pb-3">
+                    <!-- Panel Filter Modul -->
+                    <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <div>
-                                <h2 class="text-sm font-bold text-white font-mono tracking-wide uppercase">FILTER DASHBOARD PARETO ANALYTICS</h2>
-                                <p class="text-xs text-slate-400">Filter data analitik berdasarkan Unit, Tahun, Bulan, Tanggal, Cluster, Major, & Sub Component.</p>
+                                <h2 class="text-xs font-bold text-slate-900 tracking-wider uppercase font-mono">FILTER PARETO ANALYTICS</h2>
                             </div>
-                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-cardBg border border-borderCol hover:bg-cardHover text-slate-300 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5">
-                                <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-rotate-left text-xs"></i> Reset Filter
                             </button>
                         </div>
 
+                        <!-- Grid Filter -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Unit</label>
-                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Unit</label>
+                                <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                                     <option value="">Semua Unit</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Tahun</label>
-                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tahun</label>
+                                <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                                     <option value="">Semua Tahun</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Bulan</label>
-                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Bulan</label>
+                                <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                                     <option value="">Semua Bulan</option>
                                     <option value="Jan">Jan</option><option value="Feb">Feb</option><option value="Mar">Mar</option>
                                     <option value="Apr">Apr</option><option value="May">May</option><option value="Jun">Jun</option>
@@ -501,99 +389,111 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Tgl Awal</label>
-                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tgl Awal</label>
+                                <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Tgl Finish</label>
-                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tgl Akhir</label>
+                                <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Cluster</label>
-                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Cluster</label>
+                                <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                                     <option value="">Semua Cluster</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Major</label>
-                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Major</label>
+                                <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                                     <option value="">Semua Major</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1">Sub Comp</label>
-                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-darkBg border border-borderCol rounded-xl text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500">
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Sub Comp</label>
+                                <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:border-sky-500 focus:bg-white">
                                     <option value="">Semua Sub</option>
                                 </select>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Statistik Ringkas -->
+                    <!-- Ringkasan Statistik -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-amber-400">
-                            <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Total Record Problem</p>
-                            <h3 id="stat-total-records" class="text-2xl font-black text-white mt-1 font-mono">0 Data</h3>
+                        <div class="p-5 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Problem</p>
+                            <h3 id="stat-total-records" class="text-2xl font-black text-slate-900 mt-1 font-mono">0 Data</h3>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-cyan-400">
-                            <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Total Durasi Breakdown</p>
-                            <h3 id="stat-total-duration" class="text-2xl font-black text-white mt-1 font-mono">0 Jam</h3>
+                        <div class="p-5 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Durasi Downtime</p>
+                            <h3 id="stat-total-duration" class="text-2xl font-black text-slate-900 mt-1 font-mono">0 Jam</h3>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-rose-500">
-                            <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Top Major Component</p>
-                            <h3 id="stat-top-component" class="text-lg font-bold text-white mt-1 font-mono">-</h3>
+                        <div class="p-5 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Top Major Component</p>
+                            <h3 id="stat-top-component" class="text-lg font-bold text-sky-600 mt-1 font-mono truncate">-</h3>
                         </div>
                     </div>
 
-                    <!-- Grid 6 Grafik Pareto -->
+                    <!-- 6 GRAFIK PARETO GRID -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-amber-400"></i> Frequency Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2"><canvas id="chartFreqComp"></canvas></div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-500 mr-2"></i> Frequency Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <canvas id="chartFreqComp"></canvas>
+                            </div>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyan-400"></i> Duration Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2"><canvas id="chartDurComp"></canvas></div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-600 mr-2"></i> Duration Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <canvas id="chartDurComp"></canvas>
+                            </div>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-amber-400"></i> Frequency - Sub Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2"><canvas id="chartFreqSub"></canvas></div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-500 mr-2"></i> Frequency - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <canvas id="chartFreqSub"></canvas>
+                            </div>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyan-400"></i> Duration - Sub Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2"><canvas id="chartDurSub"></canvas></div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-600 mr-2"></i> Duration - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <canvas id="chartDurSub"></canvas>
+                            </div>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-amber-400"></i> Frequency - Per Unit</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2"><canvas id="chartFreqUnit"></canvas></div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-500 mr-2"></i> Frequency - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <canvas id="chartFreqUnit"></canvas>
+                            </div>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-column text-cyan-400"></i> Duration - Per Unit</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2"><canvas id="chartDurUnit"></canvas></div>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                            <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-600 mr-2"></i> Duration - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
+                                <canvas id="chartDurUnit"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 6. VIEW RELIABILITY MTBF & MTTR -->
+                <!-- VIEW 6: RELIABILITY MTBF & MTTR -->
                 <div id="reliability-mtbf-view" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-emerald-400">
-                            <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Overall MTBF</p>
-                            <h3 class="text-2xl font-black text-white mt-1 font-mono">92.4 <span class="text-xs font-semibold text-slate-400">Jam</span></h3>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Overall MTBF</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1 font-mono">92.4 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-cyan-400">
-                            <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Overall MTTR</p>
-                            <h3 class="text-2xl font-black text-white mt-1 font-mono">3.5 <span class="text-xs font-semibold text-slate-400">Jam</span></h3>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Overall MTTR</p>
+                            <h3 class="text-2xl font-black text-slate-900 mt-1 font-mono">3.5 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
                         </div>
-                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-purple-400">
-                            <p class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">System Reliability Rate</p>
-                            <h3 class="text-2xl font-black text-purple-400 mt-1 font-mono">96.2%</h3>
+                        <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80">
+                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Reliability Index</p>
+                            <h3 class="text-2xl font-black text-emerald-600 mt-1 font-mono">96.2%</h3>
                         </div>
                     </div>
 
-                    <div class="glass-card p-5 rounded-2xl border border-borderCol flex flex-col h-80">
-                        <h3 class="text-xs font-bold text-slate-200 font-mono uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-line text-cyan-400"></i> Tren Bulanan MTBF & MTTR</h3>
-                        <div class="flex-1 relative flex items-center justify-center bg-darkBg/40 rounded-xl border border-borderCol/50 p-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-xs border border-slate-200/80 flex flex-col h-80">
+                        <h3 class="text-xs font-bold text-slate-800 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-line text-sky-600 mr-2"></i> Tren Bulanan MTBF & MTTR</h3>
+                        <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-xl p-2 border border-slate-100">
                             <canvas id="mtbfChart"></canvas>
                         </div>
                     </div>
@@ -601,6 +501,7 @@
 
             </div>
         </main>
+
     </div>
 
     <!-- Script JavaScript -->
@@ -609,6 +510,7 @@
         let filteredParetoRows = [];
         let currentPage = 1;
         const rowsPerPage = 100;
+
         let chartInstances = {};
         let mtbfChartInstance = null;
 
@@ -622,8 +524,13 @@
             document.getElementById('sidebar-overlay').classList.add('hidden');
         }
 
+        function toggleSubmenu(menuId, arrowId) {
+            document.getElementById(menuId).classList.toggle('hidden');
+            document.getElementById(arrowId).classList.toggle('rotate-180');
+        }
+
         function selectView(viewId, title) {
-            ['dashboard-view', 'population-view', 'backlog-view', 'pareto-database-view', 'pareto-dashboard-view', 'reliability-mtbf-view'].forEach(id => {
+            ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view', 'reliability-mtbf-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.add('hidden');
             });
@@ -641,7 +548,9 @@
                 if(allParetoRows.length === 0) loadParetoData();
                 else applyParetoFilters();
             }
-            if (viewId === 'reliability-mtbf-view') renderMtbfChart();
+            if (viewId === 'reliability-mtbf-view') {
+                renderMtbfChart();
+            }
         }
 
         function parseCSV(text) {
@@ -652,16 +561,22 @@
                 let inQuotes = false;
                 let entry = '';
                 let line = lines[i];
+                
                 for (let j = 0; j < line.length; j++) {
                     let char = line[j];
-                    if (char === '"') inQuotes = !inQuotes;
-                    else if (char === ',' && !inQuotes) {
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
                         row.push(entry.trim().replace(/^"|"$/g, ''));
                         entry = '';
-                    } else entry += char;
+                    } else {
+                        entry += char;
+                    }
                 }
                 row.push(entry.trim().replace(/^"|"$/g, ''));
-                if (row.some(val => val !== "")) result.push(row);
+                if (row.some(val => val !== "")) {
+                    result.push(row);
+                }
             }
             return result;
         }
@@ -675,6 +590,9 @@
                     let day = parts[0].padStart(2, '0');
                     let month = parts[1].padStart(2, '0');
                     let year = parts[2];
+                    if (year.length === 4 && parts[0].length === 2 && Number(parts[0]) > 31) {
+                        return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+                    }
                     return `${year}-${month}-${day}`;
                 }
             }
@@ -685,33 +603,38 @@
             const csvUrl = `https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=0`;
             const tableHead = document.getElementById('populationTableHead');
             const tableBody = document.getElementById('populationTableBody');
+            
             if(!tableBody) return;
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-cyan-400"></i> Memuat data...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-500"></i> Memuat data database...</td></tr>`;
 
             try {
                 const response = await fetch(csvUrl);
                 const dataText = await response.text();
                 const rows = parseCSV(dataText);
-                if (rows.length < 2) return;
+
+                if (rows.length < 2) {
+                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-500 font-medium">Belum ada data.</td></tr>`;
+                    return;
+                }
 
                 const headers = rows[0];
                 let headHtml = '<tr>';
-                headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-borderCol whitespace-nowrap">${h}</th>`; });
+                headers.forEach(h => { if(h) headHtml += `<th class="p-3 font-semibold border-b border-slate-800 uppercase tracking-wider text-[11px]">${h}</th>`; });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
                 let bodyHtml = '';
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i];
-                    bodyHtml += `<tr class="hover:bg-cardHover/50 transition-colors">`;
+                    bodyHtml += `<tr class="hover:bg-slate-50 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
-                        bodyHtml += `<td class="p-3 border-r border-borderCol/50 text-slate-300 font-medium whitespace-nowrap">${cols[j] || ''}</td>`;
+                        bodyHtml += `<td class="p-3 border-b border-slate-100 font-medium">${cols[j] || ''}</td>`;
                     }
                     bodyHtml += `</tr>`;
                 }
                 tableBody.innerHTML = bodyHtml;
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-400 font-mono">Gagal memuat data.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-500 font-medium">Gagal memuat data.</td></tr>`;
             }
         }
 
@@ -719,17 +642,24 @@
             const tableHead = document.getElementById('paretoTableHead');
             const tableBody = document.getElementById('paretoTableBody');
             if(!tableBody) return;
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono"><i class="fa-solid fa-spinner fa-spin mr-2 text-amber-400"></i> Memuat Pareto...</td></tr>`;
+
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-500"></i> Memuat data Pareto...</td></tr>`;
 
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
                 const text = await res.text();
                 const rows = parseCSV(text);
-                if (rows.length < 2) return;
+
+                if (rows.length < 2) {
+                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-500 font-medium">Belum ada data pada tab Pareto.</td></tr>`;
+                    return;
+                }
 
                 const headers = rows[0];
                 let headHtml = '<tr>';
-                headers.forEach(h => { if(h) headHtml += `<th class="p-3.5 font-bold border-r border-borderCol tracking-wider text-xs whitespace-nowrap">${h}</th>`; });
+                headers.forEach(h => {
+                    if(h) headHtml += `<th class="p-3 font-semibold border-b border-slate-800 uppercase tracking-wider text-[11px]">${h}</th>`;
+                });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
@@ -740,14 +670,20 @@
                 populateFilterOptions();
                 renderParetoTable();
                 applyParetoFilters();
+
             } catch (e) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-400 font-mono">Gagal memuat data.</td></tr>`;
+                console.error("Gagal memuat pareto:", e);
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-500 font-medium">Gagal memuat data Pareto.</td></tr>`;
             }
         }
 
         function filterParetoData() {
             const keyword = document.getElementById('paretoSearchInput').value.toLowerCase();
-            filteredParetoRows = !keyword ? [...allParetoRows] : allParetoRows.filter(row => row.some(cell => cell.toLowerCase().includes(keyword)));
+            if (!keyword) {
+                filteredParetoRows = [...allParetoRows];
+            } else {
+                filteredParetoRows = allParetoRows.filter(row => row.some(cell => cell.toLowerCase().includes(keyword)));
+            }
             currentPage = 1;
             renderParetoTable();
         }
@@ -755,9 +691,12 @@
         function renderParetoTable() {
             const tableBody = document.getElementById('paretoTableBody');
             const totalData = filteredParetoRows.length;
+
             if (totalData === 0) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-mono">Data tidak ditemukan.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-medium">Data tidak ditemukan.</td></tr>`;
                 document.getElementById('pagination-info').innerText = `Menampilkan 0 dari 0 data`;
+                document.getElementById('prev-btn').disabled = true;
+                document.getElementById('next-btn').disabled = true;
                 return;
             }
 
@@ -771,14 +710,15 @@
 
             let bodyHtml = '';
             sliceData.forEach(row => {
-                bodyHtml += `<tr class="hover:bg-cardHover/50 transition-colors">`;
+                bodyHtml += `<tr class="hover:bg-slate-50 transition-colors">`;
                 for (let j = 0; j < row.length; j++) {
-                    bodyHtml += `<td class="p-3 border-r border-borderCol/50 text-slate-300 font-medium whitespace-nowrap">${row[j] || ''}</td>`;
+                    bodyHtml += `<td class="p-3 border-b border-slate-100 font-medium">${row[j] || ''}</td>`;
                 }
                 bodyHtml += `</tr>`;
             });
+
             tableBody.innerHTML = bodyHtml;
-            document.getElementById('pagination-info').innerText = `Menampilkan ${startIndex + 1} - ${endIndex} dari ${totalData} data (Halaman ${currentPage}/${totalPages})`;
+            document.getElementById('pagination-info').innerText = `Menampilkan ${startIndex + 1} - ${endIndex} dari ${totalData} data (Hal ${currentPage}/${totalPages})`;
             document.getElementById('prev-btn').disabled = currentPage === 1;
             document.getElementById('next-btn').disabled = currentPage === totalPages;
         }
@@ -786,21 +726,60 @@
         function changePage(direction) {
             currentPage += direction;
             renderParetoTable();
+            const container = document.querySelector('#pareto-database-view .overflow-y-auto');
+            if(container) container.scrollTop = 0;
         }
 
         function populateFilterOptions() {
-            let units = new Set(), years = new Set(), clusters = new Set(), majors = new Set();
+            let units = new Set();
+            let years = new Set();
+            let clusters = new Set();
+            let majors = new Set();
+
             allParetoRows.forEach(row => {
-                if (row[0]?.trim()) units.add(row[0].trim());
-                if (row[12]?.trim()) majors.add(row[12].trim());
-                if (row[19]?.trim()) clusters.add(row[19].trim());
-                if (row[21]?.trim() && !isNaN(row[21].trim())) years.add(row[21].trim());
+                let unit = row[0] || '';
+                let major = row[12] || '';
+                let cluster = row[19] || '';
+                let year = row[21] || '';
+                
+                if (unit.trim()) units.add(unit.trim());
+                if (major.trim()) majors.add(major.trim());
+                if (cluster.trim()) clusters.add(cluster.trim());
+                if (year.trim() && !isNaN(year.trim())) years.add(year.trim());
             });
 
-            document.getElementById('filter-unit').innerHTML = '<option value="">Semua Unit</option>' + Array.from(units).sort().map(u => `<option value="${u}">${u}</option>`).join('');
-            document.getElementById('filter-year').innerHTML = '<option value="">Semua Tahun</option>' + Array.from(years).sort().map(y => `<option value="${y}">${y}</option>`).join('');
-            document.getElementById('filter-cluster').innerHTML = '<option value="">Semua Cluster</option>' + Array.from(clusters).sort().map(c => `<option value="${c}">${c}</option>`).join('');
-            document.getElementById('filter-major').innerHTML = '<option value="">Semua Major</option>' + Array.from(majors).sort().map(m => `<option value="${m}">${m}</option>`).join('');
+            let unitSel = document.getElementById('filter-unit');
+            if(unitSel) {
+                unitSel.innerHTML = '<option value="">Semua Unit</option>';
+                Array.from(units).sort().forEach(u => {
+                    unitSel.innerHTML += `<option value="${u}">${u}</option>`;
+                });
+            }
+
+            let yearSel = document.getElementById('filter-year');
+            if(yearSel) {
+                yearSel.innerHTML = '<option value="">Semua Tahun</option>';
+                Array.from(years).sort().forEach(y => {
+                    yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+                });
+            }
+
+            let clusterSel = document.getElementById('filter-cluster');
+            if(clusterSel) {
+                clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
+                Array.from(clusters).sort().forEach(c => {
+                    clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
+                });
+            }
+
+            let majorSel = document.getElementById('filter-major');
+            if(majorSel) {
+                majorSel.innerHTML = '<option value="">Semua Major</option>';
+                Array.from(majors).sort().forEach(m => {
+                    majorSel.innerHTML += `<option value="${m}">${m}</option>`;
+                });
+            }
+            
             updateSubComponentDropdown();
         }
 
@@ -808,23 +787,31 @@
             let selectedMajor = document.getElementById('filter-major')?.value || '';
             let subSel = document.getElementById('filter-sub');
             if(!subSel) return;
+            
             subSel.innerHTML = '<option value="">Semua Sub</option>';
+
             let subs = new Set();
             allParetoRows.forEach(row => {
-                let major = row[12]?.trim() || '';
-                let sub = row[14]?.trim() || '';
-                if ((!selectedMajor || major === selectedMajor) && sub) subs.add(sub);
+                let major = row[12] ? row[12].trim() : '';
+                let sub = row[14] ? row[14].trim() : '';
+                if ((!selectedMajor || major === selectedMajor) && sub) {
+                    subs.add(sub);
+                }
             });
-            subSel.innerHTML += Array.from(subs).sort().map(s => `<option value="${s}">${s}</option>`).join('');
+
+            Array.from(subs).sort().forEach(s => {
+                subSel.innerHTML += `<option value="${s}">${s}</option>`;
+            });
         }
 
         function resetParetoFilters() {
-            ['filter-unit', 'filter-year', 'filter-month', 'filter-cluster', 'filter-major', 'filter-sub'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.value = '';
-            });
-            document.getElementById('filter-start-date').value = '';
-            document.getElementById('filter-end-date').value = '';
+            if(document.getElementById('filter-unit')) document.getElementById('filter-unit').value = '';
+            if(document.getElementById('filter-year')) document.getElementById('filter-year').value = '';
+            if(document.getElementById('filter-month')) document.getElementById('filter-month').value = '';
+            if(document.getElementById('filter-start-date')) document.getElementById('filter-start-date').value = '';
+            if(document.getElementById('filter-end-date')) document.getElementById('filter-end-date').value = '';
+            if(document.getElementById('filter-cluster')) document.getElementById('filter-cluster').value = '';
+            if(document.getElementById('filter-major')) document.getElementById('filter-major').value = '';
             updateSubComponentDropdown();
             applyParetoFilters();
         }
@@ -840,20 +827,32 @@
             let fSub = document.getElementById('filter-sub')?.value || '';
 
             let resultData = allParetoRows.filter(row => {
-                if (fUnit && row[0]?.trim() !== fUnit) return false;
-                if (fYear && row[21]?.trim() !== fYear) return false;
-                if (fMonth && !row[22]?.toLowerCase().includes(fMonth.toLowerCase())) return false;
-                if (fCluster && row[19]?.trim() !== fCluster) return false;
-                if (fMajor && row[12]?.trim() !== fMajor) return false;
-                if (fSub && row[14]?.trim() !== fSub) return false;
+                let unit = row[0] || '';
+                let tglSpkStartRaw = row[6] || '';
+                let major = row[12] || '';
+                let sub = row[14] || '';
+                let cluster = row[19] || '';
+                let yearV = row[21] || '';
+                let monthW = row[22] || '';
+
+                if (fUnit && unit.trim() !== fUnit) return false;
+                if (fYear && yearV.trim() !== fYear) return false;
+                if (fMonth && !monthW.toLowerCase().includes(fMonth.toLowerCase())) return false;
+                if (fCluster && cluster.trim() !== fCluster) return false;
+                if (fMajor && major.trim() !== fMajor) return false;
+                if (fSub && sub.trim() !== fSub) return false;
+
                 if (fStart || fEnd) {
-                    let stdDate = formatDateToStandard(row[6]);
-                    if (stdDate) {
-                        let cleanDate = stdDate.split(' ')[0];
+                    let standardDate = formatDateToStandard(tglSpkStartRaw);
+                    if (standardDate) {
+                        let cleanDate = standardDate.split(' ')[0];
                         if (fStart && cleanDate < fStart) return false;
                         if (fEnd && cleanDate > fEnd) return false;
-                    } else return false;
+                    } else if (fStart || fEnd) {
+                        return false;
+                    }
                 }
+
                 return true;
             });
 
@@ -861,20 +860,37 @@
         }
 
         function updateParetoDashboardStatsAndCharts(data) {
-            document.getElementById('stat-total-records').innerText = `${data.length} Data`;
-            let totalDurasi = 0, compFreq = {}, compDur = {}, subFreq = {}, subDur = {}, unitFreq = {}, unitDur = {};
+            const recEl = document.getElementById('stat-total-records');
+            const durEl = document.getElementById('stat-total-duration');
+            const topEl = document.getElementById('stat-top-component');
+
+            if(recEl) recEl.innerText = `${data.length} Data`;
+
+            let totalDurasi = 0;
+            let compFreq = {};
+            let compDur = {};
+            let subFreq = {};
+            let subDur = {};
+            let unitFreq = {};
+            let unitDur = {};
 
             data.forEach(row => {
-                let unit = row[0]?.trim() || 'Unknown';
-                let rawDur = row[10] || '0';
-                let duration = rawDur.includes(':') ? parseFloat(rawDur.split(':')[0]) + (parseFloat(rawDur.split(':')[1]) || 0) / 60 : parseFloat(rawDur) || 0;
+                let unit = row[0] && row[0].trim() !== '' ? row[0].trim() : 'Unknown';
+                const rawDur = row[10] || '0';
+                let duration = 0;
+                if (rawDur.includes(':')) {
+                    const parts = rawDur.split(':');
+                    duration = parseFloat(parts[0]) + (parseFloat(parts[1]) || 0) / 60;
+                } else {
+                    duration = parseFloat(rawDur) || 0;
+                }
                 totalDurasi += duration;
 
-                let major = row[12]?.trim() || 'Unknown';
+                let major = row[12] && row[12].trim() !== '' ? row[12].trim() : 'Unknown';
                 compFreq[major] = (compFreq[major] || 0) + 1;
                 compDur[major] = (compDur[major] || 0) + duration;
 
-                let sub = row[14]?.trim() || 'Unknown';
+                let sub = row[14] && row[14].trim() !== '' ? row[14].trim() : 'Unknown';
                 subFreq[sub] = (subFreq[sub] || 0) + 1;
                 subDur[sub] = (subDur[sub] || 0) + duration;
 
@@ -882,12 +898,18 @@
                 unitDur[unit] = (unitDur[unit] || 0) + duration;
             });
 
-            document.getElementById('stat-total-duration').innerText = `${totalDurasi.toFixed(1)} Jam`;
-            let topComp = '-', maxCount = 0;
+            if(durEl) durEl.innerText = `${totalDurasi.toFixed(1)} Jam`;
+
+            let topComp = '-';
+            let maxCount = 0;
             for (let comp in compFreq) {
-                if (compFreq[comp] > maxCount) { maxCount = compFreq[comp]; topComp = comp; }
+                if (compFreq[comp] > maxCount) {
+                    maxCount = compFreq[comp];
+                    topComp = comp;
+                }
             }
-            document.getElementById('stat-top-component').innerText = topComp;
+            if(topEl) topEl.innerText = topComp;
+
             renderSixCharts(compFreq, compDur, subFreq, subDur, unitFreq, unitDur);
         }
 
@@ -895,52 +917,91 @@
             function renderBar(canvasId, dataObj, color, isDuration = false, maxItems = 10) {
                 const ctx = document.getElementById(canvasId)?.getContext('2d');
                 if(!ctx) return;
+
                 let sorted = Object.entries(dataObj).sort((a,b) => b[1] - a[1]).slice(0, maxItems);
+                let labels = sorted.map(item => item[0]);
+                let values = sorted.map(item => isDuration ? Number(item[1].toFixed(1)) : item[1]);
+
                 if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
 
                 chartInstances[canvasId] = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: sorted.map(i => i[0]),
-                        datasets: [{ data: sorted.map(i => isDuration ? Number(i[1].toFixed(1)) : i[1]), backgroundColor: color, borderRadius: 4 }]
+                        labels: labels,
+                        datasets: [{
+                            label: isDuration ? 'Durasi (Jam)' : 'Kasus',
+                            data: values,
+                            backgroundColor: color,
+                            borderRadius: 6
+                        }]
                     },
                     options: {
-                        responsive: true, maintainAspectRatio: false,
+                        responsive: true,
+                        maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
                         scales: {
-                            y: { grid: { color: 'rgba(34, 48, 74, 0.4)' }, ticks: { font: { size: 10 }, color: '#94a3b8' } },
-                            x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#94a3b8', maxRotation: 45, minRotation: 45 } }
+                            y: { 
+                                beginAtZero: true, 
+                                grid: { color: '#f1f5f9' },
+                                ticks: { font: { size: 10, family: 'Inter' } }
+                            },
+                            x: { 
+                                grid: { display: false },
+                                ticks: { 
+                                    font: { size: 10, family: 'Inter' },
+                                    maxRotation: 45,
+                                    minRotation: 45
+                                }
+                            }
                         }
                     }
                 });
             }
-            renderBar('chartFreqComp', compFreq, '#F59E0B', false);
-            renderBar('chartDurComp', compDur, '#06B6D4', true);
-            renderBar('chartFreqSub', subFreq, '#F59E0B', false);
-            renderBar('chartDurSub', subDur, '#06B6D4', true);
-            renderBar('chartFreqUnit', unitFreq, '#F59E0B', false);
-            renderBar('chartDurUnit', unitDur, '#06B6D4', true);
+
+            // Memakai skema warna baru (Sky & Amber Pro)
+            renderBar('chartFreqComp', compFreq, '#f59e0b', false);
+            renderBar('chartDurComp', compDur, '#0284c7', true);
+            renderBar('chartFreqSub', subFreq, '#f59e0b', false);
+            renderBar('chartDurSub', subDur, '#0284c7', true);
+            renderBar('chartFreqUnit', unitFreq, '#f59e0b', false);
+            renderBar('chartDurUnit', unitDur, '#0284c7', true);
         }
 
         function renderMtbfChart() {
             const ctxMtbf = document.getElementById('mtbfChart');
             if (!ctxMtbf) return;
+            
             if (mtbfChartInstance) mtbfChartInstance.destroy();
             mtbfChartInstance = new Chart(ctxMtbf.getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'],
                     datasets: [
-                        { label: 'MTBF (Jam)', data: [80, 85, 82, 88, 90, 89, 94, 91, 92.4], borderColor: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.1)', fill: true, tension: 0.3 },
-                        { label: 'MTTR (Jam)', data: [5.2, 4.8, 4.5, 4.1, 3.9, 3.8, 3.6, 3.5, 3.5], borderColor: '#06B6D4', backgroundColor: 'rgba(6, 182, 212, 0.1)', fill: true, tension: 0.3 }
+                        {
+                            label: 'MTBF (Jam)',
+                            data: [80, 85, 82, 88, 90, 89, 94, 91, 92.4],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.08)',
+                            fill: true,
+                            tension: 0.35
+                        },
+                        {
+                            label: 'MTTR (Jam)',
+                            data: [5.2, 4.8, 4.5, 4.1, 3.9, 3.8, 3.6, 3.5, 3.5],
+                            borderColor: '#0284c7',
+                            backgroundColor: 'rgba(2, 132, 199, 0.08)',
+                            fill: true,
+                            tension: 0.35
+                        }
                     ]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 }, color: '#cbd5e1' } } },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11, family: 'Inter' } } } },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(34, 48, 74, 0.4)' }, ticks: { color: '#94a3b8' } },
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter' } } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Inter' } } }
                     }
                 }
             });
