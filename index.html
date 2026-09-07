@@ -354,9 +354,7 @@
                 <!-- VIEW 5: DASHBOARD PARETO ANALYTICS -->
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
 
-                    <!-- ========================================== -->
-                    <!-- MODUL: AI WHATSAPP REPORT GENERATOR       -->
-                    <!-- ========================================== -->
+                    <!-- MODUL: AI WHATSAPP REPORT GENERATOR -->
                     <div class="glass-card p-5 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-900/90 to-slate-900 text-white shadow-md space-y-4">
                         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                             <div class="flex items-center space-x-3">
@@ -373,7 +371,7 @@
                             </button>
                         </div>
 
-                        <!-- Kotak Hasil Draf (Hidden secara default) -->
+                        <!-- Kotak Hasil Draf -->
                         <div id="ai-report-container" class="hidden pt-4 border-t border-slate-700/80 space-y-3">
                             <div class="flex justify-between items-center">
                                 <span class="text-xs font-mono font-bold text-sky-400 flex items-center gap-2">
@@ -1040,9 +1038,6 @@
             });
         }
 
-        // ==========================================
-        // FUNGSI: AI WHATSAPP REPORT GENERATOR
-        // ==========================================
         function generateAILogReport() {
             const container = document.getElementById('ai-report-container');
             container.classList.remove('hidden');
