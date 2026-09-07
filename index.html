@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,287 +42,288 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #090d16;
+            background-color: #f1f5f9;
         }
         
-        /* Custom Styling khusus tema iOS Control Center */
+        /* Custom Styling iOS Control Center Light Theme */
         .ios-sidebar {
-            background: rgba(20, 24, 33, 0.75);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(25px) saturate(180%);
             -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(226, 232, 240, 0.8);
         }
         
         .ios-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
         }
         
         .ios-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(203, 213, 225, 1);
         }
 
         .ios-header {
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
         
         .ios-pill {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(241, 245, 249, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(203, 213, 225, 0.6);
         }
 
         .ios-input {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #f1f5f9;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(203, 213, 225, 0.8);
+            color: #0f172a;
         }
         .ios-input:focus {
-            border-color: #38bdf8;
+            border-color: #0284c7;
             outline: none;
-            background: rgba(15, 23, 42, 0.8);
+            background: #ffffff;
         }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 99px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 99px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.6); }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     </style>
 </head>
-<body class="text-slate-200 antialiased min-h-screen selection:bg-sky-500 selection:text-white overflow-hidden">
+<body class="text-slate-800 antialiased min-h-screen selection:bg-sky-500 selection:text-white overflow-hidden">
 
     <!-- OVERLAY SIDEBAR -->
-    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-black/75 backdrop-blur-md z-30 hidden transition-all duration-300"></div>
+    <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-30 hidden transition-all duration-300"></div>
 
-    <div class="flex h-screen overflow-hidden relative bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black">
+    <div class="flex h-screen overflow-hidden relative bg-gradient-to-br from-slate-100 via-sky-50/50 to-slate-200">
 
-        <!-- SIDEBAR NAVIGATOR (TEMA iOS CONTROL CENTER) -->
-        <aside id="main-sidebar" class="w-80 ios-sidebar text-slate-200 flex flex-col z-40 shadow-2xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full p-4 space-y-4">
+        <!-- SIDEBAR NAVIGATOR (LIGHT iOS THEME) -->
+        <aside id="main-sidebar" class="w-80 ios-sidebar text-slate-800 flex flex-col z-40 shadow-xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full p-4 space-y-4">
 
-            <!-- Header Status & Brand (Gaya iOS Status Bar & Title) -->
+            <!-- Header Status & Brand -->
             <div class="ios-card rounded-3xl p-4 shrink-0 flex flex-col space-y-3">
-                <div class="flex items-center justify-between text-[11px] font-semibold text-slate-400 tracking-wider">
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-signal text-sky-400"></i> PEIS 4G</span>
+                <div class="flex items-center justify-between text-[11px] font-semibold text-slate-500 tracking-wider">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-signal text-sky-600"></i> PEIS 4G</span>
                     <span class="flex items-center gap-2">
-                        <span class="text-xs text-emerald-400 font-bold">100%</span>
-                        <i class="fa-solid fa-battery-full text-emerald-400 text-sm"></i>
+                        <span class="text-xs text-emerald-600 font-bold">100%</span>
+                        <i class="fa-solid fa-battery-full text-emerald-600 text-sm"></i>
                     </span>
                 </div>
                 <div class="flex items-center justify-between pt-1">
                     <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
-                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-500/30">
+                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center shadow-md shadow-sky-500/20">
                             <i class="fa-solid fa-industry text-white text-base"></i>
                         </div>
                         <div>
-                            <span class="font-bold text-sm tracking-wide text-white block leading-tight">PEIS <span class="text-sky-300 font-extrabold text-xs ml-0.5 uppercase tracking-wider bg-sky-400/20 px-1.5 py-0.5 rounded-full border border-sky-400/30">PRO</span></span>
-                            <span class="text-[10px] text-slate-400 font-medium block tracking-wider uppercase">Plant Engineering</span>
+                            <span class="font-bold text-sm tracking-wide text-slate-900 block leading-tight">PEIS <span class="text-sky-700 font-extrabold text-xs ml-0.5 uppercase tracking-wider bg-sky-100 px-1.5 py-0.5 rounded-full border border-sky-200">PRO</span></span>
+                            <span class="text-[10px] text-slate-500 font-medium block tracking-wider uppercase">Plant Engineering</span>
                         </div>
                     </div>
-                    <button onclick="closeSidebar()" class="w-8 h-8 rounded-full ios-pill flex items-center justify-center text-slate-300 hover:text-white transition-all">
+                    <button onclick="closeSidebar()" class="w-8 h-8 rounded-full ios-pill flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition-all">
                         <i class="fa-solid fa-xmark text-sm"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Navigation Menu (Kontainer Kapsul iOS) -->
+            <!-- Navigation Menu -->
             <nav class="flex-1 overflow-y-auto custom-scrollbar space-y-2.5 pr-1">
 
                 <!-- 1. DASHBOARD -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400">
+                            <div class="w-8 h-8 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600">
                                 <i class="fa-solid fa-house text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">DASHBOARD</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">DASHBOARD</span>
                         </div>
                         <i id="dash-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="dash-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all">Plant Performance Overview</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all">Fleet Availability</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all">Breakdown Trend</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all">Top Failure Component</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all">Cost Impact</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-all">Action Monitoring</a>
+                    <div id="dash-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Plant Performance Overview</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Fleet Availability</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Breakdown Trend</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Top Failure Component</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Cost Impact</a>
+                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Action Monitoring</a>
                     </div>
                 </div>
 
                 <!-- 2. POPULATION UNIT -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600">
                                 <i class="fa-solid fa-tractor text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">POPULATION UNIT</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">POPULATION UNIT</span>
                         </div>
                         <i id="pop-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="pop-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-2 px-2 rounded-xl text-emerald-400 font-semibold hover:bg-white/10">Unit Database</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Unit History</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Component Lifetime</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Component Policy</a>
+                    <div id="pop-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="selectView('population-view', 'UNIT DATABASE')" class="block py-2 px-2 rounded-xl text-emerald-700 font-semibold hover:bg-slate-100">Unit Database</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Unit History</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Component Lifetime</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Component Policy</a>
                     </div>
                 </div>
 
                 <!-- 3. CONDITION MONITORING -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-400">
+                            <div class="w-8 h-8 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center text-purple-600">
                                 <i class="fa-solid fa-chart-line text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">CONDITION MONITORING</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">CONDITION MONITORING</span>
                         </div>
                         <i id="cm-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="cm-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Inova Index</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Oil Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">VHMS Monitoring</a>
+                    <div id="cm-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Inova Index</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Oil Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">VHMS Monitoring</a>
                     </div>
                 </div>
 
                 <!-- 4. PARETO PROBLEM -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                            <div class="w-8 h-8 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-600">
                                 <i class="fa-solid fa-chart-column text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">PARETO PROBLEM</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">PARETO PROBLEM</span>
                         </div>
                         <i id="pareto-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="pareto-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO')" class="block py-2 px-2 rounded-xl text-amber-300 font-semibold hover:bg-white/10">Database Pareto</a>
-                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-2 px-2 rounded-xl text-amber-300 font-semibold hover:bg-white/10">Dashboard Pareto</a>
+                    <div id="pareto-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="selectView('pareto-database-view', 'DATABASE PARETO')" class="block py-2 px-2 rounded-xl text-amber-700 font-semibold hover:bg-slate-100">Database Pareto</a>
+                        <a href="#" onclick="selectView('pareto-dashboard-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-2 px-2 rounded-xl text-amber-700 font-semibold hover:bg-slate-100">Dashboard Pareto</a>
                     </div>
                 </div>
 
                 <!-- 5. FAILURE ANALYSIS -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('far-sub', 'far-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-rose-500/20 border border-rose-400/30 flex items-center justify-center text-rose-400">
+                            <div class="w-8 h-8 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600">
                                 <i class="fa-solid fa-wrench text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">FAILURE ANALYSIS (FAR)</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">FAILURE ANALYSIS (FAR)</span>
                         </div>
                         <i id="far-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="far-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Create FAR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">RCA Analysis</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">PICA</a>
+                    <div id="far-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Create FAR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">RCA Analysis</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">PICA</a>
                     </div>
                 </div>
 
                 <!-- 6. BACKLOG MANAGEMENT -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('backlog-sub', 'backlog-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400">
+                            <div class="w-8 h-8 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600">
                                 <i class="fa-solid fa-clipboard-list text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">BACKLOG MANAGEMENT</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">BACKLOG MANAGEMENT</span>
                         </div>
                         <i id="backlog-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="backlog-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG SYSTEM')" class="block py-2 px-2 rounded-xl text-sky-300 font-semibold hover:bg-white/10">Finding List / Backlog System</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Priority & Risk</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Planning & Execution</a>
+                    <div id="backlog-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="selectView('backlog-view', 'BACKLOG SYSTEM')" class="block py-2 px-2 rounded-xl text-sky-700 font-semibold hover:bg-slate-100">Finding List / Backlog System</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Priority & Risk</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Planning & Execution</a>
                     </div>
                 </div>
 
                 <!-- 7. RELIABILITY DASHBOARD -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('rel-sub', 'rel-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-400">
+                            <div class="w-8 h-8 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center text-indigo-600">
                                 <i class="fa-solid fa-chart-pie text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">RELIABILITY DASHBOARD</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">RELIABILITY DASHBOARD</span>
                         </div>
                         <i id="rel-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="rel-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-2 px-2 rounded-xl text-indigo-300 font-semibold hover:bg-white/10">MTBF & MTTR</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Repeat Failure</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Bad Actor Component</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Reliability Ranking</a>
+                    <div id="rel-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="selectView('reliability-mtbf-view', 'RELIABILITY - MTBF & MTTR')" class="block py-2 px-2 rounded-xl text-indigo-700 font-semibold hover:bg-slate-100">MTBF & MTTR</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Repeat Failure</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Bad Actor Component</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Reliability Ranking</a>
                     </div>
                 </div>
 
                 <!-- 8. KNOWLEDGE MANAGEMENT -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-100 hover:bg-white/10 transition-all group">
+                    <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-teal-500/20 border border-teal-400/30 flex items-center justify-center text-teal-400">
+                            <div class="w-8 h-8 rounded-full bg-teal-100 border border-teal-200 flex items-center justify-center text-teal-600">
                                 <i class="fa-solid fa-book text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase">KNOWLEDGE BASE</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">KNOWLEDGE BASE</span>
                         </div>
                         <i id="km-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
-                    <div id="km-sub" class="hidden px-3 py-2 space-y-1 bg-black/30 rounded-2xl mt-1 text-xs font-medium border border-white/5">
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Lesson Learned</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Troubleshooting Guide</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Standard Repair (SOP)</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10">Failure Library</a>
+                    <div id="km-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Lesson Learned</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Troubleshooting Guide</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Standard Repair (SOP)</a>
+                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Failure Library</a>
                     </div>
                 </div>
 
             </nav>
 
-            <!-- User Profile Footer (iOS Widget Card) -->
+            <!-- User Profile Footer -->
             <div class="ios-card rounded-3xl p-3 shrink-0 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-500 border border-white/20 flex items-center justify-center font-bold text-white text-xs shadow-md">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 border border-white/80 flex items-center justify-center font-bold text-white text-xs shadow-md">
                         PE
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-white leading-tight">Plant Engineer</p>
-                        <p class="text-[10px] text-slate-400 font-medium">Enterprise Admin</p>
+                        <p class="text-xs font-bold text-slate-800 leading-tight">Plant Engineer</p>
+                        <p class="text-[10px] text-slate-500 font-medium">Enterprise Admin</p>
                     </div>
                 </div>
-                <div class="w-8 h-8 rounded-full ios-pill flex items-center justify-center text-slate-300 cursor-pointer hover:text-white">
+                <div class="w-8 h-8 rounded-full ios-pill flex items-center justify-center text-slate-600 cursor-pointer hover:text-slate-900 hover:bg-slate-200/60 transition-all">
                     <i class="fa-solid fa-sliders text-xs"></i>
                 </div>
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA (TEMA GELAP MATCHING SIDEBAR) -->
+        <!-- MAIN CONTENT AREA (LIGHT THEME MATCHING SIDEBAR) -->
         <main class="flex-1 flex flex-col overflow-y-auto relative w-full custom-scrollbar">
 
             <!-- Header Atas Glassmorphism -->
             <header class="h-16 ios-header flex items-center justify-between px-6 sticky top-0 z-20 shrink-0">
                 <div class="flex items-center space-x-4">
-                    <button onclick="openSidebar()" class="p-2.5 rounded-2xl ios-pill text-slate-200 hover:text-white hover:bg-white/20 transition-all flex items-center justify-center">
+                    <button onclick="openSidebar()" class="p-2.5 rounded-2xl ios-pill text-slate-700 hover:text-slate-900 hover:bg-slate-200/60 transition-all flex items-center justify-center">
                         <i class="fa-solid fa-bars text-base"></i>
                     </button>
                     <div>
-                        <h1 id="page-title" class="text-xs font-bold text-white tracking-widest uppercase font-mono">PLANT PERFORMANCE OVERVIEW</h1>
+                        <h1 id="page-title" class="text-xs font-bold text-slate-800 tracking-widest uppercase font-mono">PLANT PERFORMANCE OVERVIEW</h1>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-xs font-medium">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 rounded-full text-xs font-medium">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         <span>System Live</span>
                     </div>
-                    <div class="w-px h-5 bg-white/10"></div>
-                    <button class="w-9 h-9 rounded-full ios-pill text-slate-300 hover:text-white transition-colors relative flex items-center justify-center">
+                    <div class="w-px h-5 bg-slate-300/60"></div>
+                    <button class="w-9 h-9 rounded-full ios-pill text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition-colors relative flex items-center justify-center">
                         <i class="fa-regular fa-bell text-sm"></i>
-                        <span class="absolute top-2 right-2 w-2 h-2 bg-sky-400 rounded-full ring-2 ring-slate-900"></span>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-sky-500 rounded-full ring-2 ring-white"></span>
                     </button>
                 </div>
             </header>
@@ -335,27 +336,27 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                         <div class="ios-card p-5 rounded-3xl relative overflow-hidden transition-all hover:scale-[1.01]">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/10 rounded-full -mr-8 -mt-8 blur-xl"></div>
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Avg MTBF</p>
-                            <h3 class="text-3xl font-black text-white mt-2 font-mono">84.5 <span class="text-xs font-normal text-slate-400">Jam</span></h3>
-                            <span class="inline-flex items-center text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full mt-3"><i class="fa-solid fa-arrow-up mr-1"></i> +4.2% bulan ini</span>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Avg MTBF</p>
+                            <h3 class="text-3xl font-black text-slate-900 mt-2 font-mono">84.5 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full mt-3"><i class="fa-solid fa-arrow-up mr-1"></i> +4.2% bulan ini</span>
                         </div>
                         <div class="ios-card p-5 rounded-3xl relative overflow-hidden transition-all hover:scale-[1.01]">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-full -mr-8 -mt-8 blur-xl"></div>
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Avg MTTR</p>
-                            <h3 class="text-3xl font-black text-white mt-2 font-mono">4.2 <span class="text-xs font-normal text-slate-400">Jam</span></h3>
-                            <span class="inline-flex items-center text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full mt-3"><i class="fa-solid fa-arrow-down mr-1"></i> -0.3 Jam</span>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Avg MTTR</p>
+                            <h3 class="text-3xl font-black text-slate-900 mt-2 font-mono">4.2 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full mt-3"><i class="fa-solid fa-arrow-down mr-1"></i> -0.3 Jam</span>
                         </div>
                         <div class="ios-card p-5 rounded-3xl relative overflow-hidden transition-all hover:scale-[1.01]">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/10 rounded-full -mr-8 -mt-8 blur-xl"></div>
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Repeat Failure</p>
-                            <h3 class="text-3xl font-black text-rose-400 mt-2 font-mono">2.8%</h3>
-                            <span class="inline-flex items-center text-[10px] font-semibold text-rose-400 bg-rose-500/10 border border-rose-500/20 px-2.5 py-1 rounded-full mt-3"><i class="fa-solid fa-circle-exclamation mr-1"></i> Perlu perhatian</span>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Repeat Failure</p>
+                            <h3 class="text-3xl font-black text-rose-600 mt-2 font-mono">2.8%</h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full mt-3"><i class="fa-solid fa-circle-exclamation mr-1"></i> Perlu perhatian</span>
                         </div>
                         <div class="ios-card p-5 rounded-3xl relative overflow-hidden transition-all hover:scale-[1.01]">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full -mr-8 -mt-8 blur-xl"></div>
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Biaya Maintenance</p>
-                            <h3 class="text-3xl font-black text-white mt-2 font-mono">$124.5K</h3>
-                            <span class="inline-flex items-center text-[10px] font-semibold text-slate-300 bg-white/10 border border-white/10 px-2.5 py-1 rounded-full mt-3">Sesuai Anggaran</span>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Biaya Maintenance</p>
+                            <h3 class="text-3xl font-black text-slate-900 mt-2 font-mono">$124.5K</h3>
+                            <span class="inline-flex items-center text-[10px] font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full mt-3">Sesuai Anggaran</span>
                         </div>
                     </div>
                 </div>
@@ -371,18 +372,18 @@
                 <div id="population-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="ios-card p-4 rounded-3xl flex justify-between items-center shrink-0">
                         <div>
-                            <h2 class="font-bold text-white text-sm tracking-wide">UNIT DATABASE</h2>
-                            <p class="text-xs text-slate-400">Master data populasi unit terintegrasi.</p>
+                            <h2 class="font-bold text-slate-900 text-sm tracking-wide">UNIT DATABASE</h2>
+                            <p class="text-xs text-slate-500">Master data populasi unit terintegrasi.</p>
                         </div>
-                        <button onclick="loadDatabase('population')" class="px-4 py-2 ios-pill hover:bg-white/20 text-white rounded-xl text-xs font-medium transition-all flex items-center gap-2">
+                        <button onclick="loadDatabase('population')" class="px-4 py-2 ios-pill hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-medium transition-all flex items-center gap-2">
                             <i class="fa-solid fa-rotate text-xs"></i> Refresh
                         </button>
                     </div>
                     <div class="ios-card rounded-3xl p-4 flex-1 flex flex-col overflow-hidden">
-                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-2xl border border-white/10 bg-black/20">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-2xl border border-slate-200/80 bg-white/50">
                             <table id="populationTable" class="w-full border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="populationTableHead" class="bg-slate-900/90 text-slate-200 font-semibold sticky top-0 z-20 backdrop-blur-md"></thead>
-                                <tbody id="populationTableBody" class="divide-y divide-white/5 text-slate-300"></tbody>
+                                <thead id="populationTableHead" class="bg-slate-100/90 text-slate-700 font-semibold sticky top-0 z-20 backdrop-blur-md border-b border-slate-200"></thead>
+                                <tbody id="populationTableBody" class="divide-y divide-slate-200/60 text-slate-800"></tbody>
                             </table>
                         </div>
                     </div>
@@ -392,32 +393,32 @@
                 <div id="pareto-database-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
                     <div class="ios-card p-4 rounded-3xl flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                         <div>
-                            <h2 class="font-bold text-white text-sm tracking-wide">DATABASE PARETO PROBLEM</h2>
-                            <p class="text-xs text-slate-400">Live data catatan kerusakan & downtime.</p>
+                            <h2 class="font-bold text-slate-900 text-sm tracking-wide">DATABASE PARETO PROBLEM</h2>
+                            <p class="text-xs text-slate-500">Live data catatan kerusakan & downtime.</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
                             <div class="relative">
                                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                                 <input type="text" id="paretoSearchInput" onkeyup="filterParetoData()" placeholder="Cari Unit / Masalah..." class="pl-9 pr-4 py-2 ios-input rounded-xl text-xs w-64 transition-all">
                             </div>
-                            <button onclick="loadParetoData()" class="px-4 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-xl text-xs transition-all shadow-lg shadow-sky-500/20 flex items-center gap-2 shrink-0">
+                            <button onclick="loadParetoData()" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-sky-600/20 flex items-center gap-2 shrink-0">
                                 <i class="fa-solid fa-rotate"></i> Refresh
                             </button>
                         </div>
                     </div>
 
                     <div class="ios-card rounded-3xl p-4 flex-1 flex flex-col overflow-hidden">
-                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-2xl border border-white/10 bg-black/20">
+                        <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-2xl border border-slate-200/80 bg-white/50">
                             <table id="paretoTable" class="w-full border-collapse text-xs text-left whitespace-nowrap">
-                                <thead id="paretoTableHead" class="bg-slate-900/90 text-slate-200 font-semibold sticky top-0 z-20 backdrop-blur-md"></thead>
-                                <tbody id="paretoTableBody" class="divide-y divide-white/5 text-slate-300"></tbody>
+                                <thead id="paretoTableHead" class="bg-slate-100/90 text-slate-700 font-semibold sticky top-0 z-20 backdrop-blur-md border-b border-slate-200"></thead>
+                                <tbody id="paretoTableBody" class="divide-y divide-slate-200/60 text-slate-800"></tbody>
                             </table>
                         </div>
-                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-white/10 shrink-0">
-                            <span id="pagination-info" class="text-xs text-slate-400 font-medium">Menampilkan 0 - 0 dari 0 data</span>
+                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-200/80 shrink-0">
+                            <span id="pagination-info" class="text-xs text-slate-500 font-medium">Menampilkan 0 - 0 dari 0 data</span>
                             <div class="flex space-x-2">
-                                <button onclick="changePage(-1)" id="prev-btn" class="px-3.5 py-1.5 ios-pill hover:bg-white/20 disabled:opacity-30 text-slate-200 rounded-xl text-xs font-medium transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
-                                <button onclick="changePage(1)" id="next-btn" class="px-3.5 py-1.5 bg-white/15 hover:bg-white/25 disabled:opacity-30 text-white rounded-xl text-xs font-medium transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
+                                <button onclick="changePage(-1)" id="prev-btn" class="px-3.5 py-1.5 ios-pill hover:bg-slate-200/80 disabled:opacity-40 text-slate-700 rounded-xl text-xs font-medium transition-all"><i class="fa-solid fa-chevron-left mr-1"></i> Prev</button>
+                                <button onclick="changePage(1)" id="next-btn" class="px-3.5 py-1.5 bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-800 rounded-xl text-xs font-medium transition-all">Next <i class="fa-solid fa-chevron-right ml-1"></i></button>
                             </div>
                         </div>
                     </div>
@@ -427,43 +428,43 @@
                 <div id="pareto-dashboard-view" class="hidden space-y-6">
 
                     <!-- MODUL: AI WHATSAPP REPORT GENERATOR -->
-                    <div class="ios-card p-5 rounded-3xl border border-sky-500/30 bg-gradient-to-r from-sky-950/40 via-slate-900/60 to-slate-950/40 text-white shadow-xl space-y-4">
+                    <div class="ios-card p-5 rounded-3xl border border-sky-200 bg-gradient-to-r from-sky-50 via-white to-blue-50 text-slate-800 shadow-md space-y-4">
                         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                             <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 rounded-2xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-400 shrink-0">
+                                <div class="w-10 h-10 rounded-2xl bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0">
                                     <i class="fa-solid fa-wand-magic-sparkles text-base"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xs font-bold text-white font-mono uppercase tracking-wider">AI WhatsApp Report Generator</h3>
-                                    <p class="text-[11px] text-slate-400">Rangkum data analitik Pareto terfilter otomatis menjadi draf laporan WhatsApp siap kirim.</p>
+                                    <h3 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">AI WhatsApp Report Generator</h3>
+                                    <p class="text-[11px] text-slate-500">Rangkum data analitik Pareto terfilter otomatis menjadi draf laporan WhatsApp siap kirim.</p>
                                 </div>
                             </div>
-                            <button onclick="generateAILogReport()" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold font-mono text-xs rounded-xl transition-all shadow-lg shadow-sky-500/20 flex items-center gap-2 shrink-0">
+                            <button onclick="generateAILogReport()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold font-mono text-xs rounded-xl transition-all shadow-md shadow-sky-600/20 flex items-center gap-2 shrink-0">
                                 <i class="fa-solid fa-robot"></i> Generate Draf WA
                             </button>
                         </div>
 
                         <!-- Kotak Hasil Draf -->
-                        <div id="ai-report-container" class="hidden pt-4 border-t border-white/10 space-y-3">
+                        <div id="ai-report-container" class="hidden pt-4 border-t border-slate-200 space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-xs font-mono font-bold text-sky-400 flex items-center gap-2">
-                                    <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> DRAF PESAN WHATSAPP (SIAP SALIN):
+                                <span class="text-xs font-mono font-bold text-sky-700 flex items-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> DRAF PESAN WHATSAPP (SIAP SALIN):
                                 </span>
-                                <button onclick="copyToClipboard()" class="px-3 py-1.5 ios-pill hover:bg-white/20 text-slate-200 rounded-xl text-xs font-mono flex items-center gap-1.5 transition-all">
-                                    <i class="fa-solid fa-copy text-sky-400"></i> Copy Text
+                                <button onclick="copyToClipboard()" class="px-3 py-1.5 ios-pill hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-mono flex items-center gap-1.5 transition-all">
+                                    <i class="fa-solid fa-copy text-sky-600"></i> Copy Text
                                 </button>
                             </div>
-                            <textarea id="aiReportOutput" rows="7" class="w-full bg-black/40 border border-white/10 rounded-2xl p-3 text-xs text-slate-200 font-mono focus:outline-none focus:border-sky-500 leading-relaxed custom-scrollbar"></textarea>
+                            <textarea id="aiReportOutput" rows="7" class="w-full bg-white border border-slate-200 rounded-2xl p-3 text-xs text-slate-800 font-mono focus:outline-none focus:border-sky-500 leading-relaxed custom-scrollbar shadow-inner"></textarea>
                         </div>
                     </div>
 
                     <!-- Panel Filter Modul -->
                     <div class="ios-card p-5 rounded-3xl space-y-4">
-                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <div class="flex items-center justify-between border-b border-slate-200/80 pb-3">
                             <div>
-                                <h2 class="text-xs font-bold text-white tracking-wider uppercase font-mono">FILTER PARETO ANALYTICS</h2>
+                                <h2 class="text-xs font-bold text-slate-800 tracking-wider uppercase font-mono">FILTER PARETO ANALYTICS</h2>
                             </div>
-                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 ios-pill hover:bg-white/20 text-slate-300 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5">
+                            <button onclick="resetParetoFilters()" class="px-3 py-1.5 ios-pill hover:bg-slate-200/80 text-slate-600 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5">
                                 <i class="fa-solid fa-rotate-left text-xs"></i> Reset Filter
                             </button>
                         </div>
@@ -471,51 +472,51 @@
                         <!-- Grid Filter -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Unit</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Unit</label>
                                 <select id="filter-unit" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
-                                    <option value="" class="bg-slate-900">Semua Unit</option>
+                                    <option value="">Semua Unit</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Tahun</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tahun</label>
                                 <select id="filter-year" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
-                                    <option value="" class="bg-slate-900">Semua Tahun</option>
+                                    <option value="">Semua Tahun</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Bulan</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Bulan</label>
                                 <select id="filter-month" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
-                                    <option value="" class="bg-slate-900">Semua Bulan</option>
-                                    <option value="Jan" class="bg-slate-900">Jan</option><option value="Feb" class="bg-slate-900">Feb</option><option value="Mar" class="bg-slate-900">Mar</option>
-                                    <option value="Apr" class="bg-slate-900">Apr</option><option value="May" class="bg-slate-900">May</option><option value="Jun" class="bg-slate-900">Jun</option>
-                                    <option value="Jul" class="bg-slate-900">Jul</option><option value="Aug" class="bg-slate-900">Aug</option><option value="Sep" class="bg-slate-900">Sep</option>
-                                    <option value="Oct" class="bg-slate-900">Oct</option><option value="Nov" class="bg-slate-900">Nov</option><option value="Dec" class="bg-slate-900">Dec</option>
+                                    <option value="">Semua Bulan</option>
+                                    <option value="Jan">Jan</option><option value="Feb">Feb</option><option value="Mar">Mar</option>
+                                    <option value="Apr">Apr</option><option value="May">May</option><option value="Jun">Jun</option>
+                                    <option value="Jul">Jul</option><option value="Aug">Aug</option><option value="Sep">Sep</option>
+                                    <option value="Oct">Oct</option><option value="Nov">Nov</option><option value="Dec">Dec</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Tgl Awal</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tgl Awal</label>
                                 <input type="date" id="filter-start-date" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Tgl Akhir</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tgl Akhir</label>
                                 <input type="date" id="filter-end-date" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Cluster</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Cluster</label>
                                 <select id="filter-cluster" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
-                                    <option value="" class="bg-slate-900">Semua Cluster</option>
+                                    <option value="">Semua Cluster</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Major</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Major</label>
                                 <select id="filter-major" onchange="updateSubComponentDropdown(); applyParetoFilters();" class="w-full p-2 ios-input rounded-xl text-xs">
-                                    <option value="" class="bg-slate-900">Semua Major</option>
+                                    <option value="">Semua Major</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Sub Comp</label>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Sub Comp</label>
                                 <select id="filter-sub" onchange="applyParetoFilters()" class="w-full p-2 ios-input rounded-xl text-xs">
-                                    <option value="" class="bg-slate-900">Semua Sub</option>
+                                    <option value="">Semua Sub</option>
                                 </select>
                             </div>
                         </div>
@@ -524,54 +525,54 @@
                     <!-- Ringkasan Statistik -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="p-5 ios-card rounded-3xl">
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Problem</p>
-                            <h3 id="stat-total-records" class="text-2xl font-black text-white mt-1 font-mono">0 Data</h3>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Problem</p>
+                            <h3 id="stat-total-records" class="text-2xl font-black text-slate-900 mt-1 font-mono">0 Data</h3>
                         </div>
                         <div class="p-5 ios-card rounded-3xl">
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Durasi Downtime</p>
-                            <h3 id="stat-total-duration" class="text-2xl font-black text-white mt-1 font-mono">0 Jam</h3>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Durasi Downtime</p>
+                            <h3 id="stat-total-duration" class="text-2xl font-black text-slate-900 mt-1 font-mono">0 Jam</h3>
                         </div>
                         <div class="p-5 ios-card rounded-3xl">
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Top Major Component</p>
-                            <h3 id="stat-top-component" class="text-lg font-bold text-sky-400 mt-1 font-mono truncate">-</h3>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Top Major Component</p>
+                            <h3 id="stat-top-component" class="text-lg font-bold text-sky-700 mt-1 font-mono truncate">-</h3>
                         </div>
                     </div>
 
                     <!-- 6 GRAFIK PARETO GRID -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i> Frequency Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                            <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-500 mr-2"></i> Frequency Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                                 <canvas id="chartFreqComp"></canvas>
                             </div>
                         </div>
                         <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-400 mr-2"></i> Duration Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                            <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-600 mr-2"></i> Duration Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                                 <canvas id="chartDurComp"></canvas>
                             </div>
                         </div>
                         <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i> Frequency - Sub Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                            <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-500 mr-2"></i> Frequency - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                                 <canvas id="chartFreqSub"></canvas>
                             </div>
                         </div>
                         <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-400 mr-2"></i> Duration - Sub Component</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                            <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-600 mr-2"></i> Duration - Sub Component</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                                 <canvas id="chartDurSub"></canvas>
                             </div>
                         </div>
                         <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-400 mr-2"></i> Frequency - Per Unit</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                            <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-amber-500 mr-2"></i> Frequency - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                                 <canvas id="chartFreqUnit"></canvas>
                             </div>
                         </div>
                         <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                            <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-400 mr-2"></i> Duration - Per Unit</h3>
-                            <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                            <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-column text-sky-600 mr-2"></i> Duration - Per Unit</h3>
+                            <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                                 <canvas id="chartDurUnit"></canvas>
                             </div>
                         </div>
@@ -582,22 +583,22 @@
                 <div id="reliability-mtbf-view" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="ios-card p-5 rounded-3xl">
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Overall MTBF</p>
-                            <h3 class="text-3xl font-black text-white mt-1 font-mono">92.4 <span class="text-xs font-normal text-slate-400">Jam</span></h3>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Overall MTBF</p>
+                            <h3 class="text-3xl font-black text-slate-900 mt-1 font-mono">92.4 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
                         </div>
                         <div class="ios-card p-5 rounded-3xl">
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Overall MTTR</p>
-                            <h3 class="text-3xl font-black text-white mt-1 font-mono">3.5 <span class="text-xs font-normal text-slate-400">Jam</span></h3>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Overall MTTR</p>
+                            <h3 class="text-3xl font-black text-slate-900 mt-1 font-mono">3.5 <span class="text-xs font-normal text-slate-500">Jam</span></h3>
                         </div>
                         <div class="ios-card p-5 rounded-3xl">
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Reliability Index</p>
-                            <h3 class="text-3xl font-black text-emerald-400 mt-1 font-mono">96.2%</h3>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Reliability Index</p>
+                            <h3 class="text-3xl font-black text-emerald-600 mt-1 font-mono">96.2%</h3>
                         </div>
                     </div>
 
                     <div class="ios-card p-5 rounded-3xl flex flex-col h-80">
-                        <h3 class="text-xs font-bold text-slate-200 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-line text-sky-400 mr-2"></i> Tren Bulanan MTBF & MTTR</h3>
-                        <div class="flex-1 relative flex items-center justify-center bg-black/20 rounded-2xl p-2 border border-white/5">
+                        <h3 class="text-xs font-bold text-slate-700 tracking-wider uppercase mb-3"><i class="fa-solid fa-chart-line text-sky-600 mr-2"></i> Tren Bulanan MTBF & MTTR</h3>
+                        <div class="flex-1 relative flex items-center justify-center bg-slate-50/50 rounded-2xl p-2 border border-slate-200/60">
                             <canvas id="mtbfChart"></canvas>
                         </div>
                     </div>
@@ -610,9 +611,9 @@
 
     <!-- Script JavaScript -->
     <script>
-        // Konfigurasi Global ChartJS untuk Tema Gelap
-        Chart.defaults.color = '#94a3b8';
-        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+        // Konfigurasi Global ChartJS untuk Tema Terang
+        Chart.defaults.color = '#64748b';
+        Chart.defaults.borderColor = 'rgba(226, 232, 240, 0.8)';
 
         let allParetoRows = [];
         let filteredParetoRows = [];
@@ -713,7 +714,7 @@
             const tableBody = document.getElementById('populationTableBody');
             
             if(!tableBody) return;
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-400"></i> Memuat data database...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-600"></i> Memuat data database...</td></tr>`;
 
             try {
                 const response = await fetch(csvUrl);
@@ -721,28 +722,28 @@
                 const rows = parseCSV(dataText);
 
                 if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-400 font-medium">Belum ada data.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-medium">Belum ada data.</td></tr>`;
                     return;
                 }
 
                 const headers = rows[0];
                 let headHtml = '<tr>';
-                headers.forEach(h => { if(h) headHtml += `<th class="p-3 font-semibold border-b border-white/10 uppercase tracking-wider text-[11px] text-slate-300">${h}</th>`; });
+                headers.forEach(h => { if(h) headHtml += `<th class="p-3 font-semibold border-b border-slate-200 uppercase tracking-wider text-[11px] text-slate-700">${h}</th>`; });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
                 let bodyHtml = '';
                 for (let i = 1; i < rows.length; i++) {
                     const cols = rows[i];
-                    bodyHtml += `<tr class="hover:bg-white/5 transition-colors">`;
+                    bodyHtml += `<tr class="hover:bg-slate-100/80 transition-colors">`;
                     for (let j = 0; j < headers.length; j++) {
-                        bodyHtml += `<td class="p-3 border-b border-white/5 font-medium">${cols[j] || ''}</td>`;
+                        bodyHtml += `<td class="p-3 border-b border-slate-200/60 font-medium">${cols[j] || ''}</td>`;
                     }
                     bodyHtml += `</tr>`;
                 }
                 tableBody.innerHTML = bodyHtml;
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-400 font-medium">Gagal memuat data.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-medium">Gagal memuat data.</td></tr>`;
             }
         }
 
@@ -751,7 +752,7 @@
             const tableBody = document.getElementById('paretoTableBody');
             if(!tableBody) return;
 
-            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-400"></i> Memuat data Pareto...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-600"></i> Memuat data Pareto...</td></tr>`;
 
             try {
                 const res = await fetch('https://docs.google.com/spreadsheets/d/1EZ2V60nyd7yb8FStjjTfmyDx14lMgzylQCA8RrJGJa8/export?format=csv&gid=782860436');
@@ -759,14 +760,14 @@
                 const rows = parseCSV(text);
 
                 if (rows.length < 2) {
-                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-400 font-medium">Belum ada data pada tab Pareto.</td></tr>`;
+                    tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-medium">Belum ada data pada tab Pareto.</td></tr>`;
                     return;
                 }
 
                 const headers = rows[0];
                 let headHtml = '<tr>';
                 headers.forEach(h => {
-                    if(h) headHtml += `<th class="p-3 font-semibold border-b border-white/10 uppercase tracking-wider text-[11px] text-slate-300">${h}</th>`;
+                    if(h) headHtml += `<th class="p-3 font-semibold border-b border-slate-200 uppercase tracking-wider text-[11px] text-slate-700">${h}</th>`;
                 });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
@@ -781,7 +782,7 @@
 
             } catch (e) {
                 console.error("Gagal memuat pareto:", e);
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-400 font-medium">Gagal memuat data Pareto.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-medium">Gagal memuat data Pareto.</td></tr>`;
             }
         }
 
@@ -801,7 +802,7 @@
             const totalData = filteredParetoRows.length;
 
             if (totalData === 0) {
-                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-400 font-medium">Data tidak ditemukan.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-medium">Data tidak ditemukan.</td></tr>`;
                 document.getElementById('pagination-info').innerText = `Menampilkan 0 dari 0 data`;
                 document.getElementById('prev-btn').disabled = true;
                 document.getElementById('next-btn').disabled = true;
@@ -818,9 +819,9 @@
 
             let bodyHtml = '';
             sliceData.forEach(row => {
-                bodyHtml += `<tr class="hover:bg-white/5 transition-colors">`;
+                bodyHtml += `<tr class="hover:bg-slate-100/80 transition-colors">`;
                 for (let j = 0; j < row.length; j++) {
-                    bodyHtml += `<td class="p-3 border-b border-white/5 font-medium">${row[j] || ''}</td>`;
+                    bodyHtml += `<td class="p-3 border-b border-slate-200/60 font-medium">${row[j] || ''}</td>`;
                 }
                 bodyHtml += `</tr>`;
             });
@@ -858,33 +859,33 @@
 
             let unitSel = document.getElementById('filter-unit');
             if(unitSel) {
-                unitSel.innerHTML = '<option value="" class="bg-slate-900">Semua Unit</option>';
+                unitSel.innerHTML = '<option value="">Semua Unit</option>';
                 Array.from(units).sort().forEach(u => {
-                    unitSel.innerHTML += `<option value="${u}" class="bg-slate-900">${u}</option>`;
+                    unitSel.innerHTML += `<option value="${u}">${u}</option>`;
                 });
             }
 
             let yearSel = document.getElementById('filter-year');
             if(yearSel) {
-                yearSel.innerHTML = '<option value="" class="bg-slate-900">Semua Tahun</option>';
+                yearSel.innerHTML = '<option value="">Semua Tahun</option>';
                 Array.from(years).sort().forEach(y => {
-                    yearSel.innerHTML += `<option value="${y}" class="bg-slate-900">${y}</option>`;
+                    yearSel.innerHTML += `<option value="${y}">${y}</option>`;
                 });
             }
 
             let clusterSel = document.getElementById('filter-cluster');
             if(clusterSel) {
-                clusterSel.innerHTML = '<option value="" class="bg-slate-900">Semua Cluster</option>';
+                clusterSel.innerHTML = '<option value="">Semua Cluster</option>';
                 Array.from(clusters).sort().forEach(c => {
-                    clusterSel.innerHTML += `<option value="${c}" class="bg-slate-900">${c}</option>`;
+                    clusterSel.innerHTML += `<option value="${c}">${c}</option>`;
                 });
             }
 
             let majorSel = document.getElementById('filter-major');
             if(majorSel) {
-                majorSel.innerHTML = '<option value="" class="bg-slate-900">Semua Major</option>';
+                majorSel.innerHTML = '<option value="">Semua Major</option>';
                 Array.from(majors).sort().forEach(m => {
-                    majorSel.innerHTML += `<option value="${m}" class="bg-slate-900">${m}</option>`;
+                    majorSel.innerHTML += `<option value="${m}">${m}</option>`;
                 });
             }
             
@@ -896,7 +897,7 @@
             let subSel = document.getElementById('filter-sub');
             if(!subSel) return;
             
-            subSel.innerHTML = '<option value="" class="bg-slate-900">Semua Sub</option>';
+            subSel.innerHTML = '<option value="">Semua Sub</option>';
 
             let subs = new Set();
             allParetoRows.forEach(row => {
@@ -908,7 +909,7 @@
             });
 
             Array.from(subs).sort().forEach(s => {
-                subSel.innerHTML += `<option value="${s}" class="bg-slate-900">${s}</option>`;
+                subSel.innerHTML += `<option value="${s}">${s}</option>`;
             });
         }
 
@@ -1050,14 +1051,14 @@
                         scales: {
                             y: { 
                                 beginAtZero: true, 
-                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                                ticks: { font: { size: 10, family: 'Inter' }, color: '#94a3b8' }
+                                grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                                ticks: { font: { size: 10, family: 'Inter' }, color: '#64748b' }
                             },
                             x: { 
                                 grid: { display: false },
                                 ticks: { 
                                     font: { size: 10, family: 'Inter' },
-                                    color: '#94a3b8',
+                                    color: '#64748b',
                                     maxRotation: 45,
                                     minRotation: 45
                                 }
@@ -1068,11 +1069,11 @@
             }
 
             renderBar('chartFreqComp', compFreq, '#f59e0b', false);
-            renderBar('chartDurComp', compDur, '#38bdf8', true);
+            renderBar('chartDurComp', compDur, '#0284c7', true);
             renderBar('chartFreqSub', subFreq, '#f59e0b', false);
-            renderBar('chartDurSub', subDur, '#38bdf8', true);
+            renderBar('chartDurSub', subDur, '#0284c7', true);
             renderBar('chartFreqUnit', unitFreq, '#f59e0b', false);
-            renderBar('chartDurUnit', unitDur, '#38bdf8', true);
+            renderBar('chartDurUnit', unitDur, '#0284c7', true);
         }
 
         function renderMtbfChart() {
@@ -1088,16 +1089,16 @@
                         {
                             label: 'MTBF (Jam)',
                             data: [80, 85, 82, 88, 90, 89, 94, 91, 92.4],
-                            borderColor: '#34d399',
-                            backgroundColor: 'rgba(52, 211, 153, 0.1)',
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             fill: true,
                             tension: 0.35
                         },
                         {
                             label: 'MTTR (Jam)',
                             data: [5.2, 4.8, 4.5, 4.1, 3.9, 3.8, 3.6, 3.5, 3.5],
-                            borderColor: '#38bdf8',
-                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            borderColor: '#0284c7',
+                            backgroundColor: 'rgba(2, 132, 199, 0.1)',
                             fill: true,
                             tension: 0.35
                         }
@@ -1106,10 +1107,10 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11, family: 'Inter' }, color: '#e2e8f0' } } },
+                    plugins: { legend: { position: 'top', labels: { boxWidth: 10, font: { size: 11, family: 'Inter' }, color: '#334155' } } },
                     scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { font: { family: 'Inter' }, color: '#94a3b8' } },
-                        x: { grid: { display: false }, ticks: { font: { family: 'Inter' }, color: '#94a3b8' } }
+                        y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.8)' }, ticks: { font: { family: 'Inter' }, color: '#64748b' } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Inter' }, color: '#64748b' } }
                     }
                 }
             });
