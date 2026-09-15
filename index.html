@@ -283,7 +283,7 @@
                     </div>
                 </div>
 
-                <!-- 8. KNOWLEDGE BASE (UPDATED SUBMENU) -->
+                <!-- 8. KNOWLEDGE BASE (UPDATED SUBMENU WITH INTEGRATED LINKS) -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
                     <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
@@ -295,8 +295,12 @@
                         <i id="km-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
                     <div id="km-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="selectView('kb-sop-view', 'KNOWLEDGE BASE - STANDARD OPERATING PROCEDURE (SOP)')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">SOP</a>
-                        <a href="#" onclick="selectView('kb-wi-view', 'KNOWLEDGE BASE - WORK INSTRUCTION (WI)')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">WI</a>
+                        <a href="#" onclick="selectView('kb-sop-view', 'KNOWLEDGE BASE - STANDARD OPERATING PROCEDURE (SOP)')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">SOP (Internal View)</a>
+                        <a href="https://supabase.com/dashboard/project/mbmopwrlsselhzmxnuin/storage/files/buckets/sop-files" target="_blank" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-teal-700 hover:bg-slate-100 flex items-center justify-between">
+                            <span>SOP Storage</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70"></i>
+                        </a>
+                        <a href="#" onclick="selectView('kb-wi-view', 'KNOWLEDGE BASE - WORK INSTRUCTION (WI)')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">WI (Internal View)</a>
                     </div>
                 </div>
 
@@ -636,9 +640,14 @@
                                 <h2 class="font-bold text-slate-900 text-sm tracking-wide">DOKUMEN SOP (STANDARD OPERATING PROCEDURE)</h2>
                                 <p class="text-xs text-slate-500">Kelola dan lihat berkas panduan operasional standar (PDF & Excel).</p>
                             </div>
-                            <button onclick="toggleDocumentModal('SOP')" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-teal-600/20 flex items-center gap-2">
-                                <i class="fa-solid fa-plus"></i> Tambah SOP
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <a href="https://supabase.com/dashboard/project/mbmopwrlsselhzmxnuin/storage/files/buckets/sop-files" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center gap-2">
+                                    <i class="fa-solid fa-database"></i> Supabase Storage
+                                </a>
+                                <button onclick="toggleDocumentModal('SOP')" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-teal-600/20 flex items-center gap-2">
+                                    <i class="fa-solid fa-plus"></i> Tambah SOP
+                                </button>
+                            </div>
                         </div>
 
                         <div class="flex items-center justify-between gap-4">
@@ -780,9 +789,9 @@
 
         // Data Storage Dokumen Knowledge Base (SOP & WI)
         let knowledgeBaseData = [
-            { id: 1, type: 'SOP', code: 'SOP-PLANT-001', title: 'Standard Maintenance Overhaul Hydraulic Pump', category: 'Mechanical', fileType: 'pdf', date: '2026-02-10', fileUrl: '#' },
-            { id: 2, type: 'SOP', code: 'SOP-PLANT-002', title: 'Schedule Replacement Track Link Undercarriage', category: 'Undercarriage', fileType: 'xlsx', date: '2026-03-01', fileUrl: '#' },
-            { id: 3, type: 'WI', code: 'WI-ELEC-014', title: 'Panduan Kalibrasi Sensor Pressure Transmission', category: 'Electrical', fileType: 'pdf', date: '2026-01-15', fileUrl: '#' }
+            { id: 1, type: 'SOP', code: 'SOP-PLANT-001', title: 'Standard Maintenance Overhaul Hydraulic Pump', category: 'Mechanical', fileType: 'pdf', date: '2026-02-10', fileUrl: 'https://supabase.com/dashboard/project/mbmopwrlsselhzmxnuin/storage/files/buckets/sop-files' },
+            { id: 2, type: 'SOP', code: 'SOP-PLANT-002', title: 'Schedule Replacement Track Link Undercarriage', category: 'Undercarriage', fileType: 'xlsx', date: '2026-03-01', fileUrl: 'https://supabase.com/dashboard/project/mbmopwrlsselhzmxnuin/storage/files/buckets/sop-files' },
+            { id: 3, type: 'WI', code: 'WI-ELEC-014', title: 'Panduan Kalibrasi Sensor Pressure Transmission', category: 'Electrical', fileType: 'pdf', date: '2026-01-15', fileUrl: 'https://supabase.com/dashboard/project/mbmopwrlsselhzmxnuin/storage/files/buckets/sop-files' }
         ];
 
         function openSidebar() {
@@ -856,7 +865,7 @@
                     <td class="p-3 text-slate-500 font-mono">${doc.date}</td>
                     <td class="p-3 text-center">
                         <div class="flex items-center justify-center space-x-2">
-                            <a href="${doc.fileUrl}" target="_blank" title="Buka Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-sky-600 hover:bg-sky-100 transition-colors">
+                            <a href="${doc.fileUrl}" target="_blank" title="Buka Dokumen di Supabase" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-sky-600 hover:bg-sky-100 transition-colors">
                                 <i class="fa-solid fa-folder-open text-xs"></i>
                             </a>
                             <button onclick="editDocument(${doc.id})" title="Edit Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-amber-600 hover:bg-amber-100 transition-colors">
@@ -903,7 +912,7 @@
                     <td class="p-3 text-slate-500 font-mono">${doc.date}</td>
                     <td class="p-3 text-center">
                         <div class="flex items-center justify-center space-x-2">
-                            <a href="${doc.fileUrl}" target="_blank" title="Buka Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-sky-600 hover:bg-sky-100 transition-colors">
+                            <a href="${doc.fileUrl}" target="_blank" title="Buka Dokumen di Supabase" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-sky-600 hover:bg-sky-100 transition-colors">
                                 <i class="fa-solid fa-folder-open text-xs"></i>
                             </a>
                             <button onclick="editDocument(${doc.id})" title="Edit Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-amber-600 hover:bg-amber-100 transition-colors">
@@ -940,7 +949,7 @@
             const fileInput = document.getElementById('docFileInput');
 
             let extension = 'pdf';
-            let fileUrl = '#';
+            let fileUrl = 'https://supabase.com/dashboard/project/mbmopwrlsselhzmxnuin/storage/files/buckets/sop-files';
 
             if (fileInput.files.length > 0) {
                 const fileName = fileInput.files[0].name;
