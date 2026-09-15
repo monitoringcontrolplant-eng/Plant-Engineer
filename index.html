@@ -109,7 +109,6 @@
             <!-- Header Status & Brand -->
             <div class="ios-card rounded-3xl p-4 shrink-0 flex flex-col space-y-3">
                 <div class="flex items-center justify-between text-[11px] font-semibold text-slate-500 tracking-wider">
-                    </span>
                 </div>
                 <div class="flex items-center justify-between pt-1">
                     <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
@@ -390,14 +389,21 @@
 
                 <!-- VIEW 3: POPULATION UNIT DATABASE -->
                 <div id="population-view" class="hidden h-[calc(100vh-100px)] flex flex-col space-y-4">
-                    <div class="ios-card p-4 rounded-3xl flex justify-between items-center shrink-0">
+                    <div class="ios-card p-4 rounded-3xl flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0">
                         <div>
                             <h2 class="font-bold text-slate-900 text-sm tracking-wide">UNIT DATABASE</h2>
                             <p class="text-xs text-slate-500">Master data populasi unit terintegrasi.</p>
                         </div>
-                        <button onclick="loadDatabase('population')" class="px-4 py-2 ios-pill hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-medium transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-rotate text-xs"></i> Refresh
-                        </button>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <!-- Search Filter Unit -->
+                            <div class="relative flex-1 sm:w-64">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="text" id="popSearchInput" onkeyup="filterPopulationData()" placeholder="Cari Equipment / Model / C/N..." class="w-full pl-9 pr-4 py-2 ios-input rounded-xl text-xs transition-all">
+                            </div>
+                            <button onclick="loadDatabase('population')" class="px-4 py-2 ios-pill hover:bg-slate-200/80 text-slate-700 rounded-xl text-xs font-medium transition-all flex items-center gap-2 shrink-0">
+                                <i class="fa-solid fa-rotate text-xs"></i> Refresh
+                            </button>
+                        </div>
                     </div>
                     <div class="ios-card rounded-3xl p-4 flex-1 flex flex-col overflow-hidden">
                         <div class="overflow-x-auto overflow-y-auto flex-1 custom-scrollbar rounded-2xl border border-slate-200/80 bg-white/50">
@@ -635,6 +641,9 @@
         Chart.defaults.color = '#64748b';
         Chart.defaults.borderColor = 'rgba(226, 232, 240, 0.8)';
 
+        let allPopulationRows = [];
+        let populationHeaders = [];
+
         let allParetoRows = [];
         let filteredParetoRows = [];
         let currentPage = 1;
@@ -746,24 +755,49 @@
                     return;
                 }
 
-                const headers = rows[0];
+                populationHeaders = rows[0];
+                allPopulationRows = rows.slice(1);
+
                 let headHtml = '<tr>';
-                headers.forEach(h => { if(h) headHtml += `<th class="p-3 font-semibold border-b border-slate-200 uppercase tracking-wider text-[11px] text-slate-700">${h}</th>`; });
+                populationHeaders.forEach(h => { if(h) headHtml += `<th class="p-3 font-semibold border-b border-slate-200 uppercase tracking-wider text-[11px] text-slate-700">${h}</th>`; });
                 headHtml += '</tr>';
                 tableHead.innerHTML = headHtml;
 
-                let bodyHtml = '';
-                for (let i = 1; i < rows.length; i++) {
-                    const cols = rows[i];
-                    bodyHtml += `<tr class="hover:bg-slate-100/80 transition-colors">`;
-                    for (let j = 0; j < headers.length; j++) {
-                        bodyHtml += `<td class="p-3 border-b border-slate-200/60 font-medium">${cols[j] || ''}</td>`;
-                    }
-                    bodyHtml += `</tr>`;
-                }
-                tableBody.innerHTML = bodyHtml;
+                renderPopulationTable(allPopulationRows);
             } catch (error) {
                 tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-rose-600 font-medium">Gagal memuat data.</td></tr>`;
+            }
+        }
+
+        function renderPopulationTable(data) {
+            const tableBody = document.getElementById('populationTableBody');
+            if(!tableBody) return;
+
+            if (data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="30" class="p-8 text-center text-slate-500 font-medium">Data unit tidak ditemukan.</td></tr>`;
+                return;
+            }
+
+            let bodyHtml = '';
+            data.forEach(cols => {
+                bodyHtml += `<tr class="hover:bg-slate-100/80 transition-colors">`;
+                for (let j = 0; j < populationHeaders.length; j++) {
+                    bodyHtml += `<td class="p-3 border-b border-slate-200/60 font-medium">${cols[j] || ''}</td>`;
+                }
+                bodyHtml += `</tr>`;
+            });
+            tableBody.innerHTML = bodyHtml;
+        }
+
+        function filterPopulationData() {
+            const keyword = document.getElementById('popSearchInput').value.toLowerCase();
+            if (!keyword) {
+                renderPopulationTable(allPopulationRows);
+            } else {
+                const filtered = allPopulationRows.filter(row => 
+                    row.some(cell => cell.toLowerCase().includes(keyword))
+                );
+                renderPopulationTable(filtered);
             }
         }
 
