@@ -283,7 +283,7 @@
                     </div>
                 </div>
 
-                <!-- 8. KNOWLEDGE MANAGEMENT -->
+                <!-- 8. KNOWLEDGE BASE (UPDATED SUBMENU) -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
                     <button type="button" onclick="toggleSubmenu('km-sub', 'km-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
@@ -295,10 +295,8 @@
                         <i id="km-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
                     </button>
                     <div id="km-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Lesson Learned</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Troubleshooting Guide</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Standard Repair (SOP)</a>
-                        <a href="#" onclick="closeSidebar()" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Failure Library</a>
+                        <a href="#" onclick="selectView('kb-sop-view', 'KNOWLEDGE BASE - STANDARD OPERATING PROCEDURE (SOP)')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">SOP</a>
+                        <a href="#" onclick="selectView('kb-wi-view', 'KNOWLEDGE BASE - WORK INSTRUCTION (WI)')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">WI</a>
                     </div>
                 </div>
 
@@ -630,9 +628,137 @@
                     </div>
                 </div>
 
+                <!-- VIEW 7: KNOWLEDGE BASE - SOP -->
+                <div id="kb-sop-view" class="hidden space-y-6">
+                    <div class="ios-card p-5 rounded-3xl space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200/80 pb-4">
+                            <div>
+                                <h2 class="font-bold text-slate-900 text-sm tracking-wide">DOKUMEN SOP (STANDARD OPERATING PROCEDURE)</h2>
+                                <p class="text-xs text-slate-500">Kelola dan lihat berkas panduan operasional standar (PDF & Excel).</p>
+                            </div>
+                            <button onclick="toggleDocumentModal('SOP')" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-teal-600/20 flex items-center gap-2">
+                                <i class="fa-solid fa-plus"></i> Tambah SOP
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="relative flex-1 max-w-md">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="text" id="sopSearchInput" onkeyup="filterDocs('SOP')" placeholder="Cari Judul / Kode Dokumen SOP..." class="w-full pl-9 pr-4 py-2 ios-input rounded-xl text-xs transition-all">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto custom-scrollbar rounded-2xl border border-slate-200/80 bg-white/50">
+                            <table class="w-full border-collapse text-xs text-left whitespace-nowrap">
+                                <thead class="bg-slate-100/90 text-slate-700 font-semibold border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-3 border-b">Kode Dokumen</th>
+                                        <th class="p-3 border-b">Judul Dokumen</th>
+                                        <th class="p-3 border-b">Kategori</th>
+                                        <th class="p-3 border-b">Tipe File</th>
+                                        <th class="p-3 border-b">Tanggal Upload</th>
+                                        <th class="p-3 border-b text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sopTableBody" class="divide-y divide-slate-200/60 text-slate-800">
+                                    <!-- Dynamic rows loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 8: KNOWLEDGE BASE - WI -->
+                <div id="kb-wi-view" class="hidden space-y-6">
+                    <div class="ios-card p-5 rounded-3xl space-y-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200/80 pb-4">
+                            <div>
+                                <h2 class="font-bold text-slate-900 text-sm tracking-wide">DOKUMEN WI (WORK INSTRUCTION)</h2>
+                                <p class="text-xs text-slate-500">Kelola dan lihat instruksi kerja rinci (PDF & Excel).</p>
+                            </div>
+                            <button onclick="toggleDocumentModal('WI')" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl text-xs transition-all shadow-md shadow-teal-600/20 flex items-center gap-2">
+                                <i class="fa-solid fa-plus"></i> Tambah WI
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="relative flex-1 max-w-md">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="text" id="wiSearchInput" onkeyup="filterDocs('WI')" placeholder="Cari Judul / Kode Dokumen WI..." class="w-full pl-9 pr-4 py-2 ios-input rounded-xl text-xs transition-all">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto custom-scrollbar rounded-2xl border border-slate-200/80 bg-white/50">
+                            <table class="w-full border-collapse text-xs text-left whitespace-nowrap">
+                                <thead class="bg-slate-100/90 text-slate-700 font-semibold border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-3 border-b">Kode Dokumen</th>
+                                        <th class="p-3 border-b">Judul Dokumen</th>
+                                        <th class="p-3 border-b">Kategori</th>
+                                        <th class="p-3 border-b">Tipe File</th>
+                                        <th class="p-3 border-b">Tanggal Upload</th>
+                                        <th class="p-3 border-b text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="wiTableBody" class="divide-y divide-slate-200/60 text-slate-800">
+                                    <!-- Dynamic rows loaded via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
 
+    </div>
+
+    <!-- MODAL UPLOAD / EDIT DOKUMEN -->
+    <div id="docModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="ios-card w-full max-w-lg rounded-3xl p-6 bg-white space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                <h3 id="modalTitle" class="font-bold text-sm text-slate-900 tracking-wide">Tambah Dokumen</h3>
+                <button onclick="toggleDocumentModal()" class="w-7 h-7 rounded-full ios-pill flex items-center justify-center text-slate-500 hover:text-slate-800">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            
+            <form id="docForm" onsubmit="saveDocument(event)" class="space-y-3">
+                <input type="hidden" id="docId">
+                <input type="hidden" id="docType">
+
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Kode Dokumen</label>
+                    <input type="text" id="docCode" required placeholder="Contoh: SOP-ENG-001" class="w-full p-2.5 ios-input rounded-xl text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Judul Dokumen</label>
+                    <input type="text" id="docTitle" required placeholder="Contoh: Prosedur Overhaul Engine" class="w-full p-2.5 ios-input rounded-xl text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Kategori Dokumen</label>
+                    <select id="docCategory" class="w-full p-2.5 ios-input rounded-xl text-xs">
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Undercarriage">Undercarriage</option>
+                        <option value="General Maintenance">General Maintenance</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Upload File (PDF / Excel)</label>
+                    <input type="file" id="docFileInput" accept=".pdf, .xls, .xlsx" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 cursor-pointer">
+                    <p class="text-[10px] text-slate-400 mt-1">Format yang didukung: .pdf, .xls, .xlsx</p>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
+                    <button type="button" onclick="toggleDocumentModal()" class="px-4 py-2 ios-pill hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-medium">Batal</button>
+                    <button type="submit" class="px-5 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl text-xs shadow-md shadow-teal-600/20">Simpan Dokumen</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Script JavaScript -->
@@ -652,6 +778,13 @@
         let chartInstances = {};
         let mtbfChartInstance = null;
 
+        // Data Storage Dokumen Knowledge Base (SOP & WI)
+        let knowledgeBaseData = [
+            { id: 1, type: 'SOP', code: 'SOP-PLANT-001', title: 'Standard Maintenance Overhaul Hydraulic Pump', category: 'Mechanical', fileType: 'pdf', date: '2026-02-10', fileUrl: '#' },
+            { id: 2, type: 'SOP', code: 'SOP-PLANT-002', title: 'Schedule Replacement Track Link Undercarriage', category: 'Undercarriage', fileType: 'xlsx', date: '2026-03-01', fileUrl: '#' },
+            { id: 3, type: 'WI', code: 'WI-ELEC-014', title: 'Panduan Kalibrasi Sensor Pressure Transmission', category: 'Electrical', fileType: 'pdf', date: '2026-01-15', fileUrl: '#' }
+        ];
+
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.remove('hidden');
@@ -668,7 +801,7 @@
         }
 
         function selectView(viewId, title) {
-            ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view', 'reliability-mtbf-view'].forEach(id => {
+            ['dashboard-view', 'backlog-view', 'population-view', 'pareto-database-view', 'pareto-dashboard-view', 'reliability-mtbf-view', 'kb-sop-view', 'kb-wi-view'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.add('hidden');
             });
@@ -688,6 +821,181 @@
             }
             if (viewId === 'reliability-mtbf-view') {
                 renderMtbfChart();
+            }
+            if (viewId === 'kb-sop-view') renderKnowledgeBaseTable('SOP');
+            if (viewId === 'kb-wi-view') renderKnowledgeBaseTable('WI');
+        }
+
+        /* --- KNOWLEDGE BASE MANAGEMENT (SOP & WI) --- */
+        function renderKnowledgeBaseTable(type) {
+            const tableBody = document.getElementById(type === 'SOP' ? 'sopTableBody' : 'wiTableBody');
+            if (!tableBody) return;
+
+            const filteredData = knowledgeBaseData.filter(item => item.type === type);
+
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500 font-medium">Belum ada dokumen ${type}. Silakan tambah dokumen baru.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            filteredData.forEach(doc => {
+                const badgeColor = doc.fileType === 'pdf' ? 'bg-rose-100 text-rose-700 border-rose-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
+                const fileIcon = doc.fileType === 'pdf' ? 'fa-file-pdf text-rose-600' : 'fa-file-excel text-emerald-600';
+
+                html += `
+                <tr class="hover:bg-slate-100/80 transition-colors">
+                    <td class="p-3 font-mono font-semibold text-slate-700">${doc.code}</td>
+                    <td class="p-3 font-medium text-slate-900">${doc.title}</td>
+                    <td class="p-3 text-slate-600">${doc.category}</td>
+                    <td class="p-3">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-full border ${badgeColor}">
+                            <i class="fa-solid ${fileIcon}"></i> ${doc.fileType}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-500 font-mono">${doc.date}</td>
+                    <td class="p-3 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                            <a href="${doc.fileUrl}" target="_blank" title="Buka Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-sky-600 hover:bg-sky-100 transition-colors">
+                                <i class="fa-solid fa-folder-open text-xs"></i>
+                            </a>
+                            <button onclick="editDocument(${doc.id})" title="Edit Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-amber-600 hover:bg-amber-100 transition-colors">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <button onclick="deleteDocument(${doc.id}, '${doc.type}')" title="Hapus Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-rose-600 hover:bg-rose-100 transition-colors">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+
+            tableBody.innerHTML = html;
+        }
+
+        function filterDocs(type) {
+            const searchVal = document.getElementById(type === 'SOP' ? 'sopSearchInput' : 'wiSearchInput').value.toLowerCase();
+            const filtered = knowledgeBaseData.filter(item => item.type === type && (item.title.toLowerCase().includes(searchVal) || item.code.toLowerCase().includes(searchVal)));
+            
+            const tableBody = document.getElementById(type === 'SOP' ? 'sopTableBody' : 'wiTableBody');
+            if (!tableBody) return;
+
+            if (filtered.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500 font-medium">Dokumen tidak ditemukan.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(doc => {
+                const badgeColor = doc.fileType === 'pdf' ? 'bg-rose-100 text-rose-700 border-rose-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
+                const fileIcon = doc.fileType === 'pdf' ? 'fa-file-pdf text-rose-600' : 'fa-file-excel text-emerald-600';
+
+                html += `
+                <tr class="hover:bg-slate-100/80 transition-colors">
+                    <td class="p-3 font-mono font-semibold text-slate-700">${doc.code}</td>
+                    <td class="p-3 font-medium text-slate-900">${doc.title}</td>
+                    <td class="p-3 text-slate-600">${doc.category}</td>
+                    <td class="p-3">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold uppercase rounded-full border ${badgeColor}">
+                            <i class="fa-solid ${fileIcon}"></i> ${doc.fileType}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-500 font-mono">${doc.date}</td>
+                    <td class="p-3 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                            <a href="${doc.fileUrl}" target="_blank" title="Buka Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-sky-600 hover:bg-sky-100 transition-colors">
+                                <i class="fa-solid fa-folder-open text-xs"></i>
+                            </a>
+                            <button onclick="editDocument(${doc.id})" title="Edit Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-amber-600 hover:bg-amber-100 transition-colors">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <button onclick="deleteDocument(${doc.id}, '${doc.type}')" title="Hapus Dokumen" class="w-7 h-7 rounded-lg ios-pill flex items-center justify-center text-rose-600 hover:bg-rose-100 transition-colors">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+            tableBody.innerHTML = html;
+        }
+
+        function toggleDocumentModal(type = 'SOP') {
+            const modal = document.getElementById('docModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('docForm').reset();
+                document.getElementById('docId').value = '';
+                document.getElementById('docType').value = type;
+                document.getElementById('modalTitle').innerText = `Tambah Dokumen Baru (${type})`;
+            }
+        }
+
+        function saveDocument(e) {
+            e.preventDefault();
+            const id = document.getElementById('docId').value;
+            const type = document.getElementById('docType').value;
+            const code = document.getElementById('docCode').value;
+            const title = document.getElementById('docTitle').value;
+            const category = document.getElementById('docCategory').value;
+            const fileInput = document.getElementById('docFileInput');
+
+            let extension = 'pdf';
+            let fileUrl = '#';
+
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.files[0].name;
+                extension = fileName.split('.').pop().toLowerCase();
+                fileUrl = URL.createObjectURL(fileInput.files[0]);
+            }
+
+            if (id) {
+                // Mode Edit
+                const index = knowledgeBaseData.findIndex(item => item.id == id);
+                if (index !== -1) {
+                    knowledgeBaseData[index].code = code;
+                    knowledgeBaseData[index].title = title;
+                    knowledgeBaseData[index].category = category;
+                    if (fileInput.files.length > 0) {
+                        knowledgeBaseData[index].fileType = extension;
+                        knowledgeBaseData[index].fileUrl = fileUrl;
+                    }
+                }
+            } else {
+                // Mode Tambah Baru
+                const newDoc = {
+                    id: Date.now(),
+                    type: type,
+                    code: code,
+                    title: title,
+                    category: category,
+                    fileType: extension,
+                    date: new Date().toISOString().split('T')[0],
+                    fileUrl: fileUrl
+                };
+                knowledgeBaseData.unshift(newDoc);
+            }
+
+            toggleDocumentModal();
+            renderKnowledgeBaseTable(type);
+        }
+
+        function editDocument(id) {
+            const doc = knowledgeBaseData.find(item => item.id === id);
+            if (!doc) return;
+
+            toggleDocumentModal(doc.type);
+            document.getElementById('docId').value = doc.id;
+            document.getElementById('docType').value = doc.type;
+            document.getElementById('docCode').value = doc.code;
+            document.getElementById('docTitle').value = doc.title;
+            document.getElementById('docCategory').value = doc.category;
+            document.getElementById('modalTitle').innerText = `Edit Dokumen ${doc.type} - ${doc.code}`;
+        }
+
+        function deleteDocument(id, type) {
+            if (confirm('Apakah Anda yakin ingin menghapus dokumen ini?')) {
+                knowledgeBaseData = knowledgeBaseData.filter(item => item.id !== id);
+                renderKnowledgeBaseTable(type);
             }
         }
 
