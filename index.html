@@ -1521,16 +1521,40 @@
                 console.error('Gagal menyalin teks: ', err);
             });
         }
-<!-- SDK Supabase -->
+<!-- 1. Load Supabase JS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- 2. Integration & UI Logic -->
     <script>
-      // 1. Inisialisasi Supabase
+      // ==========================================
+      // A. FUNGSI NAVIGASI & SIDEBAR BAWAAN (WAJIB ADA)
+      // ==========================================
+      function toggleSubmenu(element) {
+        const parent = element.parentElement;
+        if (parent) {
+          parent.classList.toggle('active');
+        }
+      }
+
+      function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-content, .content-section, [data-page]');
+        pages.forEach(page => {
+          page.style.display = 'none';
+        });
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+          targetPage.style.display = 'block';
+        }
+      }
+
+      // ==========================================
+      // B. INISIALISASI SUPABASE
+      // ==========================================
       const SUPABASE_URL = 'https://mbmopwrlsselhzmxnuin.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_xcHIBKfP50fm1tQgbyCCVA_z2nrcdUg';
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // 2. Fungsi Upload Berkas ke Supabase Storage
+      // Upload berkas ke Storage Bucket 'sop-files'
       async function uploadSOP(file) {
         const filePath = `${Date.now()}_${file.name}`;
         const { data, error } = await supabaseClient
@@ -1551,7 +1575,7 @@
         return urlData.publicUrl;
       }
 
-      // 3. Fungsi Simpan Metadata ke Tabel Database
+      // Simpan metadata ke Tabel Database
       async function simpanSOPKeDatabase(kode, judul, kategori, fileUrl, fileExt) {
         const { data, error } = await supabaseClient
           .from('sop_documents')
@@ -1572,27 +1596,10 @@
         }
       }
 
-      // 4. Integrasi Menu Sidebar UI & Event Listener Form
+      // ==========================================
+      // C. EVENT LISTENER FORM SOP
+      // ==========================================
       document.addEventListener('DOMContentLoaded', () => {
-        // Kontrol Buka/Tutup Submenu Sidebar
-        const navDropdowns = document.querySelectorAll('.nav-dropdown');
-        navDropdowns.forEach(dropdown => {
-          dropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-            this.classList.toggle('active');
-          });
-        });
-
-        // Kontrol Mobile Sidebar Toggle (Jika tombol burger diklik)
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebar = document.querySelector('.sidebar');
-        if (sidebarToggle && sidebar) {
-          sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-          });
-        }
-
-        // Handler Form Submit Modal SOP
         const formSOP = document.getElementById('formTambahSOP');
         if (formSOP) {
           formSOP.addEventListener('submit', async function(e) {
