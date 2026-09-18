@@ -1521,19 +1521,16 @@
                 console.error('Gagal menyalin teks: ', err);
             });
         }
-  <!-- 1. SDK Supabase Client -->
+ <!-- SDK Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- 2. Integration & UI Logic -->
     <script>
-      // ==========================================
-      // A. INISIALISASI SUPABASE
-      // ==========================================
+      // 1. Inisialisasi Supabase
       const SUPABASE_URL = 'https://mbmopwrlsselhzmxnuin.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_xcHIBKfP50fm1tQgbyCCVA_z2nrcdUg';
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      // Upload berkas ke Storage Bucket 'sop-files'
+      // 2. Fungsi Upload Berkas ke Supabase Storage
       async function uploadSOP(file) {
         const filePath = `${Date.now()}_${file.name}`;
         const { data, error } = await supabaseClient
@@ -1554,7 +1551,7 @@
         return urlData.publicUrl;
       }
 
-      // Simpan metadata ke Tabel Database PostgreSQL
+      // 3. Fungsi Simpan Metadata ke Tabel Database
       async function simpanSOPKeDatabase(kode, judul, kategori, fileUrl, fileExt) {
         const { data, error } = await supabaseClient
           .from('sop_documents')
@@ -1575,21 +1572,18 @@
         }
       }
 
-      // ==========================================
-      // B. KONTROL UI & EVENT LISTENERS
-      // ==========================================
+      // 4. Integrasi Menu Sidebar UI & Event Listener Form
       document.addEventListener('DOMContentLoaded', () => {
-        // 1. Toggle Submenu Sidebar
-        const menuHeaderBtns = document.querySelectorAll('.menu-header-btn');
-        menuHeaderBtns.forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const parentLi = btn.parentElement;
-            parentLi.classList.toggle('active');
+        // Kontrol Buka/Tutup Submenu Sidebar
+        const navDropdowns = document.querySelectorAll('.nav-dropdown');
+        navDropdowns.forEach(dropdown => {
+          dropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
           });
         });
 
-        // 2. Toggle Mobile Sidebar Toggle (Jika ada)
+        // Kontrol Mobile Sidebar Toggle (Jika tombol burger diklik)
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.querySelector('.sidebar');
         if (sidebarToggle && sidebar) {
@@ -1598,7 +1592,7 @@
           });
         }
 
-        // 3. Form Submit Handler (Supabase Integration)
+        // Handler Form Submit Modal SOP
         const formSOP = document.getElementById('formTambahSOP');
         if (formSOP) {
           formSOP.addEventListener('submit', async function(e) {
