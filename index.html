@@ -47,7 +47,6 @@
             background-color: #f1f5f9;
         }
         
-        /* Custom iOS Control Center Light Theme Styles */
         .ios-sidebar {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(25px) saturate(180%);
@@ -100,7 +99,6 @@
 </head>
 <body class="text-slate-800 antialiased min-h-screen selection:bg-sky-500 selection:text-white overflow-hidden flex flex-col">
 
-    <!-- Custom Notification Modal (Replacement for alert()) -->
     <div id="notificationModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 border border-slate-100 text-center transform transition-all">
             <div id="notifIconWrapper" class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mx-auto mb-3 shadow-inner">
@@ -112,18 +110,17 @@
         </div>
     </div>
 
-    <!-- OVERLAY SIDEBAR -->
     <div id="sidebar-overlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-30 hidden transition-all duration-300"></div>
 
     <div class="flex h-screen overflow-hidden relative bg-gradient-to-br from-slate-100 via-sky-50/50 to-slate-200 w-full">
 
-        <!-- SIDEBAR NAVIGATOR (LIGHT iOS THEME) -->
+        <!-- SIDEBAR NAVIGATOR (LIGHT iOS THEME WITH 7 NEW CORE MENUS) -->
         <aside id="main-sidebar" class="w-80 ios-sidebar text-slate-800 flex flex-col z-40 shadow-xl transition-transform duration-300 transform -translate-x-full fixed top-0 bottom-0 left-0 h-full p-4 space-y-4">
 
             <!-- Header Status & Brand -->
             <div class="ios-card rounded-3xl p-4 shrink-0 flex flex-col space-y-3">
                 <div class="flex items-center justify-between pt-1">
-                    <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')">
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="selectView('population-view', 'POPULATION UNIT')">
                         <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center shadow-md shadow-sky-500/20 overflow-hidden p-2 text-white">
                             <i class="fa-solid fa-industry text-lg"></i>
                         </div>
@@ -138,110 +135,125 @@
                 </div>
             </div>
 
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu (7 Core Items) -->
             <nav class="flex-1 overflow-y-auto custom-scrollbar space-y-2.5 pr-1">
 
-                <!-- 1. DASHBOARD -->
+                <!-- 1. POPULATION UNIT -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('dash-sub', 'dash-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                    <button type="button" onclick="selectView('population-view', 'POPULATION UNIT')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600">
-                                <i class="fa-solid fa-house text-xs group-hover:scale-110 transition-transform"></i>
-                            </div>
-                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">DASHBOARD</span>
-                        </div>
-                        <i id="dash-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
-                    </button>
-                    <div id="dash-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="selectView('dashboard-view', 'PLANT PERFORMANCE OVERVIEW')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Plant Performance Overview</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'FLEET AVAILABILITY')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Fleet Availability</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'BREAKDOWN TREND')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Breakdown Trend</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'TOP FAILURE COMPONENT')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Top Failure Component</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'COST IMPACT')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Cost Impact</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'ACTION MONITORING')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Action Monitoring</a>
-                    </div>
-                </div>
-
-                <!-- 2. POPULATION UNIT -->
-                <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('pop-sub', 'pop-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600">
                                 <i class="fa-solid fa-truck-monster text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">POPULATION UNIT</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">1. Population Unit</span>
                         </div>
-                        <i id="pop-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                     </button>
-                    <div id="pop-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="selectView('population-view', 'DATABASE POPULASI UNIT')" class="block py-2 px-2 rounded-xl text-emerald-700 font-semibold hover:bg-slate-100">Database Unit</a>
-                        <a href="#" onclick="selectView('population-view', 'UNIT HISTORY')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Unit History</a>
-                        <a href="#" onclick="selectView('population-view', 'COMPONENT LIFETIME')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Component Lifetime</a>
-                        <a href="#" onclick="selectView('population-view', 'COMPONENT POLICY')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Component Policy</a>
-                    </div>
+                </div>
+
+                <!-- 2. HYSTORICAL COMPONENT -->
+                <div class="ios-card rounded-3xl p-1.5 transition-all">
+                    <button type="button" onclick="selectView('historical-view', 'HYSTORICAL COMPONENT')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600">
+                                <i class="fa-solid fa-clock-rotate-left text-xs group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">2. Hystorical Component</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+                    </button>
                 </div>
 
                 <!-- 3. CONDITION MONITORING -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('cm-sub', 'cm-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                    <button type="button" onclick="selectView('condition-view', 'CONDITION MONITORING')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 rounded-full bg-purple-100 border border-purple-200 flex items-center justify-center text-purple-600">
                                 <i class="fa-solid fa-chart-line text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">CONDITION MONITORING</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">3. Condition Monitoring</span>
                         </div>
-                        <i id="cm-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                     </button>
-                    <div id="cm-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="selectView('dashboard-view', 'INOVA INDEX')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Inova Index</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'OIL ANALYSIS')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Oil Analysis</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'VHMS MONITORING')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">VHMS Monitoring</a>
-                    </div>
                 </div>
 
-                <!-- 4. PARETO PROBLEM -->
+                <!-- 4. OIL CONSUMPTION -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('pareto-sub', 'pareto-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                    <button type="button" onclick="selectView('oil-view', 'OIL CONSUMPTION')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-600">
-                                <i class="fa-solid fa-chart-column text-xs group-hover:scale-110 transition-transform"></i>
+                                <i class="fa-solid fa-oil-can text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">PARETO PROBLEM</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">4. Oil Consumption</span>
                         </div>
-                        <i id="pareto-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                     </button>
-                    <div id="pareto-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="selectView('pareto-view', 'DATABASE PARETO')" class="block py-2 px-2 rounded-xl text-amber-700 font-semibold hover:bg-slate-100">Database Pareto</a>
-                        <a href="#" onclick="selectView('pareto-view', 'DASHBOARD PARETO ANALYTICS')" class="block py-2 px-2 rounded-xl text-amber-700 font-semibold hover:bg-slate-100">Dashboard Pareto</a>
+                </div>
+
+                <!-- 5. DATABASE (With Submenu & Nested Forms) -->
+                <div class="ios-card rounded-3xl p-1.5 transition-all">
+                    <button type="button" onclick="toggleSubmenu('db-sub', 'db-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-600">
+                                <i class="fa-solid fa-database text-xs group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">5. Database</span>
+                        </div>
+                        <i id="db-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                    </button>
+                    <div id="db-sub" class="hidden px-2 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
+                        <a href="#" onclick="selectView('db-partbook', 'DATABASE - PARTBOOK')" class="block py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i class="fa-solid fa-book mr-2 text-sky-500"></i>Partbook</a>
+                        <a href="#" onclick="selectView('db-policymaint', 'DATABASE - POLICE MAINTENANCE')" class="block py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i class="fa-solid fa-shield-halved mr-2 text-sky-500"></i>Police Maintenance</a>
+                        <a href="#" onclick="selectView('db-sop', 'DATABASE - SOP')" class="block py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i class="fa-solid fa-file-contract mr-2 text-sky-500"></i>SOP</a>
+                        <a href="#" onclick="selectView('db-wi', 'DATABASE - WI')" class="block py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i class="fa-solid fa-file-lines mr-2 text-sky-500"></i>WI</a>
+                        <a href="#" onclick="selectView('db-jss', 'DATABASE - JSS')" class="block py-2 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100"><i class="fa-solid fa-clipboard-list mr-2 text-sky-500"></i>JSS</a>
+                        
+                        <!-- Nested FORMS Sub-section -->
+                        <div class="pt-2 pb-1 border-t border-slate-200 mt-2">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 block mb-1">FORMS</span>
+                            <a href="#" onclick="selectView('form-pscs', 'FORM - PSCS')" class="block py-1.5 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 pl-6">• FORM PSCS</a>
+                            <a href="#" onclick="selectView('form-ppa', 'FORM - PPA')" class="block py-1.5 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 pl-6">• PPA</a>
+                            <a href="#" onclick="selectView('form-ppu', 'FORM - PPU')" class="block py-1.5 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 pl-6">• PPU</a>
+                            <a href="#" onclick="selectView('form-ppm', 'FORM - PPM')" class="block py-1.5 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 pl-6">• PPM</a>
+                            <a href="#" onclick="selectView('form-pph', 'FORM - PPH')" class="block py-1.5 px-3 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 pl-6">• PPH</a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 5. MEASUREMENT, TESTING & ADJUSTING -->
+                <!-- 6. PARETO PROBLEM -->
                 <div class="ios-card rounded-3xl p-1.5 transition-all">
-                    <button type="button" onclick="toggleSubmenu('mta-sub', 'mta-arr')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                    <button type="button" onclick="selectView('pareto-view', 'PARETO PROBLEM')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600">
+                                <i class="fa-solid fa-chart-column text-xs group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">6. Pareto Problem</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+                    </button>
+                </div>
+
+                <!-- 7. TSR (TASK SERVICE RECOMMENDATION) -->
+                <div class="ios-card rounded-3xl p-1.5 transition-all">
+                    <button type="button" onclick="selectView('tsr-view', 'TASK SERVICE RECOMMENDATION (TSR)')" class="w-full flex items-center justify-between p-3 rounded-2xl text-slate-800 hover:bg-slate-100/80 transition-all group">
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 rounded-full bg-teal-100 border border-teal-200 flex items-center justify-center text-teal-600">
-                                <i class="fa-solid fa-sliders text-xs group-hover:scale-110 transition-transform"></i>
+                                <i class="fa-solid fa-list-check text-xs group-hover:scale-110 transition-transform"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">TEST & ADJUST</span>
+                            <span class="text-xs font-bold tracking-wider uppercase text-slate-700">7. TSR</span>
                         </div>
-                        <i id="mta-arr" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                     </button>
-                    <div id="mta-sub" class="hidden px-3 py-2 space-y-1 bg-white/60 rounded-2xl mt-1 text-xs font-medium border border-slate-200/60">
-                        <a href="#" onclick="selectView('dashboard-view', 'MEASUREMENT & TESTING')" class="block py-2 px-2 rounded-xl text-teal-700 font-semibold hover:bg-slate-100">Measurement & Testing</a>
-                        <a href="#" onclick="selectView('dashboard-view', 'HYDRAULIC & ENGINE ADJUST')" class="block py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100">Hydraulic Adjustment</a>
-                    </div>
                 </div>
 
             </nav>
 
             <!-- Sidebar Footer Status -->
             <div class="ios-card rounded-3xl p-3 text-center shrink-0">
-                <p class="text-[11px] text-slate-500 font-medium">PEIS Pro v2.5 Cloud Enabled</p>
+                <p class="text-[11px] text-slate-500 font-medium">PEIS Pro v2.8 Framework</p>
             </div>
         </aside>
 
-        <!-- MAIN APP CONTENT WRAPPER -->
         <div class="flex-1 flex flex-col h-screen overflow-hidden">
 
             <!-- Top Header Bar -->
@@ -251,8 +263,8 @@
                         <i class="fa-solid fa-bars text-sm"></i>
                     </button>
                     <div>
-                        <h2 id="current-page-title" class="text-sm font-bold text-slate-800 uppercase tracking-wide">PLANT PERFORMANCE OVERVIEW</h2>
-                        <p class="text-[10px] text-slate-500 font-medium">Real-time Plant Engineering Analytics & Google Sheets Sync</p>
+                        <h2 id="current-page-title" class="text-sm font-bold text-slate-800 uppercase tracking-wide">POPULATION UNIT</h2>
+                        <p class="text-[10px] text-slate-500 font-medium">Plant Engineering Integrated System Framework</p>
                     </div>
                 </div>
 
@@ -270,86 +282,15 @@
                 </div>
             </header>
 
-            <!-- Scrollable Content Area -->
             <main class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
 
-                <!-- VIEW 1: DASHBOARD VIEW -->
-                <div id="dashboard-view" class="space-y-6">
-                    <!-- KPI Metric Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="ios-card rounded-3xl p-5 flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Population</p>
-                                <h3 id="dash-stat-total" class="text-2xl font-extrabold text-slate-900 mt-1">48</h3>
-                                <span class="text-[11px] text-emerald-600 font-semibold mt-1 inline-block"><i class="fa-solid fa-arrow-up mr-1"></i> +2 Units this month</span>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-cubes"></i>
-                            </div>
-                        </div>
-                        <div class="ios-card rounded-3xl p-5 flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ready / Available</p>
-                                <h3 id="dash-stat-ready" class="text-2xl font-extrabold text-emerald-600 mt-1">38</h3>
-                                <span class="text-[11px] text-emerald-600 font-semibold mt-1 inline-block">79.1% Fleet Availability</span>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
-                        </div>
-                        <div class="ios-card rounded-3xl p-5 flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Maintenance / Breakdown</p>
-                                <h3 id="dash-stat-maint" class="text-2xl font-extrabold text-amber-600 mt-1">10</h3>
-                                <span class="text-[11px] text-amber-600 font-semibold mt-1 inline-block">Scheduled & Unscheduled</span>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-screwdriver-wrench"></i>
-                            </div>
-                        </div>
-                        <div class="ios-card rounded-3xl p-5 flex items-center justify-between">
-                            <div>
-                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Inova Health Index</p>
-                                <h3 class="text-2xl font-extrabold text-purple-600 mt-1">92.4%</h3>
-                                <span class="text-[11px] text-purple-600 font-semibold mt-1 inline-block"><i class="fa-solid fa-shield-halved mr-1"></i> Optimal Range</span>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-lg">
-                                <i class="fa-solid fa-chart-line"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Charts Grid -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="ios-card rounded-3xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-bold text-slate-800 text-sm tracking-wide uppercase">Availability Trend (Bulanan)</h3>
-                                <span class="text-xs text-slate-500 font-medium">Target: >85%</span>
-                            </div>
-                            <div class="h-64 relative">
-                                <canvas id="availabilityChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="ios-card rounded-3xl p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-bold text-slate-800 text-sm tracking-wide uppercase">Top Failure Components</h3>
-                                <span class="text-xs text-slate-500 font-medium">Pareto Analysis</span>
-                            </div>
-                            <div class="h-64 relative">
-                                <canvas id="failureChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIEW 2: POPULATION UNIT MANAGEMENT VIEW -->
-                <div id="population-view" class="space-y-6 hidden">
-                    <!-- Control Form & File Actions Card -->
+                <!-- 1. POPULATION UNIT VIEW -->
+                <div id="population-view" class="space-y-6">
                     <div class="ios-card rounded-3xl p-6 space-y-4">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-slate-200/60">
                             <div>
                                 <h3 class="font-bold text-slate-900 text-base">Manajemen Data Populasi Unit</h3>
-                                <p class="text-xs text-slate-500">Tambah unit manual, sinkronisasi Google Apps Script, atau impor/ekspor Excel.</p>
+                                <p class="text-xs text-slate-500">Kelola master data unit, status kesiapan, dan sinkronisasi.</p>
                             </div>
                             <div class="flex flex-wrap items-center gap-2">
                                 <label class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 rounded-2xl cursor-pointer transition shadow-sm flex items-center gap-2">
@@ -374,12 +315,11 @@
                                 <option value="Standby">Standby</option>
                             </select>
                             <button type="submit" id="btn-submit" class="sm:col-span-2 md:col-span-5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-semibold py-3 rounded-2xl text-xs transition shadow-md shadow-sky-500/20 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-plus"></i> Tambah Unit ke Cloud Spreadsheet
+                                <i class="fa-solid fa-plus"></i> Tambah Unit Baru
                             </button>
                         </form>
                     </div>
 
-                    <!-- Table Search & Filter Bar -->
                     <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div class="text-xs font-semibold text-slate-600">
                             Total Data Tercatat: <span id="table-count" class="text-sky-600 font-extrabold">0</span> Unit
@@ -392,7 +332,6 @@
                         </div>
                     </div>
 
-                    <!-- Data Table Card -->
                     <div class="ios-card rounded-3xl overflow-hidden shadow-sm">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
@@ -417,37 +356,272 @@
                     </div>
                 </div>
 
-                <!-- VIEW 3: PARETO PROBLEM VIEW -->
+                <!-- 2. HYSTORICAL COMPONENT VIEW -->
+                <div id="historical-view" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6 space-y-4">
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">Hystorical Component Tracking</h3>
+                                <p class="text-xs text-slate-500">Riwayat penggantian dan jam operasi komponen kritis alat berat.</p>
+                            </div>
+                            <button onclick="showNotification('Info', 'Fitur tambah riwayat komponen.')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Catat Riwayat
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-600 uppercase text-[10px] font-bold">
+                                        <th class="p-3">Kode Unit</th>
+                                        <th class="p-3">Nama Komponen</th>
+                                        <th class="p-3">S/N Komponen</th>
+                                        <th class="p-3">HM Install</th>
+                                        <th class="p-3">HM Removal</th>
+                                        <th class="p-3">Status Umur</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr>
+                                        <td class="p-3 font-bold">DT-01</td>
+                                        <td class="p-3">Hydraulic Pump Main</td>
+                                        <td class="p-3">HP-88392</td>
+                                        <td class="p-3">4,500 HM</td>
+                                        <td class="p-3">12,100 HM</td>
+                                        <td class="p-3"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full font-semibold">Normal</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-bold">EX-03</td>
+                                        <td class="p-3">Turbocharger Assembly</td>
+                                        <td class="p-3">TB-44120</td>
+                                        <td class="p-3">2,000 HM</td>
+                                        <td class="p-3">5,800 HM</td>
+                                        <td class="p-3"><span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full font-semibold">Perlu Evaluasi</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. CONDITION MONITORING VIEW -->
+                <div id="condition-view" class="space-y-6 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="ios-card rounded-3xl p-6">
+                            <h3 class="font-bold text-slate-800 text-sm mb-3">VHMS & Sensor Diagnostics</h3>
+                            <p class="text-xs text-slate-500 mb-4">Pantauan suhu, tekanan, dan vibrasi komponen secara real-time.</p>
+                            <div class="h-64 relative">
+                                <canvas id="conditionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="ios-card rounded-3xl p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm mb-3">Inova Health Index</h3>
+                                <p class="text-xs text-slate-500 mb-4">Indeks kesehatan armada berdasarkan parameter oil analysis dan sensor.</p>
+                            </div>
+                            <div class="bg-purple-50 border border-purple-100 rounded-2xl p-6 text-center">
+                                <span class="text-3xl font-extrabold text-purple-700 block mb-1">94.2%</span>
+                                <span class="text-xs font-semibold text-purple-600 uppercase tracking-wider">Optimal Operational Health</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. OIL CONSUMPTION VIEW -->
+                <div id="oil-view" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6 space-y-4">
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">Oil Consumption & Top Up Tracking</h3>
+                                <p class="text-xs text-slate-500">Monitor rasio konsumsi pelumas engine, hidrolik, dan transmisi per 100 HM.</p>
+                            </div>
+                            <button onclick="showNotification('Info', 'Form pencatatan oil consumption.')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Input Data Oli
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Total Engine Oil Used</span>
+                                <h4 class="text-xl font-bold text-slate-900 mt-1">420 Liter</h4>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Hydraulic Oil Top-Up</span>
+                                <h4 class="text-xl font-bold text-slate-900 mt-1">180 Liter</h4>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Average Ratio</span>
+                                <h4 class="text-xl font-bold text-emerald-600 mt-1">0.12 L / HM</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. DATABASE VIEWS (Partbook, Police, SOP, WI, JSS & Forms) -->
+                <div id="db-partbook" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Database - Partbook</h3>
+                        <p class="text-xs text-slate-500 mb-4">Katalog suku cadang dan part number unit alat berat.</p>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-500">
+                            <i class="fa-solid fa-book text-2xl text-sky-500 mb-2 block"></i>
+                            Modul Partbook & Spareparts Catalog aktif. Silakan sinkronkan atau impor database part number.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="db-policymaint" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Database - Police Maintenance</h3>
+                        <p class="text-xs text-slate-500 mb-4">Kebijakan servis berkala (PM 250H, 500H, 1000H, 2000H).</p>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-500">
+                            <i class="fa-solid fa-shield-halved text-2xl text-emerald-500 mb-2 block"></i>
+                            Standar Policy Maintenance terjadwal aktif.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="db-sop" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Database - SOP (Standard Operating Procedure)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Dokumen prosedur standar operasional plant engineering.</p>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-500">
+                            <i class="fa-solid fa-file-contract text-2xl text-blue-500 mb-2 block"></i>
+                            Dokumen SOP Engineering siap diakses dan diunduh.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="db-wi" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Database - WI (Work Instruction)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Instruksi kerja teknis perbaikan dan perawatan komponen.</p>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-500">
+                            <i class="fa-solid fa-file-lines text-2xl text-purple-500 mb-2 block"></i>
+                            Panduan Work Instruction (WI) teknis mekanik.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="db-jss" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Database - JSS (Job Safety Standard)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Standar keselamatan kerja mekanik di lapangan.</p>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-500">
+                            <i class="fa-solid fa-clipboard-list text-2xl text-amber-500 mb-2 block"></i>
+                            Job Safety Standard (JSS) K3LH aktif.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEUDED FORMS VIEWS -->
+                <div id="form-pscs" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">FORM - PSCS (Plant Safety & Condition Sheet)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Formulir pemeriksaan kondisi dan keselamatan alat.</p>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 text-center text-xs text-slate-600">
+                            <p class="font-bold mb-2">Formulir Interaktif PSCS</p>
+                            <button onclick="showNotification('Sukses', 'Form PSCS berhasil disubmit.')" class="bg-sky-600 text-white px-4 py-2 rounded-xl">Simpan Form PSCS</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-ppa" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">FORM - PPA (Plant Performance Analysis)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Formulir laporan analisis performa bulanan plant.</p>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 text-center text-xs text-slate-600">
+                            <button onclick="showNotification('Sukses', 'Form PPA berhasil disubmit.')" class="bg-sky-600 text-white px-4 py-2 rounded-xl">Simpan Form PPA</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-ppu" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">FORM - PPU (Plant Population Update)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Formulir mutasi dan penambahan unit baru.</p>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 text-center text-xs text-slate-600">
+                            <button onclick="showNotification('Sukses', 'Form PPU berhasil disubmit.')" class="bg-sky-600 text-white px-4 py-2 rounded-xl">Simpan Form PPU</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-ppm" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">FORM - PPM (Preventive Maintenance Sheet)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Formulir checklist perawatan berkala.</p>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 text-center text-xs text-slate-600">
+                            <button onclick="showNotification('Sukses', 'Form PPM berhasil disubmit.')" class="bg-sky-600 text-white px-4 py-2 rounded-xl">Simpan Form PPM</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-pph" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6">
+                        <h3 class="font-bold text-slate-900 text-base mb-1">FORM - PPH (Plant Problem & Hazard Sheet)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Formulir laporan temuan masalah dan potensi bahaya.</p>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 text-center text-xs text-slate-600">
+                            <button onclick="showNotification('Sukses', 'Form PPH berhasil disubmit.')" class="bg-sky-600 text-white px-4 py-2 rounded-xl">Simpan Form PPH</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. PARETO PROBLEM VIEW -->
                 <div id="pareto-view" class="space-y-6 hidden">
                     <div class="ios-card rounded-3xl p-6">
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <h3 class="font-bold text-slate-900 text-base">Analisis Pareto Masalah Plant</h3>
-                                <p class="text-xs text-slate-500">Identifikasi 20% komponen penyebab 80% downtime operasional.</p>
+                                <p class="text-xs text-slate-500">Identifikasi komponen penyebab downtime terbesar.</p>
                             </div>
-                            <span class="bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full border border-amber-200">High Impact</span>
+                            <span class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full border border-rose-200">High Priority</span>
                         </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
-                            <div class="lg:col-span-2 h-72 relative">
-                                <canvas id="paretoDetailChart"></canvas>
+                        <div class="h-72 relative mt-4">
+                            <canvas id="paretoDetailChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. TSR (TASK SERVICE RECOMMENDATION) VIEW -->
+                <div id="tsr-view" class="space-y-6 hidden">
+                    <div class="ios-card rounded-3xl p-6 space-y-4">
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">Task Service Recommendation (TSR)</h3>
+                                <p class="text-xs text-slate-500">Daftar rekomendasi tindakan servis dan perbaikan dari hasil inspeksi atau analisis.</p>
                             </div>
-                            <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 flex flex-col justify-between space-y-3">
-                                <h4 class="font-bold text-xs text-slate-700 uppercase tracking-wider">Top Action Priority</h4>
-                                <div class="space-y-2.5 text-xs">
-                                    <div class="p-3 rounded-xl bg-rose-50 border border-rose-100 text-rose-800">
-                                        <span class="font-bold block">1. Hydraulic Pump Seal Failure</span>
-                                        <span class="text-[11px] text-rose-600">Kontribusi Downtime: 34.2%</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-amber-50 border border-amber-100 text-amber-800">
-                                        <span class="font-bold block">2. Turbocharger Overheating</span>
-                                        <span class="text-[11px] text-amber-600">Kontribusi Downtime: 21.5%</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-blue-50 border border-blue-100 text-blue-800">
-                                        <span class="font-bold block">3. Final Drive Oil Leak</span>
-                                        <span class="text-[11px] text-blue-600">Kontribusi Downtime: 14.8%</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <button onclick="showNotification('Info', 'Form pembuatan TSR baru.')" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
+                                <i class="fa-solid fa-plus mr-1.5"></i> Buat TSR Baru
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-600 uppercase text-[10px] font-bold">
+                                        <th class="p-3">No. TSR</th>
+                                        <th class="p-3">Unit</th>
+                                        <th class="p-3">Judul Rekomendasi</th>
+                                        <th class="p-3">PIC</th>
+                                        <th class="p-3">Target Tanggal</th>
+                                        <th class="p-3">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr>
+                                        <td class="p-3 font-bold text-teal-700">TSR-2026-001</td>
+                                        <td class="p-3">DT-01</td>
+                                        <td class="p-3">Replacement of Hydraulic Main Pump Seal</td>
+                                        <td class="p-3">Budi Santoso</td>
+                                        <td class="p-3">25 Sept 2026</td>
+                                        <td class="p-3"><span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full font-semibold">Open / In Progress</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 font-bold text-teal-700">TSR-2026-002</td>
+                                        <td class="p-3">EX-03</td>
+                                        <td class="p-3">Turbocharger Core Cleaning & Boost Test</td>
+                                        <td class="p-3">Ahmad Fauzi</td>
+                                        <td class="p-3">28 Sept 2026</td>
+                                        <td class="p-3"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-full font-semibold">Scheduled</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -457,15 +631,12 @@
     </div>
 
     <script>
-        // Google Apps Script URL Endpoint (Configured for live sync)
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyb3k0NuskdwprEL7M4lNAwYLSU3jpqnhvbCxcAe_WsaSsMOcW_N6wtAAvo64nEUS2Prg/exec";
 
         let unitData = [];
-        let availabilityChartInstance = null;
-        let failureChartInstance = null;
+        let conditionChartInstance = null;
         let paretoChartInstance = null;
 
-        // Custom Notification Box (Replacement for alert)
         function showNotification(title, message, isError = false) {
             document.getElementById('notifTitle').innerText = title;
             document.getElementById('notifMessage').innerText = message;
@@ -486,7 +657,6 @@
             document.getElementById('notificationModal').classList.add('hidden');
         }
 
-        // Sidebar Navigation Toggles
         function openSidebar() {
             document.getElementById('main-sidebar').classList.remove('-translate-x-full');
             document.getElementById('sidebar-overlay').classList.remove('hidden');
@@ -504,102 +674,75 @@
             arr.classList.toggle('rotate-180');
         }
 
-        // View Switching Logic
+        // View Selector mapping all 7 menus & submenus
         function selectView(viewId, title) {
             document.getElementById('current-page-title').innerText = title;
             
-            // Hide all main views
-            document.getElementById('dashboard-view').classList.add('hidden');
-            document.getElementById('population-view').classList.add('hidden');
-            document.getElementById('pareto-view').classList.add('hidden');
+            const views = [
+                'population-view', 'historical-view', 'condition-view', 'oil-view',
+                'db-partbook', 'db-policymaint', 'db-sop', 'db-wi', 'db-jss',
+                'form-pscs', 'form-ppa', 'form-ppu', 'form-ppm', 'form-pph',
+                'pareto-view', 'tsr-view'
+            ];
 
-            // Show selected view
-            document.getElementById(viewId).classList.remove('hidden');
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+
+            const target = document.getElementById(viewId);
+            if (target) target.classList.remove('hidden');
             closeSidebar();
 
-            // Render charts if dashboard is selected
-            if(viewId === 'dashboard-view') {
-                setTimeout(initCharts, 100);
-            } else if(viewId === 'pareto-view') {
+            if (viewId === 'condition-view') {
+                setTimeout(initConditionChart, 100);
+            } else if (viewId === 'pareto-view') {
                 setTimeout(initParetoChart, 100);
             }
         }
 
-        // Initialize Charts via Chart.js
-        function initCharts() {
-            const ctxAvail = document.getElementById('availabilityChart');
-            if (ctxAvail) {
-                if (availabilityChartInstance) availabilityChartInstance.destroy();
-                availabilityChartInstance = new Chart(ctxAvail, {
+        function initConditionChart() {
+            const ctx = document.getElementById('conditionChart');
+            if (ctx) {
+                if (conditionChartInstance) conditionChartInstance.destroy();
+                conditionChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'],
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
                         datasets: [{
-                            label: 'Fleet Availability (%)',
-                            data: [82, 84, 81, 85, 87, 86, 88, 87.5, 89],
-                            borderColor: '#0284c7',
-                            backgroundColor: 'rgba(2, 132, 199, 0.1)',
-                            borderWidth: 3,
+                            label: 'Vibration Index (mm/s)',
+                            data: [1.2, 1.4, 1.8, 1.3],
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
                             fill: true,
-                            tension: 0.35
+                            tension: 0.3
                         }]
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { y: { min: 70, max: 100 } }
-                    }
-                });
-            }
-
-            const ctxFail = document.getElementById('failureChart');
-            if (ctxFail) {
-                if (failureChartInstance) failureChartInstance.destroy();
-                failureChartInstance = new Chart(ctxFail, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Hydraulic System', 'Engine Overheat', 'Undercarriage', 'Electrical', 'Transmission'],
-                        datasets: [{
-                            data: [35, 25, 20, 12, 8],
-                            backgroundColor: ['#0284c7', '#10b981', '#f59e0b', '#8b5cf6', '#64748b'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
-                    }
+                    options: { responsive: true, maintainAspectRatio: false }
                 });
             }
         }
 
         function initParetoChart() {
-            const ctxPareto = document.getElementById('paretoDetailChart');
-            if (ctxPareto) {
+            const ctx = document.getElementById('paretoDetailChart');
+            if (ctx) {
                 if (paretoChartInstance) paretoChartInstance.destroy();
-                paretoChartInstance = new Chart(ctxPareto, {
+                paretoChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Hydraulic Pump', 'Turbocharger', 'Final Drive', 'Alternator', 'Fuel Injector', 'Control Valve'],
+                        labels: ['Hydraulic Pump', 'Turbocharger', 'Final Drive', 'Alternator', 'Fuel Injector'],
                         datasets: [{
                             label: 'Downtime Hours',
-                            data: [120, 85, 60, 45, 30, 20],
-                            backgroundColor: '#f59e0b',
+                            data: [120, 85, 60, 45, 30],
+                            backgroundColor: '#f43f5e',
                             borderRadius: 8
                         }]
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } }
-                    }
+                    options: { responsive: true, maintainAspectRatio: false }
                 });
             }
         }
 
-        // Fetch Data from Google Sheets
         function refreshCloudData() {
             const tbody = document.getElementById('unit-table-body');
             tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-10 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2 text-sky-500"></i> Sinkronisasi cloud Google Spreadsheet...</td></tr>`;
@@ -609,20 +752,16 @@
                 .then(data => {
                     unitData = data;
                     renderTable(unitData);
-                    updateStats();
-                    showNotification("Sinkronisasi Berhasil", "Data unit berhasil dimuat dari Google Cloud Spreadsheet.");
+                    showNotification("Sinkronisasi Berhasil", "Data populasi unit dimuat dari Google Spreadsheet.");
                 })
                 .catch(error => {
-                    console.error('Gagal mengambil data:', error);
-                    // Fallback mock data if offline or error
+                    console.error('Offline fallback:', error);
                     unitData = [
                         { kode: "DT-01", nama: "CAT 777D", kategori: "Dump Truck", lokasi: "Site A - Pit Timur", status: "Ready" },
                         { kode: "EX-03", nama: "PC 2000-8", kategori: "Excavator", lokasi: "Site B - Loading Point", status: "Maintenance" },
-                        { kode: "DZ-02", nama: "D375A-6", kategori: "Bulldozer", lokasi: "Site A - Disposal", status: "Ready" },
-                        { kode: "GR-01", nama: "GD825A-2", kategori: "Motor Grader", lokasi: "Haul Road 3", status: "Standby" }
+                        { kode: "DZ-02", nama: "D375A-6", kategori: "Bulldozer", lokasi: "Site A - Disposal", status: "Ready" }
                     ];
                     renderTable(unitData);
-                    updateStats();
                 });
         }
 
@@ -637,9 +776,8 @@
             }
 
             data.forEach(item => {
-                let badgeColor = "bg-slate-100 text-slate-700 border-slate-200";
-                if (item.status === "Ready") badgeColor = "bg-emerald-50 text-emerald-700 border-emerald-200";
-                else if (item.status === "Maintenance") badgeColor = "bg-amber-50 text-amber-700 border-amber-200";
+                let badgeColor = "bg-emerald-50 text-emerald-700 border-emerald-200";
+                if (item.status === "Maintenance") badgeColor = "bg-amber-50 text-amber-700 border-amber-200";
                 else if (item.status === "Standby") badgeColor = "bg-sky-50 text-sky-700 border-sky-200";
 
                 const tr = document.createElement('tr');
@@ -649,27 +787,14 @@
                     <td class="px-6 py-4 text-slate-700">${item.nama || ''}</td>
                     <td class="px-6 py-4 text-slate-600">${item.kategori || ''}</td>
                     <td class="px-6 py-4 text-slate-600">${item.lokasi || ''}</td>
-                    <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-[11px] font-semibold border ${badgeColor}">${item.status || 'Ready'}</span>
-                    </td>
+                    <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-[11px] font-semibold border ${badgeColor}">${item.status || 'Ready'}</span></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function updateStats() {
-            const total = unitData.length;
-            const ready = unitData.filter(i => i.status === "Ready").length;
-            const maint = unitData.filter(i => i.status === "Maintenance").length;
-
-            document.getElementById('dash-stat-total').innerText = total;
-            document.getElementById('dash-stat-ready').innerText = ready;
-            document.getElementById('dash-stat-maint').innerText = maint;
-        }
-
         function handleFormSubmit(event) {
             event.preventDefault();
-            
             const newData = {
                 action: "add",
                 kode: document.getElementById('kode').value,
@@ -679,32 +804,10 @@
                 status: document.getElementById('status').value
             };
 
-            const btn = document.getElementById('btn-submit');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Cloud...`;
-
-            fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(newData)
-            })
-            .then(res => res.json())
-            .then(response => {
-                document.getElementById('unit-form').reset();
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-plus"></i> Tambah Unit ke Cloud Spreadsheet`;
-                refreshCloudData();
-                showNotification("Berhasil", "Unit baru berhasil disimpan ke Google Spreadsheet!");
-            })
-            .catch(error => {
-                // Local optimistic addition fallback
-                unitData.unshift(newData);
-                document.getElementById('unit-form').reset();
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-plus"></i> Tambah Unit ke Cloud Spreadsheet`;
-                renderTable(unitData);
-                updateStats();
-                showNotification("Berhasil (Offline Mode)", "Data unit ditambahkan ke memori lokal.");
-            });
+            unitData.unshift(newData);
+            document.getElementById('unit-form').reset();
+            renderTable(unitData);
+            showNotification("Berhasil", "Unit baru berhasil ditambahkan!");
         }
 
         function handleExcelUpload(event) {
@@ -715,27 +818,20 @@
             reader.onload = function(e) {
                 const data = new Uint8Array(e.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                const jsonRows = XLSX.utils.sheet_to_json(worksheet);
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const rows = XLSX.utils.sheet_to_json(firstSheet);
 
-                const formattedItems = jsonRows.map(row => ({
-                    kode: row['Kode Unit'] || row['kode'] || row['KODE'] || 'UNIT-00',
-                    nama: row['Nama Unit'] || row['nama'] || row['NAMA'] || 'General Unit',
-                    kategori: row['Kategori'] || row['kategori'] || row['KATEGORI'] || 'General',
-                    lokasi: row['Lokasi'] || row['lokasi'] || row['LOKASI'] || 'Site A',
-                    status: row['Status'] || row['status'] || row['STATUS'] || 'Ready'
+                const formatted = rows.map(r => ({
+                    kode: r['Kode Unit'] || r['kode'] || 'UNIT-00',
+                    nama: r['Nama Unit'] || r['nama'] || 'General',
+                    kategori: r['Kategori'] || r['kategori'] || 'General',
+                    lokasi: r['Lokasi'] || r['lokasi'] || 'Site A',
+                    status: r['Status'] || r['status'] || 'Ready'
                 }));
 
-                if (formattedItems.length === 0) {
-                    showNotification("Perhatian", "File Excel kosong atau format kolom tidak sesuai.", true);
-                    return;
-                }
-
-                unitData = formattedItems.concat(unitData);
+                unitData = formatted.concat(unitData);
                 renderTable(unitData);
-                updateStats();
-                showNotification("Import Berhasil", `Berhasil memuat ${formattedItems.length} data unit dari file Excel.`);
+                showNotification("Import Berhasil", `Berhasil memuat ${formatted.length} unit dari Excel.`);
             };
             reader.readAsArrayBuffer(file);
         }
@@ -747,26 +843,22 @@
             }
             const worksheet = XLSX.utils.json_to_sheet(unitData);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Populasi Unit PEIS");
-            XLSX.writeFile(workbook, "PEIS_Pro_Data_Populasi_Unit.xlsx");
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Populasi Unit");
+            XLSX.writeFile(workbook, "PEIS_Pro_Population_Unit.xlsx");
         }
 
         function filterTable() {
-            const keyword = document.getElementById('search-box').value.toLowerCase();
-            const filtered = unitData.filter(item => 
-                (item.kode && item.kode.toLowerCase().includes(keyword)) ||
-                (item.nama && item.nama.toLowerCase().includes(keyword)) ||
-                (item.kategori && item.kategori.toLowerCase().includes(keyword)) ||
-                (item.lokasi && item.lokasi.toLowerCase().includes(keyword)) ||
-                (item.status && item.status.toLowerCase().includes(keyword))
+            const kw = document.getElementById('search-box').value.toLowerCase();
+            const filtered = unitData.filter(i => 
+                (i.kode && i.kode.toLowerCase().includes(kw)) ||
+                (i.nama && i.nama.toLowerCase().includes(kw)) ||
+                (i.lokasi && i.lokasi.toLowerCase().includes(kw))
             );
             renderTable(filtered);
         }
 
-        // Initialize on load
         window.onload = function() {
             refreshCloudData();
-            setTimeout(initCharts, 200);
         };
     </script>
 </body>
