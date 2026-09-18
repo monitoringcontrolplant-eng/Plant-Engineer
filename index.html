@@ -1521,6 +1521,86 @@
                 console.error('Gagal menyalin teks: ', err);
             });
         }
+   <!-- 1. Load Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 2. Logic Supabase Integration -->
+    <script>
+      // Inisialisasi Supabase Client
+      const SUPABASE_URL = 'https://mbmopwrlsselhzmxnuin.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_xcHIBKfP50fm1tQgbyCCVA_z2nrcdUg';
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // Upload berkas ke Bucket Storage 'sop-files'
+      async function uploadSOP(file) {
+        const filePath = `${Date.now()}_${file.name}`;
+        
+        const { data, error } = await supabaseClient
+          .storage
+          .from('sop-files')
+          .upload(filePath, file);
+
+        if (error) {
+          alert('Gagal Upload ke Storage: ' + error.message);
+          return null;
+        }
+
+        const { data: urlData } = supabaseClient
+          .storage
+          .from('sop-files')
+          .getPublicUrl(filePath);
+
+        return urlData.publicUrl;
+      }
+
+      // Simpan metadata ke Tabel Database
+      async function simpanSOPKeDatabase(kode, judul, kategori, fileUrl, fileExt) {
+        const { data, error } = await supabaseClient
+          .from('sop_documents')
+          .insert([{
+            kode_dokumen: kode,
+            judul_dokumen: judul,
+            kategori: kategori,
+            tipe_file: fileExt.toUpperCase(),
+            file_url: fileUrl,
+            tanggal_upload: new Date().toISOString().split('T')[0]
+          }]);
+
+        if (error) {
+          alert('Gagal Simpan Database: ' + error.message);
+        } else {
+          alert('Berhasil Tersimpan di Supabase!');
+          location.reload();
+        }
+      }
+// Handler Form Submit
+      document.addEventListener('DOMContentLoaded', () => {
+        const formSOP = document.getElementById('formTambahSOP');
+        
+        if (formSOP) {
+          formSOP.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const kode = document.getElementById('inputKodeSOP').value;
+            const judul = document.getElementById('inputJudulSOP').value;
+            const kategori = document.getElementById('inputKategoriSOP').value;
+            const fileInput = document.getElementById('inputFileSOP');
+            const file = fileInput.files[0];
+
+            if (file) {
+              const fileExt = file.name.split('.').pop();
+              const fileUrl = await uploadSOP(file);
+
+              if (fileUrl) {
+                await simpanSOPKeDatabase(kode, judul, kategori, fileUrl, fileExt);
+              }
+            } else {
+              alert('Silakan pilih file terlebih dahulu!');
+            }
+          });
+        }
+      });
     </script>
 </body>
 </html>
+   
